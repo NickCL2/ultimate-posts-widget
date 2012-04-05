@@ -42,6 +42,16 @@ Nothing right now.
 
 1. Widget options
 
+== Frequently Asked Questions ==
+
+= How do I get posts to show in the widget? =
+
+The widget will only show posts which are marked as sticky. Mark a post as sticky by editing the post and checking "Stick this post to the front page" under the visibility section.
+
+= How do I get thumbnials to show in widget? =
+
+Turn on "Show thumbnails" in the widget and ensure that the post has a "Featured Image"
+
 == Changelog ==
 
 = 1.4.5 = 
