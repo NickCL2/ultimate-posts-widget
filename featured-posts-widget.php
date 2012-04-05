@@ -26,6 +26,17 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 		}
 	
 		function widget( $args, $instance ) {
+
+			function get_image_path($src) {
+				global $blog_id;
+				if(isset($blog_id) && $blog_id > 0) {
+					$imageParts = explode('/files/' , $src);
+					if(isset($imageParts[1])) {
+						$src = '/blogs.dir/' . $blog_id . '/files/' . $imageParts[1];
+					}
+				}
+				return $src;
+			}
 			
 			$cache = wp_cache_get( 'widget_featured_posts', 'widget' );
 	
@@ -40,7 +51,7 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 			ob_start();
 			extract( $args );
 	
-			$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Featured Posts' ) : $instance['title'], $instance, $this->id_base );
+			if ( isset( $instance['title'] ) ) $title = apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base );
 			
 			if ( !$number = (int) $instance['number'] )
 				$number = 1;
@@ -49,10 +60,10 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 			else if ( $number > 5 )
 				$number = 5;
 
-			if( ! $thumb_h =  absint($instance['thumb_h'] ))  $thumb_h = 50;
-			if( ! $thumb_w =  absint($instance['thumb_w'] ))  $thumb_w = 50;
-			if( ! $excerpt_length = absint( $instance['excerpt_length'] ) ) $excerpt_length = 10;
-			if( ! $excerpt_readmore = $instance['excerpt_readmore'] )  $excerpt_readmore = 'Read more &rarr;';
+			if( !$thumb_h =  absint($instance['thumb_h'] ))  $thumb_h = 50;
+			if( !$thumb_w =  absint($instance['thumb_w'] ))  $thumb_w = 50;
+			if( !$excerpt_length = absint( $instance['excerpt_length'] ) ) $excerpt_length = 10;
+			if( !$excerpt_readmore = $instance['excerpt_readmore'] )  $excerpt_readmore = 'Read more &rarr;';
 
 			//Excerpt more filter
 			$new_excerpt_more = create_function('$more', 'return " ";');	
@@ -75,11 +86,11 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 			if ( $r->have_posts() ) :
 				
 				echo $before_widget;
-				
 				if ( $title ) echo $before_title . $title . $after_title;
 				echo '<ul>';
-				while ( $r->have_posts() ) : $r->the_post();
-					?>
+				
+				while ( $r->have_posts() ) : $r->the_post(); ?>
+					
 					<li>
 
 						<?php
@@ -93,29 +104,34 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 
 						<div class="fpw-image">
 							<a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>">
-								<img src="<?php echo WP_PLUGIN_URL . '/' . $plugin_dir . '/thumb.php?src='. $thumbnail[0] .'&h='.$thumb_h.'&w='.$thumb_w.'&z=0'; ?>" alt="<?php the_title_attribute(); ?>" width="<?php echo $thumb_w; ?>" height="<?php echo $thumb_h; ?>" />
+								<img src="<?php echo plugin_dir_url( __FILE__ ) . 'thumb.php?src='. get_image_path($thumbnail[0]) .'&h='.$thumb_h.'&w='.$thumb_w.'&&zc=2'; ?>" alt="<?php the_title_attribute(); ?>" width="<?php echo $thumb_w; ?>" height="<?php echo $thumb_h; ?>" />
 							</a>
 						</div>
 
 						<?php endif; ?>
 
-						<div class"fpw-content">
+						<div class="fpw-content">
 							
 							<?php if ( get_the_title() ) : ?>
-								<a class="title" href="<?php the_permalink(); ?>" title="<?php echo esc_attr( get_the_title() ? get_the_title() : get_the_ID() ); ?>">
+								<a class="post-title" href="<?php the_permalink(); ?>" title="<?php echo esc_attr( get_the_title() ? get_the_title() : get_the_ID() ); ?>">
 									<?php the_title(); ?>
 								</a>
 							<?php endif; ?>
-							
+
+							<?php if ( $instance['show_date'] ) : ?>
+								<p class="post-date"><?php the_time("j M Y"); ?></p>
+							<?php endif; ?>
+
 							<?php if ( $instance['show_excerpt'] ) :
 	              if ( $instance['readmore'] ) : $linkmore = ' <a href="'.get_permalink().'" class="more-link">'.$excerpt_readmore.'</a>'; else: $linkmore =''; endif; ?>
-								<p class="excerpt"><?php echo get_the_excerpt() . $linkmore; ?></p>
+								<p class="post-excerpt"><?php echo get_the_excerpt() . $linkmore; ?></p>
 							<?php endif; ?>
 
 						</div>
 
 					</li>
-					<?php
+					
+				<?php
 				endwhile;
 				echo '</ul>';
 				echo $after_widget;
@@ -136,6 +152,7 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 			$instance['number'] = (int) $new_instance['number'];
 			$instance["show_excerpt"] = esc_attr($new_instance["show_excerpt"]);
 			$instance["show_thumbnail"] = esc_attr($new_instance["show_thumbnail"]);
+			$instance['show_date'] = esc_attr($new_instance['show_date']);
 			$instance["thumb_w"] = absint($new_instance["thumb_w"]);
 			$instance["thumb_h"] = absint($new_instance["thumb_h"]);
 			$instance["show_readmore"] = esc_attr($new_instance["show_readmore"]);
@@ -173,6 +190,11 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 	
 			<p><label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of posts to show:' ); ?></label>
 			<input id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="text" value="<?php echo $number; ?>" size="3" /></p>
+
+			<p>
+				<input class="checkbox" id="<?php echo $this->get_field_id( 'show_date' ); ?>" name="<?php echo $this->get_field_name( 'show_date' ); ?>" type="checkbox" <?php checked( (bool) $instance["show_date"], true ); ?> />
+				<label for="<?php echo $this->get_field_id( 'show_date' ); ?>"><?php _e( 'Show date?' ); ?></label>
+			</p>
 
 			<p>
 				<input class="checkbox" id="<?php echo $this->get_field_id( 'show_excerpt' ); ?>" name="<?php echo $this->get_field_name( 'show_excerpt' ); ?>" type="checkbox" <?php checked( (bool) $instance["show_excerpt"], true ); ?> />
