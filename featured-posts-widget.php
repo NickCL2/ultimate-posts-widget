@@ -63,19 +63,6 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 			$excerpt_length = $instance['excerpt_length'];
 			$excerpt_readmore = $instance['excerpt_readmore'];
 
-			// Categories
-			/* $cats = str_replace(" ", "", esc_attr($cats));
-			if (($atcat) && (is_category())) {
-			 $cats = get_query_var('cat');
-			}
-			if (($atcat) && (is_single())) {
-			 $cats = '';
-			 foreach (get_the_category() as $catt) {
-				 $cats .= $catt->cat_ID.' '; 
-			 }
-			 $cats = str_replace(" ", ",", trim($cats));
-			} */
-
 			//Excerpt more filter
 			$new_excerpt_more = create_function('$more', 'return " ";');	
 			add_filter('excerpt_more', $new_excerpt_more);
@@ -83,9 +70,6 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 			// Excerpt length filter
 			$new_excerpt_length = create_function('$length', "return " . $excerpt_length . ";");
 			if ( $instance["excerpt_length"] > 0 ) add_filter('excerpt_length', $new_excerpt_length);
-
-			print_r($cats);
-			print_r($types);
 
 			$r = new WP_Query( 
 				array( 
