@@ -51,34 +51,30 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 			ob_start();
 			extract( $args );
 	
-			if ( isset( $instance['title'] ) ) $title = apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base );
-			
-			if ( !$number = (int) $instance['number'] )
-				$number = 1;
-			else if ( $number < 1 )
-				$number = 1;
-			else if ( $number > 5 )
-				$number = 5;
-
-			if( !$thumb_h = absint($instance['thumb_h'] ))  $thumb_h = 50;
-			if( !$thumb_w = absint($instance['thumb_w'] ))  $thumb_w = 50;
-			if( !$excerpt_length = absint( $instance['excerpt_length'] ) ) $excerpt_length = 10;
-			if( !$excerpt_readmore = $instance['excerpt_readmore'] )  $excerpt_readmore = 'Read more &rarr;';
-			if( !$atcat = $instance['atcat'] ) $atcat = '';
-			if( !intval($cats) ) $cats = '';
+			$title = apply_filters( 'widget_title', $instance['title'] );
+			$number = $instance['number'];
+			$cpt = $instance['types'];		
+			$types = explode(',', $cpt);
+			$categories = $instance['cats'];		
+			$cats = explode(',', $categories);
+			$atcat = $instance['atcat'];
+			$thumb_w = $instance['thumb_w'];
+			$thumb_h = $instance['thumb_h'];
+			$excerpt_length = $instance['excerpt_length'];
+			$excerpt_readmore = $instance['excerpt_readmore'];
 
 			// Categories
-			$cats = str_replace(" ", "", esc_attr($cats));
+			/* $cats = str_replace(" ", "", esc_attr($cats));
 			if (($atcat) && (is_category())) {
 			 $cats = get_query_var('cat');
 			}
 			if (($atcat) && (is_single())) {
 			 $cats = '';
 			 foreach (get_the_category() as $catt) {
-			   $cats .= $catt->cat_ID.' '; 
+				 $cats .= $catt->cat_ID.' '; 
 			 }
 			 $cats = str_replace(" ", ",", trim($cats));
-			}
+			} */
 
 			//Excerpt more filter
 			$new_excerpt_more = create_function('$more', 'return " ";');	
@@ -88,8 +84,9 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 			$new_excerpt_length = create_function('$length', "return " . $excerpt_length . ";");
 			if ( $instance["excerpt_length"] > 0 ) add_filter('excerpt_length', $new_excerpt_length);
 
-			
-	
+			print_r($cats);
+			print_r($types);
+
 			$r = new WP_Query( 
 				array( 
 					'showposts' => $number, 
@@ -98,6 +95,7 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 					'caller_get_posts' => 1, 
 					'post__in' => get_option( 'sticky_posts' ),
 					'cat' => $cats,
+					'post_type' => $types,
 				) 
 			);
 			
@@ -141,7 +139,7 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 							<?php endif; ?>
 
 							<?php if ( $instance['show_excerpt'] ) :
-	              if ( $instance['readmore'] ) : $linkmore = ' <a href="'.get_permalink().'" class="more-link">'.$excerpt_readmore.'</a>'; else: $linkmore =''; endif; ?>
+								if ( $instance['readmore'] ) : $linkmore = ' <a href="'.get_permalink().'" class="more-link">'.$excerpt_readmore.'</a>'; else: $linkmore =''; endif; ?>
 								<p class="post-excerpt"><?php echo get_the_excerpt() . $linkmore; ?></p>
 							<?php endif; ?>
 
@@ -164,20 +162,26 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 		}
 	
 		function update( $new_instance, $old_instance ) {
-			
 			$instance = $old_instance;
+			
+			//Let's turn that array into something the Wordpress database can store
+			$types = implode(',', (array)$new_instance['types']);
+			$cats = implode(',', (array)$new_instance['cats']);
+
 			$instance['title'] = strip_tags( $new_instance['title'] );
-			$instance['number'] = (int) $new_instance['number'];
-			$instance["show_excerpt"] = esc_attr($new_instance["show_excerpt"]);
-			$instance["show_thumbnail"] = esc_attr($new_instance["show_thumbnail"]);
-			$instance['show_date'] = esc_attr($new_instance['show_date']);
-			$instance["thumb_w"] = absint($new_instance["thumb_w"]);
-			$instance["thumb_h"] = absint($new_instance["thumb_h"]);
-			$instance["show_readmore"] = esc_attr($new_instance["show_readmore"]);
-			$instance["excerpt_length"]=absint($new_instance["excerpt_length"]);
-			$instance["excerpt_readmore"]=esc_attr($new_instance["excerpt_readmore"]);
-			$instance['cats'] = esc_attr($new_instance['cats']);
-			$instance['atcat'] = $new_instance['atcat'] ? 1 : 0;
+			$instance['number'] = strip_tags( $new_instance['number'] );
+			$instance['types'] = $types;
+			$instance['cats'] = $cats;
+			$instance['atcat'] = strip_tags( $new_instance['atcat'] );
+			$instance['show_excerpt'] = strip_tags( $new_instance['show_excerpt'] );
+			$instance['show_thumbnail'] = strip_tags( $new_instance['show_thumbnail'] );
+			$instance['show_date'] = strip_tags( $new_instance['show_date'] );
+			$instance['thumb_w'] = strip_tags( $new_instance['thumb_w'] );
+			$instance['thumb_h'] = strip_tags( $new_instance['thumb_h'] );
+			$instance['show_readmore'] = strip_tags( $new_instance['show_readmore'] );
+			$instance['excerpt_length'] = strip_tags( $new_instance['excerpt_length'] );
+			$instance['excerpt_readmore'] = strip_tags( $new_instance['excerpt_readmore'] );
+			
 			
 			$this->flush_widget_cache();
 	
@@ -196,15 +200,51 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 		}
 	
 		function form( $instance ) {
+
+			// instance exist? if not set defaults
+			if ( $instance ) {
+				$title  = $instance['title'];
+				$number = $instance['number'];
+				$types  = $instance['types'];
+				$cats = $instance['cats'];
+				$atcat = $instance['atcat'];
+				$thumb_w = $instance['thumb_w'];
+				$thumb_h = $instance['thumb_h'];
+				$excerpt_length = $instance['excerpt_length'];
+				$excerpt_readmore = $instance['excerpt_readmore'];
+			} else {
+				//These are our defaults
+				$title  = '';
+				$number = '5';
+				$types  = 'post';
+				$cats = '';
+				$atcat = false;
+				$thumb_w = 100;
+				$thumb_h = 100;
+				$excerpt_length = 10;
+				$excerpt_readmore = 'Read more &rarr;';	
+			}
+
+			//Let's turn $types and $cats into an array
+			$types = explode(',', $types);
+			$cats = explode(',', $cats);
 			
-			$title = isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '';
-			if ( !isset($instance['number']) || !$number = (int) $instance['number'] ) $number = 1;
-			$thumb_h = isset($instance['thumb_h']) ? absint($instance['thumb_h']) : 100;
-			$thumb_w = isset($instance['thumb_w']) ? absint($instance['thumb_w']) : 100;
-			$excerpt_length = isset($instance['excerpt_length']) ? absint($instance['excerpt_length']) : 10;
-			$excerpt_readmore = isset($instance['excerpt_readmore']) ? esc_attr($instance['excerpt_readmore']) : 'Read more &rarr;';
-			$cats = esc_attr($instance['cats']);
-			$atcat = (bool) $instance['atcat'];
+			//Count number of post types for select box sizing
+			$cpt_types = get_post_types( array( 'public' => true ), 'names' );
+			foreach ($cpt_types as $cpt ) {
+			   $cpt_ar[] = $cpt;
+			}
+			$n = count($cpt_ar);
+			if($n > 10) { $n = 10; }
+
+			//Count number of categories for select box sizing
+			$cat_list = get_categories( 'hide_empty=0' );
+			foreach ($cat_list as $cat ) {
+			   $cat_ar[] = $cat;
+			}
+			$c = count($cat_ar);
+			if($c > 10) { $c = 10; }
+
 			?>
 
 			<p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
@@ -224,8 +264,8 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 			</p>
 
 			<p><label for="<?php echo $this->get_field_id("excerpt_length"); ?>"><?php _e( 'Excerpt length (in words):' ); ?></label>
-        <input style="text-align: center;" type="text" id="<?php echo $this->get_field_id("excerpt_length"); ?>" name="<?php echo $this->get_field_name("excerpt_length"); ?>" value="<?php echo $excerpt_length; ?>" size="3" />
-      </p>
+				<input style="text-align: center;" type="text" id="<?php echo $this->get_field_id("excerpt_length"); ?>" name="<?php echo $this->get_field_name("excerpt_length"); ?>" value="<?php echo $excerpt_length; ?>" size="3" />
+			</p>
 
 			<p>
 				<label for="<?php echo $this->get_field_id('show_readmore'); ?>">
@@ -247,27 +287,44 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 				</p>
 
 				<p>
-				<label><?php _e('Thumbnail size:'); ?><br />
-					<label for="<?php echo $this->get_field_id("thumb_w"); ?>">
-						W: <input class="widefat" style="width:40%;" type="text" id="<?php echo $this->get_field_id("thumb_w"); ?>" name="<?php echo $this->get_field_name("thumb_w"); ?>" value="<?php echo $thumb_w; ?>" />
+					<label><?php _e('Thumbnail size:'); ?></label>
+					<br />
+					<label for="<?php echo $this->get_field_id('thumb_w'); ?>">
+						W: <input class="widefat" style="width:40%;" type="text" id="<?php echo $this->get_field_id('thumb_w'); ?>" name="<?php echo $this->get_field_name('thumb_w'); ?>" value="<?php echo $thumb_w; ?>" />
 					</label>
-					<label for="<?php echo $this->get_field_id("thumb_h"); ?>">
-						H: <input class="widefat" style="width:40%;" type="text" id="<?php echo $this->get_field_id("thumb_h"); ?>" name="<?php echo $this->get_field_name("thumb_h"); ?>" value="<?php echo $thumb_h; ?>" />
+					<label for="<?php echo $this->get_field_id('thumb_h'); ?>">
+						H: <input class="widefat" style="width:40%;" type="text" id="<?php echo $this->get_field_id('thumb_h'); ?>" name="<?php echo $this->get_field_name('thumb_h'); ?>" value="<?php echo $thumb_h; ?>" />
 					</label>
-				</label>
 				</p>
 
 			<?php endif; ?>
 
 			<p>
-			  <label for="<?php echo $this->get_field_id('cats'); ?>"><?php _e('Categories:', 'adv-recent-posts');?> 
-			  <input class="widefat" id="<?php echo $this->get_field_id('cats'); ?>" name="<?php echo $this->get_field_name('cats'); ?>" type="text" value="<?php echo $cats; ?>" /><br />
-				<small>(<?php _e('Category IDs, separated by commas.' );?>)</small>
-			  </label>
-		  </p>
-			<p>
 				<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('atcat'); ?>" name="<?php echo $this->get_field_name('atcat'); ?>"<?php checked( $atcat ); ?> />
 				<label for="<?php echo $this->get_field_id('atcat'); ?>"> <?php _e('Get posts from current category');?></label>
+			</p>
+
+			<p>
+			<label for="<?php echo $this->get_field_id('cats'); ?>"><?php _e( 'Select categories:' ); ?></label>
+			<select name="<?php echo $this->get_field_name('cats'); ?>[]" id="<?php echo $this->get_field_id('cats'); ?>" class="widefat" style="height: auto;" size="<?php echo $c ?>" multiple>
+				<?php 
+				$categories = get_categories( 'hide_empty=0' );
+				foreach ($categories as $category ) { ?>
+					<option value="<?php echo $category->term_id; ?>" <?php if( in_array($category->term_id, $cats)) { echo 'selected="selected"'; } ?>><?php echo $category->cat_name;?></option>
+				<?php }	?>
+			</select>
+			</p>
+
+			<p>
+			<label for="<?php echo $this->get_field_id('types'); ?>"><?php _e( 'Select post type(s):' ); ?></label>
+			<select name="<?php echo $this->get_field_name('types'); ?>[]" id="<?php echo $this->get_field_id('types'); ?>" class="widefat" style="height: auto;" size="<?php echo $n ?>" multiple>
+				<?php 
+				$args = array( 'public' => true );
+				$post_types = get_post_types( $args, 'names' );
+				foreach ($post_types as $post_type ) { ?>
+					<option value="<?php echo $post_type; ?>" <?php if( in_array($post_type, $types)) { echo 'selected="selected"'; } ?>><?php echo $post_type;?></option>
+				<?php }	?>
+			</select>
 			</p>
 
 			<?php
