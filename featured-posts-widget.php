@@ -63,6 +63,7 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 			$excerpt_length = $instance['excerpt_length'];
 			$excerpt_readmore = $instance['excerpt_readmore'];
 			$sticky = $instance['sticky'];
+			$order = $instance['order'];
 
 			// If $atcat true and in category
 			if ($atcat && is_category()) {  
@@ -96,6 +97,7 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 
 			$args = array(
 				'showposts' => $number,
+				'orderby' => $order,
 				'post__in' => $sticky_option,
 				'category__in' => $cats,
 				'post_type' => $types
@@ -189,6 +191,7 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 			$instance['excerpt_length'] = strip_tags( $new_instance['excerpt_length'] );
 			$instance['excerpt_readmore'] = strip_tags( $new_instance['excerpt_readmore'] );
 			$instance['sticky'] = strip_tags( $new_instance['sticky'] );
+			$instance['order'] = strip_tags( $new_instance['order'] );
 			
 			
 			$this->flush_widget_cache();
@@ -221,6 +224,7 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 				$excerpt_length = $instance['excerpt_length'];
 				$excerpt_readmore = $instance['excerpt_readmore'];
 				$sticky = $instance['sticky'];
+				$order = $instance['order'];
 			} else {
 				//These are our defaults
 				$title  = '';
@@ -233,6 +237,7 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 				$excerpt_length = 10;
 				$excerpt_readmore = 'Read more &rarr;';
 				$sticky = false;
+				$order = 'date';
 			}
 
 			//Let's turn $types and $cats into an array
@@ -340,6 +345,16 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 			<p>
 				<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('sticky'); ?>" name="<?php echo $this->get_field_name('sticky'); ?>" <?php checked( (bool) $instance['sticky'], true ); ?> />
 				<label for="<?php echo $this->get_field_id('sticky'); ?>"> <?php _e('Only get sticky posts');?></label>
+			</p>
+
+			<p>
+			<label for="<?php echo $this->get_field_id('order'); ?>"><?php _e( 'Order by:' ); ?></label>
+			<select name="<?php echo $this->get_field_name('order'); ?>" id="<?php echo $this->get_field_id('order'); ?>" class="widefat">
+				<option value="date" <?php if( $order == 'date') { echo 'selected="selected"'; } ?>><?php _e('Date'); ?></option>
+				<option value="title" <?php if( $order == 'title') { echo 'selected="selected"'; } ?>><?php _e('Title'); ?></option>
+				<option value="comment_count" <?php if( $order == 'comment_count') { echo 'selected="selected"'; } ?>><?php _e('Comments'); ?></option>
+				<option value="rand" <?php if( $order == 'rand') { echo 'selected="selected"'; } ?>><?php _e('Random'); ?></option>
+			</select>
 			</p>
 
 			<?php
