@@ -54,9 +54,9 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 			$title = apply_filters( 'widget_title', $instance['title'] );
 			$number = $instance['number'];
 			$cpt = $instance['types'];		
-			$types = explode(',', $cpt);
+			if (!empty($cpt)) $types = explode(',', $cpt);
 			$categories = $instance['cats'];		
-			$cats = explode(',', $categories);
+			if (!empty($categories)) $cats = explode(',', $categories);
 			$atcat = $instance['atcat'];
 			$thumb_w = $instance['thumb_w'];
 			$thumb_h = $instance['thumb_h'];
@@ -78,7 +78,7 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 				$cats = str_replace(" ", ",", trim($cats));  
 			}
 
-			// If sticky set sticky filter option
+			// If sticky
 			if ($sticky) {
 				$sticky_option = get_option( 'sticky_posts' );
 			}
@@ -91,22 +91,20 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 			$new_excerpt_length = create_function('$length', "return " . $excerpt_length . ";");
 			if ( $instance["excerpt_length"] > 0 ) add_filter('excerpt_length', $new_excerpt_length);
 
-			$r = new WP_Query( 
-				array( 
-					'showposts' => $number, 
-					'nopaging' => 0, 
-					'post_status' => 'publish', 
-					'caller_get_posts' => 1, 
-					'post__in' => $sticky_option,
-					'cat' => $cats,
-					'post_type' => $types,
-				) 
+			echo $before_widget;
+			if ( $title ) echo $before_title . $title . $after_title;
+
+			$args = array(
+				'showposts' => $number,
+				'post__in' => $sticky_option,
+				'category__in' => $cats,
+				'post_type' => $types
 			);
+
+			$r = new WP_Query( $args );
 			
 			if ( $r->have_posts() ) :
 				
-				echo $before_widget;
-				if ( $title ) echo $before_title . $title . $after_title;
 				echo '<ul>';
 				
 				while ( $r->have_posts() ) : $r->the_post(); ?>
@@ -154,12 +152,17 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 				<?php
 				endwhile;
 				echo '</ul>';
-				echo $after_widget;
 				
 				// Reset the global $the_post as this query will have stomped on it
 				wp_reset_postdata();
+
+			else :
+
+				echo __('No posts found.');
 	
 			endif;
+
+			echo $after_widget;
 	
 			$cache[$args['widget_id']] = ob_get_flush();
 			wp_cache_set( 'widget_featured_posts', $cache, 'widget' );
@@ -307,7 +310,7 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 			<?php endif; ?>
 
 			<p>
-				<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('atcat'); ?>" name="<?php echo $this->get_field_name('atcat'); ?>"<?php checked( $atcat ); ?> />
+				<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('atcat'); ?>" name="<?php echo $this->get_field_name('atcat'); ?>" <?php checked( (bool) $instance['atcat'], true ); ?> />
 				<label for="<?php echo $this->get_field_id('atcat'); ?>"> <?php _e('Get posts from current category');?></label>
 			</p>
 
@@ -335,7 +338,7 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 			</p>
 
 			<p>
-				<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('sticky'); ?>" name="<?php echo $this->get_field_name('sticky'); ?>"<?php checked( $sticky ); ?> />
+				<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('sticky'); ?>" name="<?php echo $this->get_field_name('sticky'); ?>" <?php checked( (bool) $instance['sticky'], true ); ?> />
 				<label for="<?php echo $this->get_field_id('sticky'); ?>"> <?php _e('Only get sticky posts');?></label>
 			</p>
 
