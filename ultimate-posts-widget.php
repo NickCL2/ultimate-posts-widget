@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Ultimate Posts Widget
-Plugin URI: http://www.pomelodesign.com/ultimate-posts-widget
+Plugin URI: http://pomelodesign.com/ultimate-posts-widget
 Description: The ultimate widget for displaying posts, custom post types or sticky posts with an array of options.
-Version: 1.4.1
-Author: Pomelo Design Inc.
-Author URI: http://www.pomelodesign.com
+Version: 1.4.2
+Author: Pomelo Design
+Author URI: http://pomelodesign.com
 License: GPL2
 
 This program is free software; you can redistribute it and/or modify
@@ -389,20 +389,19 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 					var excerpt_readmore = $("#<?php echo $this->get_field_id( 'excerpt_readmore' ); ?>").parents('p');	
 					var thumb_w = $("#<?php echo $this->get_field_id( 'thumb_w' ); ?>").parents('p');
 
-					// Hide excerpt length if not checked
-					if (show_excerpt.not(':checked')) {
-						excerpt_length.hide();
-					}
-
-					// Hide excerpt readmore if not checked
-					if (show_readmore.not(':checked')) {
-						excerpt_readmore.hide();
-					}
-
-					// Hide excerpt readmore if not checked
-					if (show_thumbnail.not(':checked')) {
-						thumb_w.hide();
-					}
+					<?php 
+					// Use PHP to determine if not checked and hide if so
+					// jQuery method was acting up
+					if ( !$instance['show_excerpt'] ) {
+						echo 'excerpt_length.hide();';
+					} 
+					if ( !$instance['show_readmore'] ) {
+						echo 'excerpt_readmore.hide();';
+					} 
+					if ( !$instance['show_thumbnail'] ) {
+						echo 'thumb_w.hide();';
+					} 
+					?>
 
 					// Toggle excerpt length on click
 					show_excerpt.click(function(){
