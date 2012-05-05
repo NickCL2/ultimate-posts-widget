@@ -31,7 +31,7 @@ Options:
 * Custom featured image size
 * Order by date, title, number of comments or random
 
-For support please use [github issues](https://github.com/bostondv/enhanced-text-widget/issues). Visit [our website](http://pomelodesign.com), follow [@pomelod](http://twitter.com/pomelod/) or like [on facebook](http://www.facebook.com/pomelodesign/) for updates.
+For support please use [github issues](https://github.com/bostondv/ultimate-posts-widget/issues). Visit [our website](http://pomelodesign.com), follow [@pomelod](http://twitter.com/pomelod/) or like [on facebook](http://www.facebook.com/pomelodesign/) for updates.
 
 == Frequently Asked Questions ==
 
