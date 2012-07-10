@@ -3,8 +3,8 @@ Contributors: bostondv
 Donate link: http://www.pomelodesign.com/donate
 Tags: widget, sticky posts, feature image, post thumbnail
 Requires at least: 2.9
-Tested up to: 3.3.1
-Stable tag: 1.0
+Tested up to: 3.4
+Stable tag: 1.1
 
 A simple widget that will display a list of your sticky posts with the featured image, title and excerpt.
 
@@ -22,11 +22,19 @@ The widget will only show posts marked as sticky. Mark a post as sticky by editi
 
 Turn on "Show thumbnails" in the widget and ensure that you have added a "Featured Image" to the post. To add a featured image, edit the post and find the Featured Image box, click "Set feature image" and select the image you want from the popup.
 
+= How do I display posts from specific categories only? =
+
+Enter any number of category IDs separated by commas in the Category field. The widget will only display posts matching these categories. Additionally, you can select the "Get posts from current category" option to only display posts in the current category. 
+
 = Why are images displayed as broken links? =
 
 Ensure that the feature image you've uploaded is a JPG, GIF or PNG file.
 
 == Changelog ==
+
+= 1.1 =
+
+* Added category filter option.
 
 = 1.0 =
 
