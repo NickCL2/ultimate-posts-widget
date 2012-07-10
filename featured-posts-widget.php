@@ -27,15 +27,17 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 	
 		function widget( $args, $instance ) {
 
-			function get_image_path($src) {
-				global $blog_id;
-				if(isset($blog_id) && $blog_id > 0) {
-					$imageParts = explode('/files/' , $src);
-					if(isset($imageParts[1])) {
-						$src = '/blogs.dir/' . $blog_id . '/files/' . $imageParts[1];
+			if( !function_exists(get_image_path) ) {
+				function get_image_path($src) {
+					global $blog_id;
+					if(isset($blog_id) && $blog_id > 0) {
+						$imageParts = explode('/files/' , $src);
+						if(isset($imageParts[1])) {
+							$src = '/blogs.dir/' . $blog_id . '/files/' . $imageParts[1];
+						}
 					}
+					return $src;
 				}
-				return $src;
 			}
 			
 			$cache = wp_cache_get( 'widget_featured_posts', 'widget' );
@@ -364,43 +366,64 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 
 			<script>
 
-				(function($) {
+				jQuery(document).ready(function($){
 
-					$(document).ready(function() {
+					var show_excerpt = $("#<?php echo $this->get_field_id( 'show_excerpt' ); ?>");
+					var show_readmore = $("#<?php echo $this->get_field_id( 'show_readmore' ); ?>");
+					var show_thumbnail = $("#<?php echo $this->get_field_id( 'show_thumbnail' ); ?>");
+					var excerpt_length = $("#<?php echo $this->get_field_id( 'excerpt_length' ); ?>").parents('p');	
+					var excerpt_readmore = $("#<?php echo $this->get_field_id( 'excerpt_readmore' ); ?>").parents('p');	
+					var thumb_w = $("#<?php echo $this->get_field_id( 'thumb_w' ); ?>").parents('p');
 
-						// Hide excerpt length if not checked
-						if ($("#<?php echo $this->get_field_id( 'show_excerpt' ); ?>").not(':checked')) {
-							$("#<?php echo $this->get_field_id( 'excerpt_length' ); ?>").parent('p').hide();
+					// Hide excerpt length if not checked
+					if (show_excerpt.not(':checked')) {
+						excerpt_length.hide();
+					}
+
+					// Hide excerpt readmore if not checked
+					if (show_readmore.not(':checked')) {
+						excerpt_readmore.hide();
+					}
+
+					// Hide excerpt readmore if not checked
+					if (show_thumbnail.not(':checked')) {
+						thumb_w.hide();
+					}
+
+					// Toggle excerpt length on click
+					show_excerpt.click(function(){
+
+						if ( $(this).is(":checked") ) {
+							excerpt_length.show("fast");
+						} else {
+							excerpt_length.hide("fast");
 						}
 
-						// Toggle excerpt length on check
-						$("#<?php echo $this->get_field_id( 'show_excerpt' ); ?>").click(function() {
-							$("#<?php echo $this->get_field_id( 'excerpt_length' ); ?>").parent('p').toggle();
-						});
+					 });
 
-						// Hide read more excerpt if not checked
-						if ($("#<?php echo $this->get_field_id( 'show_readmore' ); ?>").not(':checked')) {
-							$("#<?php echo $this->get_field_id( 'excerpt_readmore' ); ?>").parent('p').hide();
+					// Toggle excerpt length on click
+					show_readmore.click(function(){
+
+						if ( $(this).is(":checked") ) {
+							excerpt_readmore.show("fast");
+						} else {
+							excerpt_readmore.hide("fast");
 						}
 
-						// Toggle read more excerpt on check
-						$("#<?php echo $this->get_field_id( 'show_readmore' ); ?>").click(function() {
-							$("#<?php echo $this->get_field_id( 'excerpt_readmore' ); ?>").parent('p').toggle();
-						});
+					 });
 
-						// Hide thumbnail size if not checked
-						if ($("#<?php echo $this->get_field_id( 'show_thumbnail' ); ?>").not(':checked')) {
-							$("#<?php echo $this->get_field_id( 'thumb_w' ); ?>").parents('p').hide();
+					// Toggle excerpt length on click
+					show_thumbnail.click(function(){
+
+						if ( $(this).is(":checked") ) {
+							thumb_w.show("fast");
+						} else {
+							thumb_w.hide("fast");
 						}
 
-						// Toggle thumbnail size on check
-						$("#<?php echo $this->get_field_id( 'show_thumbnail' ); ?>").click(function() {
-							$("#<?php echo $this->get_field_id( 'thumb_w' ); ?>").parents('p').toggle();
-						});
+					 });
 
-					});
-
-				})(jQuery);
+				});
 
 			</script>
 
