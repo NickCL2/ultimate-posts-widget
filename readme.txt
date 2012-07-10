@@ -4,7 +4,7 @@ Donate link: http://www.pomelodesign.com/donate
 Tags: widget, sticky posts, feature image, post thumbnail
 Requires at least: 2.9
 Tested up to: 3.4
-Stable tag: 1.3
+Stable tag: 1.4
 
 A simple widget that will display a list of your sticky posts with the featured image, title and excerpt.
 
@@ -31,6 +31,12 @@ Enter any number of category IDs separated by commas in the Category field. The 
 Ensure that the feature image you've uploaded is a JPG, GIF or PNG file.
 
 == Changelog ==
+
+= 1.4 =
+
+* Cleaner widget options
+* Code refactoring and fixes
+* Adds order by option
 
 = 1.3 =
 

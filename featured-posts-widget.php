@@ -265,32 +265,33 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 			<p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
 			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title; ?>" /></p>
 	
-			<p><label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of posts to show:' ); ?></label>
-			<input id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="text" value="<?php echo $number; ?>" size="3" /></p>
+			<p><label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of posts:' ); ?></label>
+			<input id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="text" value="<?php echo $number; ?>" size="2" /></p>
 
 			<p>
 				<input class="checkbox" id="<?php echo $this->get_field_id( 'show_date' ); ?>" name="<?php echo $this->get_field_name( 'show_date' ); ?>" type="checkbox" <?php checked( (bool) $instance["show_date"], true ); ?> />
-				<label for="<?php echo $this->get_field_id( 'show_date' ); ?>"><?php _e( 'Show date?' ); ?></label>
+				<label for="<?php echo $this->get_field_id( 'show_date' ); ?>"><?php _e( 'Show date' ); ?></label>
 			</p>
 
 			<p>
 				<input class="checkbox" id="<?php echo $this->get_field_id( 'show_excerpt' ); ?>" name="<?php echo $this->get_field_name( 'show_excerpt' ); ?>" type="checkbox" <?php checked( (bool) $instance["show_excerpt"], true ); ?> />
-				<label for="<?php echo $this->get_field_id( 'show_excerpt' ); ?>"><?php _e( 'Show excerpt?' ); ?></label>
+				<label for="<?php echo $this->get_field_id( 'show_excerpt' ); ?>"><?php _e( 'Show excerpt' ); ?></label>
 			</p>
 
-			<p><label for="<?php echo $this->get_field_id("excerpt_length"); ?>"><?php _e( 'Excerpt length (in words):' ); ?></label>
+			<p>
+				<label for="<?php echo $this->get_field_id("excerpt_length"); ?>"><?php _e( 'Excerpt length (in words):' ); ?></label>
 				<input style="text-align: center;" type="text" id="<?php echo $this->get_field_id("excerpt_length"); ?>" name="<?php echo $this->get_field_name("excerpt_length"); ?>" value="<?php echo $excerpt_length; ?>" size="3" />
 			</p>
 
 			<p>
 				<label for="<?php echo $this->get_field_id('show_readmore'); ?>">
 				<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id("show_readmore"); ?>" name="<?php echo $this->get_field_name("show_readmore"); ?>"<?php checked( (bool) $instance["show_readmore"], true ); ?> />
-				<?php _e( 'Include read more link in excerpt' ); ?>
+				<?php _e( 'Show read more link' ); ?>
 				</label>
 			</p>
 				
-			<p>
-				<label for="<?php echo $this->get_field_id('excerpt_readmore'); ?>"><?php _e( 'Excerpt read more text:' ); ?></label>
+			<p class="<?php echo $this->get_field_id('excerpt_readmore'); ?>">
+				<label for="<?php echo $this->get_field_id('excerpt_readmore'); ?>"><?php _e( 'Read more text:' ); ?></label>
 				<input class="widefat" type="text" id="<?php echo $this->get_field_id('excerpt_readmore'); ?>" name="<?php echo $this->get_field_name("excerpt_readmore"); ?>" value="<?php echo $excerpt_readmore; ?>" />
 			</p>
 
@@ -298,7 +299,7 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 
 				<p>
 					<input class="checkbox" id="<?php echo $this->get_field_id( 'show_thumbnail' ); ?>" name="<?php echo $this->get_field_name( 'show_thumbnail' ); ?>" type="checkbox" <?php checked( (bool) $instance["show_thumbnail"], true ); ?> />
-					<label for="<?php echo $this->get_field_id( 'show_thumbnail' ); ?>"><?php _e( 'Show thumbnail?' ); ?></label>
+					<label for="<?php echo $this->get_field_id( 'show_thumbnail' ); ?>"><?php _e( 'Show thumbnail' ); ?></label>
 				</p>
 
 				<p>
@@ -315,8 +316,13 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 			<?php endif; ?>
 
 			<p>
+				<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('sticky'); ?>" name="<?php echo $this->get_field_name('sticky'); ?>" <?php checked( (bool) $instance['sticky'], true ); ?> />
+				<label for="<?php echo $this->get_field_id('sticky'); ?>"> <?php _e('Show only sticky posts');?></label>
+			</p>
+
+			<p>
 				<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('atcat'); ?>" name="<?php echo $this->get_field_name('atcat'); ?>" <?php checked( (bool) $instance['atcat'], true ); ?> />
-				<label for="<?php echo $this->get_field_id('atcat'); ?>"> <?php _e('Get posts from current category');?></label>
+				<label for="<?php echo $this->get_field_id('atcat'); ?>"> <?php _e('Show posts only from current category');?></label>
 			</p>
 
 			<p>
@@ -342,10 +348,7 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 			</select>
 			</p>
 
-			<p>
-				<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('sticky'); ?>" name="<?php echo $this->get_field_name('sticky'); ?>" <?php checked( (bool) $instance['sticky'], true ); ?> />
-				<label for="<?php echo $this->get_field_id('sticky'); ?>"> <?php _e('Only get sticky posts');?></label>
-			</p>
+			
 
 			<p>
 			<label for="<?php echo $this->get_field_id('order'); ?>"><?php _e( 'Order by:' ); ?></label>
@@ -356,6 +359,48 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 				<option value="rand" <?php if( $order == 'rand') { echo 'selected="selected"'; } ?>><?php _e('Random'); ?></option>
 			</select>
 			</p>
+
+			<script>
+
+				(function($) {
+
+					$(document).ready(function() {
+
+						// Hide excerpt length if not checked
+						if ($("#<?php echo $this->get_field_id( 'show_excerpt' ); ?>").not(':checked')) {
+							$("#<?php echo $this->get_field_id( 'excerpt_length' ); ?>").parent('p').hide();
+						}
+
+						// Toggle excerpt length on check
+						$("#<?php echo $this->get_field_id( 'show_excerpt' ); ?>").click(function() {
+							$("#<?php echo $this->get_field_id( 'excerpt_length' ); ?>").parent('p').toggle();
+						});
+
+						// Hide read more excerpt if not checked
+						if ($("#<?php echo $this->get_field_id( 'show_readmore' ); ?>").not(':checked')) {
+							$("#<?php echo $this->get_field_id( 'excerpt_readmore' ); ?>").parent('p').hide();
+						}
+
+						// Toggle read more excerpt on check
+						$("#<?php echo $this->get_field_id( 'show_readmore' ); ?>").click(function() {
+							$("#<?php echo $this->get_field_id( 'excerpt_readmore' ); ?>").parent('p').toggle();
+						});
+
+						// Hide thumbnail size if not checked
+						if ($("#<?php echo $this->get_field_id( 'show_thumbnail' ); ?>").not(':checked')) {
+							$("#<?php echo $this->get_field_id( 'thumb_w' ); ?>").parents('p').hide();
+						}
+
+						// Toggle thumbnail size on check
+						$("#<?php echo $this->get_field_id( 'show_thumbnail' ); ?>").click(function() {
+							$("#<?php echo $this->get_field_id( 'thumb_w' ); ?>").parents('p').toggle();
+						});
+
+					});
+
+				})(jQuery);
+
+			</script>
 
 			<?php
 			
