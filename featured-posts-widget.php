@@ -124,7 +124,7 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 
 						<div class="fpw-image">
 							<a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>">
-								<img src="<?php echo plugin_dir_url( __FILE__ ) . 'thumb.php?src='. get_image_path($thumbnail[0]) .'&h='.$thumb_h.'&w='.$thumb_w.'&&zc=2'; ?>" alt="<?php the_title_attribute(); ?>" width="<?php echo $thumb_w; ?>" height="<?php echo $thumb_h; ?>" />
+								<img src="<?php echo plugin_dir_url() . '/featured-posts-widget/thumb.php?src='. get_image_path($thumbnail[0]) .'&h='.$thumb_h.'&w='.$thumb_w.'&&zc=2'; ?>" alt="<?php the_title_attribute(); ?>" width="<?php echo $thumb_w; ?>" height="<?php echo $thumb_h; ?>" />
 							</a>
 						</div>
 
