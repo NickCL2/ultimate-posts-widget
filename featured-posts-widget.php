@@ -62,6 +62,26 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 			$thumb_h = $instance['thumb_h'];
 			$excerpt_length = $instance['excerpt_length'];
 			$excerpt_readmore = $instance['excerpt_readmore'];
+			$sticky = $instance['sticky'];
+
+			// If $atcat true and in category
+			if ($atcat && is_category()) {  
+				$cats = get_query_var('cat');  
+			}
+
+			// If $atcat true and is single post
+			if ($atcat && is_single()) {  
+				$cats = '';  
+				foreach (get_the_category() as $catt) {  
+					$cats .= $catt->cat_ID.' ';   
+				}  
+				$cats = str_replace(" ", ",", trim($cats));  
+			}
+
+			// If sticky set sticky filter option
+			if ($sticky) {
+				$sticky_option = get_option( 'sticky_posts' );
+			}
 
 			//Excerpt more filter
 			$new_excerpt_more = create_function('$more', 'return " ";');	
@@ -77,7 +97,7 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 					'nopaging' => 0, 
 					'post_status' => 'publish', 
 					'caller_get_posts' => 1, 
-					'post__in' => get_option( 'sticky_posts' ),
+					'post__in' => $sticky_option,
 					'cat' => $cats,
 					'post_type' => $types,
 				) 
@@ -165,6 +185,7 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 			$instance['show_readmore'] = strip_tags( $new_instance['show_readmore'] );
 			$instance['excerpt_length'] = strip_tags( $new_instance['excerpt_length'] );
 			$instance['excerpt_readmore'] = strip_tags( $new_instance['excerpt_readmore'] );
+			$instance['sticky'] = strip_tags( $new_instance['sticky'] );
 			
 			
 			$this->flush_widget_cache();
@@ -196,6 +217,7 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 				$thumb_h = $instance['thumb_h'];
 				$excerpt_length = $instance['excerpt_length'];
 				$excerpt_readmore = $instance['excerpt_readmore'];
+				$sticky = $instance['sticky'];
 			} else {
 				//These are our defaults
 				$title  = '';
@@ -206,7 +228,8 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 				$thumb_w = 100;
 				$thumb_h = 100;
 				$excerpt_length = 10;
-				$excerpt_readmore = 'Read more &rarr;';	
+				$excerpt_readmore = 'Read more &rarr;';
+				$sticky = false;
 			}
 
 			//Let's turn $types and $cats into an array
@@ -309,6 +332,11 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 					<option value="<?php echo $post_type; ?>" <?php if( in_array($post_type, $types)) { echo 'selected="selected"'; } ?>><?php echo $post_type;?></option>
 				<?php }	?>
 			</select>
+			</p>
+
+			<p>
+				<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('sticky'); ?>" name="<?php echo $this->get_field_name('sticky'); ?>"<?php checked( $sticky ); ?> />
+				<label for="<?php echo $this->get_field_id('sticky'); ?>"> <?php _e('Only get sticky posts');?></label>
 			</p>
 
 			<?php
