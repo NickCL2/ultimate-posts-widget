@@ -60,10 +60,25 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 			else if ( $number > 5 )
 				$number = 5;
 
-			if( !$thumb_h =  absint($instance['thumb_h'] ))  $thumb_h = 50;
-			if( !$thumb_w =  absint($instance['thumb_w'] ))  $thumb_w = 50;
+			if( !$thumb_h = absint($instance['thumb_h'] ))  $thumb_h = 50;
+			if( !$thumb_w = absint($instance['thumb_w'] ))  $thumb_w = 50;
 			if( !$excerpt_length = absint( $instance['excerpt_length'] ) ) $excerpt_length = 10;
 			if( !$excerpt_readmore = $instance['excerpt_readmore'] )  $excerpt_readmore = 'Read more &rarr;';
+			if( !$atcat = $instance['atcat'] ) $atcat = 0;
+			if( !intval($cats) ) $cats = '';
+
+			// Categories
+			$cats = str_replace(" ", "", esc_attr($cats));
+			if (($atcat) && (is_category())) {
+			 $cats = get_query_var('cat');
+			}
+			if (($atcat) && (is_single())) {
+			 $cats = '';
+			 foreach (get_the_category() as $catt) {
+			   $cats .= $catt->cat_ID.' '; 
+			 }
+			 $cats = str_replace(" ", ",", trim($cats));
+			}
 
 			//Excerpt more filter
 			$new_excerpt_more = create_function('$more', 'return " ";');	
@@ -72,6 +87,8 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 			// Excerpt length filter
 			$new_excerpt_length = create_function('$length', "return " . $excerpt_length . ";");
 			if ( $instance["excerpt_length"] > 0 ) add_filter('excerpt_length', $new_excerpt_length);
+
+			
 	
 			$r = new WP_Query( 
 				array( 
@@ -80,6 +97,7 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 					'post_status' => 'publish', 
 					'caller_get_posts' => 1, 
 					'post__in' => get_option( 'sticky_posts' ),
+					'cat' => $cats,
 				) 
 			);
 			
@@ -158,6 +176,8 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 			$instance["show_readmore"] = esc_attr($new_instance["show_readmore"]);
 			$instance["excerpt_length"]=absint($new_instance["excerpt_length"]);
 			$instance["excerpt_readmore"]=esc_attr($new_instance["excerpt_readmore"]);
+			$instance['cats'] = esc_attr($new_instance['cats']);
+			$instance['atcat'] = $new_instance['atcat'] ? 1 : 0;
 			
 			$this->flush_widget_cache();
 	
@@ -183,6 +203,8 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 			$thumb_w = isset($instance['thumb_w']) ? absint($instance['thumb_w']) : 100;
 			$excerpt_length = isset($instance['excerpt_length']) ? absint($instance['excerpt_length']) : 10;
 			$excerpt_readmore = isset($instance['excerpt_readmore']) ? esc_attr($instance['excerpt_readmore']) : 'Read more &rarr;';
+			$cats = esc_attr($instance['cats']);
+			$atcat = (bool) $instance['atcat'];
 			?>
 
 			<p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
@@ -236,6 +258,17 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 				</p>
 
 			<?php endif; ?>
+
+			<p>
+			  <label for="<?php echo $this->get_field_id('cats'); ?>"><?php _e('Categories:', 'adv-recent-posts');?> 
+			  <input class="widefat" id="<?php echo $this->get_field_id('cats'); ?>" name="<?php echo $this->get_field_name('cats'); ?>" type="text" value="<?php echo $cats; ?>" /><br />
+				<small>(<?php _e('Category IDs, separated by commas.' );?>)</small>
+			  </label>
+		  </p>
+			<p>
+				<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('atcat'); ?>" name="<?php echo $this->get_field_name('atcat'); ?>"<?php checked( $atcat ); ?> />
+				<label for="<?php echo $this->get_field_id('atcat'); ?>"> <?php _e('Get posts from current category');?></label>
+			</p>
 
 			<?php
 			
