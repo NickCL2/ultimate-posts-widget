@@ -132,7 +132,7 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 
 						<div class="fpw-content">
 							
-							<?php if ( get_the_title() ) : ?>
+							<?php if ( get_the_title() && $instance['show_title'] ) : ?>
 								<a class="post-title" href="<?php the_permalink(); ?>" title="<?php echo esc_attr( get_the_title() ? get_the_title() : get_the_ID() ); ?>">
 									<?php the_title(); ?>
 								</a>
@@ -185,6 +185,7 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 			$instance['show_excerpt'] = strip_tags( $new_instance['show_excerpt'] );
 			$instance['show_thumbnail'] = strip_tags( $new_instance['show_thumbnail'] );
 			$instance['show_date'] = strip_tags( $new_instance['show_date'] );
+			$instance['show_title'] = strip_tags( $new_instance['show_title'] );
 			$instance['thumb_w'] = strip_tags( $new_instance['thumb_w'] );
 			$instance['thumb_h'] = strip_tags( $new_instance['thumb_h'] );
 			$instance['show_readmore'] = strip_tags( $new_instance['show_readmore'] );
@@ -218,12 +219,10 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 				$number = $instance['number'];
 				$types  = $instance['types'];
 				$cats = $instance['cats'];
-				$atcat = $instance['atcat'];
 				$thumb_w = $instance['thumb_w'];
 				$thumb_h = $instance['thumb_h'];
 				$excerpt_length = $instance['excerpt_length'];
 				$excerpt_readmore = $instance['excerpt_readmore'];
-				$sticky = $instance['sticky'];
 				$order = $instance['order'];
 			} else {
 				//These are our defaults
@@ -231,12 +230,10 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 				$number = '5';
 				$types  = 'post';
 				$cats = '';
-				$atcat = false;
 				$thumb_w = 100;
 				$thumb_h = 100;
 				$excerpt_length = 10;
 				$excerpt_readmore = 'Read more &rarr;';
-				$sticky = false;
 				$order = 'date';
 			}
 
@@ -267,6 +264,11 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 	
 			<p><label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of posts:' ); ?></label>
 			<input id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="text" value="<?php echo $number; ?>" size="2" /></p>
+
+			<p>
+				<input class="checkbox" id="<?php echo $this->get_field_id( 'show_title' ); ?>" name="<?php echo $this->get_field_name( 'show_title' ); ?>" type="checkbox" <?php checked( (bool) $instance["show_title"], true ); ?> />
+				<label for="<?php echo $this->get_field_id( 'show_title' ); ?>"><?php _e( 'Show title' ); ?></label>
+			</p>
 
 			<p>
 				<input class="checkbox" id="<?php echo $this->get_field_id( 'show_date' ); ?>" name="<?php echo $this->get_field_name( 'show_date' ); ?>" type="checkbox" <?php checked( (bool) $instance["show_date"], true ); ?> />
