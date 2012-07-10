@@ -64,7 +64,7 @@ if ( !class_exists( 'WP_Widget_Featured_Posts' ) ) {
 			if( !$thumb_w = absint($instance['thumb_w'] ))  $thumb_w = 50;
 			if( !$excerpt_length = absint( $instance['excerpt_length'] ) ) $excerpt_length = 10;
 			if( !$excerpt_readmore = $instance['excerpt_readmore'] )  $excerpt_readmore = 'Read more &rarr;';
-			if( !$atcat = $instance['atcat'] ) $atcat = 0;
+			if( !$atcat = $instance['atcat'] ) $atcat = '';
 			if( !intval($cats) ) $cats = '';
 
 			// Categories
