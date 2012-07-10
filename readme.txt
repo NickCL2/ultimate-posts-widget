@@ -16,11 +16,15 @@ A simple widget that will display a list of your sticky posts with the featured 
 
 = How do I get posts to show in the widget? =
 
-The widget will only show posts which are marked as sticky. Mark a post as sticky by editing the post and checking "Stick this post to the front page" under the visibility section.
+The widget will only show posts marked as sticky. Mark a post as sticky by editing the post and checking "Stick this post to the front page" under the Visibility section of the Publish box.
 
 = How do I get thumbnials to show in widget? =
 
-Turn on "Show thumbnails" in the widget and ensure that the post has a "Featured Image"
+Turn on "Show thumbnails" in the widget and ensure that you have added a "Featured Image" to the post. To add a featured image, edit the post and find the Featured Image box, click "Set feature image" and select the image you want from the popup.
+
+= Why are images are showing as broken links? =
+
+Ensure that the feature image you've uploaded is a JPG, GIF or PNG file.
 
 == Changelog ==
 
