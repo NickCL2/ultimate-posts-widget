@@ -4,7 +4,7 @@ Donate link: http://www.pomelodesign.com/donate
 Tags: widget, recent posts, custom post types, sticky posts, featured image, post thumbnail, excerpts, category
 Requires at least: 3.0
 Tested up to: 3.4
-Stable tag: trunk
+Stable tag: 1.4.2
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
