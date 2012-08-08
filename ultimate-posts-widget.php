@@ -3,7 +3,7 @@
 Plugin Name: Ultimate Posts Widget
 Plugin URI: http://pomelodesign.com/ultimate-posts-widget
 Description: The ultimate widget for displaying posts, custom post types or sticky posts with an array of options.
-Version: 1.4.3
+Version: 1.4.4
 Author: Pomelo Design
 Author URI: http://pomelodesign.com
 License: GPL2

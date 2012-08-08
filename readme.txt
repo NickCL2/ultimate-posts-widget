@@ -4,7 +4,7 @@ Donate link: http://www.pomelodesign.com/donate
 Tags: widget, recent posts, custom post types, sticky posts, featured image, post thumbnail, excerpts, category
 Requires at least: 3.0
 Tested up to: 3.4
-Stable tag: 1.4.3
+Stable tag: 1.4.4
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,6 +26,7 @@ Options:
 * Display excerpt
 * Display read more link
 * Display featured image
+* Display more button link
 * Custom read more link text
 * Custom excerpt length (in words)
 * Custom featured image size
@@ -42,6 +43,11 @@ Nothing right now.
 1. Widget options
 
 == Changelog ==
+
+= 1.4.4 = 
+
+* Fixes show_readmore function
+* Adds more button link option
 
 = 1.4 =
 
