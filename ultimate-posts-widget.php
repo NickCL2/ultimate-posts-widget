@@ -171,6 +171,12 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 				endwhile;
 				echo '</ul>';
 				
+				if ( $instance['show_morebutton'] ) : ?>
+				<div class="upw-more">
+					<a href="<?php echo $instance['morebutton_url']; ?>" class="button"><?php echo $instance['morebutton_text']; ?></a>
+				</div>
+				<?php endif;
+				
 				// Reset the global $the_post as this query will have stomped on it
 				wp_reset_postdata();
 
@@ -209,6 +215,9 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			$instance['excerpt_readmore'] = strip_tags( $new_instance['excerpt_readmore'] );
 			$instance['sticky'] = strip_tags( $new_instance['sticky'] );
 			$instance['order'] = strip_tags( $new_instance['order'] );
+			$instance['show_morebutton'] = strip_tags( $new_instance['show_morebutton'] );
+			$instance['morebutton_url'] = strip_tags( $new_instance['morebutton_url'] );
+			$instance['morebutton_text'] = strip_tags( $new_instance['morebutton_text'] );
 			
 			
 			$this->flush_widget_cache();
@@ -240,6 +249,8 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 				$excerpt_length = $instance['excerpt_length'];
 				$excerpt_readmore = $instance['excerpt_readmore'];
 				$order = $instance['order'];
+				$morebutton_text = $instance['morebutton_text'];
+				$morebutton_url = $instance['morebutton_url'];
 			} else {
 				//These are our defaults
 				$title  = '';
@@ -251,6 +262,8 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 				$excerpt_length = 10;
 				$excerpt_readmore = 'Read more &rarr;';
 				$order = 'date';
+				$morebutton_text = 'View More Posts';
+				$morebutton_url = get_bloginfo('url');
 			}
 
 			//Let's turn $types and $cats into an array
@@ -334,8 +347,23 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			<?php endif; ?>
 
 			<p>
+				<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('show_morebutton'); ?>" name="<?php echo $this->get_field_name('show_morebutton'); ?>" <?php checked( (bool) $instance['show_morebutton'], true ); ?> />
+				<label for="<?php echo $this->get_field_id('show_morebutton'); ?>"> <?php _e('Show more button'); ?></label>
+			</p>
+
+			<p class="<?php echo $this->get_field_id('morebutton_text'); ?>">
+				<label for="<?php echo $this->get_field_id('morebutton_text'); ?>"><?php _e( 'More button text:' ); ?></label>
+				<input class="widefat" type="text" id="<?php echo $this->get_field_id('morebutton_text'); ?>" name="<?php echo $this->get_field_name('morebutton_text'); ?>" value="<?php echo $morebutton_text; ?>" />
+			</p>
+
+			<p class="<?php echo $this->get_field_id('morebutton_url'); ?>">
+				<label for="<?php echo $this->get_field_id('morebutton_url'); ?>"><?php _e( 'More button URL:' ); ?></label>
+				<input class="widefat" type="text" id="<?php echo $this->get_field_id('morebutton_url'); ?>" name="<?php echo $this->get_field_name('morebutton_url'); ?>" value="<?php echo $morebutton_url; ?>" />
+			</p>
+
+			<p>
 				<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('sticky'); ?>" name="<?php echo $this->get_field_name('sticky'); ?>" <?php checked( (bool) $instance['sticky'], true ); ?> />
-				<label for="<?php echo $this->get_field_id('sticky'); ?>"> <?php _e('Show only sticky posts');?></label>
+				<label for="<?php echo $this->get_field_id('sticky'); ?>"> <?php _e('Show only sticky posts'); ?></label>
 			</p>
 
 			<p>
@@ -388,6 +416,9 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 					var excerpt_length = $("#<?php echo $this->get_field_id( 'excerpt_length' ); ?>").parents('p');	
 					var excerpt_readmore = $("#<?php echo $this->get_field_id( 'excerpt_readmore' ); ?>").parents('p');	
 					var thumb_w = $("#<?php echo $this->get_field_id( 'thumb_w' ); ?>").parents('p');
+					var show_morebutton = $("#<?php echo $this->get_field_id( 'show_morebutton' ); ?>");
+					var morebutton_text = $("#<?php echo $this->get_field_id( 'morebutton_text' ); ?>").parents('p');
+					var morebutton_url = $("#<?php echo $this->get_field_id( 'morebutton_url' ); ?>").parents('p');
 
 					<?php 
 					// Use PHP to determine if not checked and hide if so
@@ -401,6 +432,10 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 					if ( !$instance['show_thumbnail'] ) {
 						echo 'thumb_w.hide();';
 					} 
+					if ( !$instance['show_morebutton'] ) {
+						echo 'morebutton_text.hide();';
+						echo 'morebutton_url.hide();';
+					}
 					?>
 
 					// Toggle excerpt length on click
@@ -432,6 +467,19 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 							thumb_w.show("fast");
 						} else {
 							thumb_w.hide("fast");
+						}
+
+					 });
+
+					// Toggle more button on click
+					show_morebutton.click(function(){
+
+						if ( $(this).is(":checked") ) {
+							morebutton_text.show("fast");
+							morebutton_url.show("fast");
+						} else {
+							morebutton_text.hide("fast");
+							morebutton_url.hide("fast");
 						}
 
 					 });
