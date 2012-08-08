@@ -101,7 +101,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			}
 
 			//Excerpt more filter
-			$new_excerpt_more = create_function('$more', 'return " ";');	
+			$new_excerpt_more = create_function('$more', 'return "...";');	
 			add_filter('excerpt_more', $new_excerpt_more);
 			
 			// Excerpt length filter
@@ -159,7 +159,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 							<?php endif; ?>
 
 							<?php if ( $instance['show_excerpt'] ) :
-								if ( $instance['readmore'] ) : $linkmore = ' <a href="'.get_permalink().'" class="more-link">'.$excerpt_readmore.'</a>'; else: $linkmore =''; endif; ?>
+								if ( $instance['show_readmore'] ) : $linkmore = ' <a href="'.get_permalink().'" class="more-link">'.$excerpt_readmore.'</a>'; else: $linkmore =''; endif; ?>
 								<p class="post-excerpt"><?php echo get_the_excerpt() . $linkmore; ?></p>
 							<?php endif; ?>
 
