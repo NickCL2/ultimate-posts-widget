@@ -41,7 +41,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
 		function widget( $args, $instance ) {
 
-			if( !function_exists(get_image_path) ) {
+			if( !function_exists('get_image_path') ) {
 				function get_image_path($src) {
 					global $blog_id;
 					if(isset($blog_id) && $blog_id > 0) {
@@ -54,26 +54,25 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 				}
 			}
 
-			$cache = wp_cache_get( 'widget_ultimate_posts', 'widget' );
+			/* $cache = wp_cache_get( 'widget_ultimate_posts', 'widget' );
 
-			if ( !is_array( $cache ) )
+			if ( !is_array( $cache ) ) {
 				$cache = array();
+			}
 
 			if ( isset( $cache[$args['widget_id']] ) ) {
 				echo $cache[$args['widget_id']];
 				return;
 			}
 
-			ob_start();
+			ob_start(); */
 			extract( $args );
 
 			$title = apply_filters( 'widget_title', $instance['title'] );
 			$css_class = $instance['css_class'];
 			$number = $instance['number'];
 			$cpt = $instance['types'];
-			if (!empty($cpt)) $types = explode(',', $cpt);
 			$categories = $instance['cats'];
-			if (!empty($categories)) $cats = explode(',', $categories);
 			$atcat = $instance['atcat'];
 			$thumb_w = $instance['thumb_w'];
 			$thumb_h = $instance['thumb_h'];
@@ -81,6 +80,19 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			$excerpt_readmore = $instance['excerpt_readmore'];
 			$sticky = $instance['sticky'];
 			$order = $instance['order'];
+			$show_thumbnail = $instance['show_thumbnail'];
+			$show_title = $instance['show_title'];
+			$show_date = $instance['show_date'];
+			$show_excerpt = $instance['show_excerpt'];
+			$show_readmore = $instance['show_readmore'];
+			$show_morebutton = $instance['show_morebutton'];
+			$morebutton_text = $instance['morebutton_text'];
+			$morebutton_url = $instance['morebutton_url'];
+
+			// Query defaults
+			( !empty($cpt) ? $types = explode(',', $cpt) : $types = array() );
+			( !empty($categories) ? $cats = explode(',', $categories) : $cats = array() );
+			( !empty($sticky) ? $sticky_option = get_option( 'sticky_posts' ) :  $sticky_option = array() );
 
 			// If $atcat true and in category
 			if ($atcat && is_category()) {
@@ -105,18 +117,13 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
         }
       }
 
-			// If sticky
-			if ($sticky) {
-				$sticky_option = get_option( 'sticky_posts' );
-			}
-
 			//Excerpt more filter
 			$new_excerpt_more = create_function('$more', 'return "...";');
 			add_filter('excerpt_more', $new_excerpt_more);
 
 			// Excerpt length filter
 			$new_excerpt_length = create_function('$length', "return " . $excerpt_length . ";");
-			if ( $instance["excerpt_length"] > 0 ) add_filter('excerpt_length', $new_excerpt_length);
+			if ( $excerpt_length > 0 ) add_filter('excerpt_length', $new_excerpt_length);
 
 			echo $before_widget;
 			if ( $title ) echo $before_title . $title . $after_title;
@@ -129,22 +136,22 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 				'post_type' => $types
 			);
 
-			$r = new WP_Query( $args );
+			$upw_query = new WP_Query( $args );
 
-			if ( $r->have_posts() ) :
+			if ( $upw_query->have_posts() ) :
 
 				echo '<ul>';
 
-				while ( $r->have_posts() ) : $r->the_post(); ?>
+				while ( $upw_query->have_posts() ) : $upw_query->the_post(); ?>
 
 					<li>
 
 						<?php
 							if ( function_exists('the_post_thumbnail') &&
-									 current_theme_supports("post-thumbnails") &&
-									 $instance["show_thumbnail"] &&
+									 current_theme_supports('post-thumbnails') &&
+									 $show_thumbnail &&
 									 has_post_thumbnail() ) :
-							$thumbnail = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID),'full');
+							$thumbnail = wp_get_attachment_image_src(get_post_thumbnail_id(get_the_ID()),'full');
 							$plugin_dir = 'ultimate-posts-widget';
 						?>
 
@@ -158,18 +165,18 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
 						<div class="upw-content">
 
-							<?php if ( get_the_title() && $instance['show_title'] ) : ?>
+							<?php if ( get_the_title() && $show_title ) : ?>
 								<a class="post-title" href="<?php the_permalink(); ?>" title="<?php echo esc_attr( get_the_title() ? get_the_title() : get_the_ID() ); ?>">
 									<?php the_title(); ?>
 								</a>
 							<?php endif; ?>
 
-							<?php if ( $instance['show_date'] ) : ?>
-								<p class="post-date"><?php the_time("j M Y"); ?></p>
+							<?php if ( $show_date ) : ?>
+								<time datetime="<?php the_time('Y-m-d'); ?>" class="post-date" pubdate><?php the_time("j M Y"); ?></time>
 							<?php endif; ?>
 
-							<?php if ( $instance['show_excerpt'] ) :
-								if ( $instance['show_readmore'] ) : $linkmore = ' <a href="'.get_permalink().'" class="more-link">'.$excerpt_readmore.'</a>'; else: $linkmore =''; endif; ?>
+							<?php if ( $show_excerpt ) :
+								if ( $show_readmore ) : $linkmore = ' <a href="'.get_permalink().'" class="more-link">'.$excerpt_readmore.'</a>'; else: $linkmore =''; endif; ?>
 								<p class="post-excerpt"><?php echo get_the_excerpt() . $linkmore; ?></p>
 							<?php endif; ?>
 
@@ -181,14 +188,14 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 				endwhile;
 				echo '</ul>';
 
-				if ( $instance['show_morebutton'] ) : ?>
+				if ( $show_morebutton ) : ?>
 				<div class="upw-more">
-					<a href="<?php echo $instance['morebutton_url']; ?>" class="button"><?php echo $instance['morebutton_text']; ?></a>
+					<a href="<?php echo $morebutton_url; ?>" class="button"><?php echo $morebutton_text; ?></a>
 				</div>
 				<?php endif;
 
 				// Reset the global $the_post as this query will have stomped on it
-				wp_reset_postdata();
+				wp_reset_query();
 
 			else :
 
@@ -198,8 +205,11 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
 			echo $after_widget;
 
-			$cache[$args['widget_id']] = ob_get_flush();
-			wp_cache_set( 'widget_ultimate_posts', $cache, 'widget' );
+			/* if( isset( $cache[$args['widget_id']] ) ) {
+				$cache[$args['widget_id']] = ob_get_flush();
+			}
+			wp_cache_set( 'widget_ultimate_posts', $cache, 'widget' ); */
+
 		}
 
 		function update( $new_instance, $old_instance ) {
@@ -263,6 +273,14 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 				$order = $instance['order'];
 				$morebutton_text = $instance['morebutton_text'];
 				$morebutton_url = $instance['morebutton_url'];
+				$show_title = $instance['show_title'];
+				$show_date = $instance['show_date'];
+				$show_excerpt = $instance['show_excerpt'];
+				$show_readmore = $instance['show_readmore'];
+				$show_thumbnail = $instance['show_thumbnail'];
+				$show_morebutton = $instance['show_morebutton'];
+				$sticky = $instance['sticky'];
+				$atcat = $instance['atcat'];
 			} else {
 				//These are our defaults
 				$title  = '';
@@ -277,6 +295,14 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 				$order = 'date';
 				$morebutton_text = 'View More Posts';
 				$morebutton_url = get_bloginfo('url');
+				$show_title = false;
+				$show_date = false;
+				$show_excerpt = false;
+				$show_readmore = false;
+				$show_thumbnail = false;
+				$show_morebutton = false;
+				$sticky = false;
+				$atcat = false;
 			}
 
 			//Let's turn $types and $cats into an array
@@ -311,17 +337,17 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			<input id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="text" value="<?php echo $number; ?>" size="2" /></p>
 
 			<p>
-				<input class="checkbox" id="<?php echo $this->get_field_id( 'show_title' ); ?>" name="<?php echo $this->get_field_name( 'show_title' ); ?>" type="checkbox" <?php checked( (bool) $instance["show_title"], true ); ?> />
+				<input class="checkbox" id="<?php echo $this->get_field_id( 'show_title' ); ?>" name="<?php echo $this->get_field_name( 'show_title' ); ?>" type="checkbox" <?php checked( (bool) $show_title, true ); ?> />
 				<label for="<?php echo $this->get_field_id( 'show_title' ); ?>"><?php _e( 'Show title' ); ?></label>
 			</p>
 
 			<p>
-				<input class="checkbox" id="<?php echo $this->get_field_id( 'show_date' ); ?>" name="<?php echo $this->get_field_name( 'show_date' ); ?>" type="checkbox" <?php checked( (bool) $instance["show_date"], true ); ?> />
+				<input class="checkbox" id="<?php echo $this->get_field_id( 'show_date' ); ?>" name="<?php echo $this->get_field_name( 'show_date' ); ?>" type="checkbox" <?php checked( (bool) $show_date, true ); ?> />
 				<label for="<?php echo $this->get_field_id( 'show_date' ); ?>"><?php _e( 'Show date' ); ?></label>
 			</p>
 
 			<p>
-				<input class="checkbox" id="<?php echo $this->get_field_id( 'show_excerpt' ); ?>" name="<?php echo $this->get_field_name( 'show_excerpt' ); ?>" type="checkbox" <?php checked( (bool) $instance["show_excerpt"], true ); ?> />
+				<input class="checkbox" id="<?php echo $this->get_field_id( 'show_excerpt' ); ?>" name="<?php echo $this->get_field_name( 'show_excerpt' ); ?>" type="checkbox" <?php checked( (bool) $show_excerpt, true ); ?> />
 				<label for="<?php echo $this->get_field_id( 'show_excerpt' ); ?>"><?php _e( 'Show excerpt' ); ?></label>
 			</p>
 
@@ -332,7 +358,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
 			<p>
 				<label for="<?php echo $this->get_field_id('show_readmore'); ?>">
-				<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id("show_readmore"); ?>" name="<?php echo $this->get_field_name("show_readmore"); ?>"<?php checked( (bool) $instance["show_readmore"], true ); ?> />
+				<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id("show_readmore"); ?>" name="<?php echo $this->get_field_name("show_readmore"); ?>"<?php checked( (bool) $show_readmore, true ); ?> />
 				<?php _e( 'Show read more link' ); ?>
 				</label>
 			</p>
@@ -345,7 +371,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			<?php if ( function_exists('the_post_thumbnail') && current_theme_supports( 'post-thumbnails' ) ) : ?>
 
 				<p>
-					<input class="checkbox" id="<?php echo $this->get_field_id( 'show_thumbnail' ); ?>" name="<?php echo $this->get_field_name( 'show_thumbnail' ); ?>" type="checkbox" <?php checked( (bool) $instance["show_thumbnail"], true ); ?> />
+					<input class="checkbox" id="<?php echo $this->get_field_id( 'show_thumbnail' ); ?>" name="<?php echo $this->get_field_name( 'show_thumbnail' ); ?>" type="checkbox" <?php checked( (bool) $show_thumbnail, true ); ?> />
 					<label for="<?php echo $this->get_field_id( 'show_thumbnail' ); ?>"><?php _e( 'Show thumbnail' ); ?></label>
 				</p>
 
@@ -363,7 +389,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			<?php endif; ?>
 
 			<p>
-				<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('show_morebutton'); ?>" name="<?php echo $this->get_field_name('show_morebutton'); ?>" <?php checked( (bool) $instance['show_morebutton'], true ); ?> />
+				<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('show_morebutton'); ?>" name="<?php echo $this->get_field_name('show_morebutton'); ?>" <?php checked( (bool) $show_morebutton, true ); ?> />
 				<label for="<?php echo $this->get_field_id('show_morebutton'); ?>"> <?php _e('Show more button'); ?></label>
 			</p>
 
@@ -378,12 +404,12 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			</p>
 
 			<p>
-				<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('sticky'); ?>" name="<?php echo $this->get_field_name('sticky'); ?>" <?php checked( (bool) $instance['sticky'], true ); ?> />
+				<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('sticky'); ?>" name="<?php echo $this->get_field_name('sticky'); ?>" <?php checked( (bool) $sticky, true ); ?> />
 				<label for="<?php echo $this->get_field_id('sticky'); ?>"> <?php _e('Show only sticky posts'); ?></label>
 			</p>
 
 			<p>
-				<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('atcat'); ?>" name="<?php echo $this->get_field_name('atcat'); ?>" <?php checked( (bool) $instance['atcat'], true ); ?> />
+				<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('atcat'); ?>" name="<?php echo $this->get_field_name('atcat'); ?>" <?php checked( (bool) $atcat, true ); ?> />
 				<label for="<?php echo $this->get_field_id('atcat'); ?>"> <?php _e('Show posts only from current category');?></label>
 			</p>
 
@@ -439,16 +465,16 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 					<?php
 					// Use PHP to determine if not checked and hide if so
 					// jQuery method was acting up
-					if ( !$instance['show_excerpt'] ) {
+					if ( empty($show_excerpt) ) {
 						echo 'excerpt_length.hide();';
 					}
-					if ( !$instance['show_readmore'] ) {
+					if ( empty($show_readmore) ) {
 						echo 'excerpt_readmore.hide();';
 					}
-					if ( !$instance['show_thumbnail'] ) {
+					if ( empty($show_thumbnail) ) {
 						echo 'thumb_w.hide();';
 					}
-					if ( !$instance['show_morebutton'] ) {
+					if ( empty($show_morebutton) ) {
 						echo 'morebutton_text.hide();';
 						echo 'morebutton_url.hide();';
 					}
