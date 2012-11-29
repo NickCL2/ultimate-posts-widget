@@ -34,10 +34,6 @@ Options:
 
 For support please use [github issues](https://github.com/bostondv/ultimate-posts-widget/issues). Visit [our website](http://pomelodesign.com), follow [@pomelod](http://twitter.com/pomelod/) or like [on facebook](http://www.facebook.com/pomelodesign/) for updates.
 
-== Frequently Asked Questions ==
-
-Nothing right now.
-
 == Screenshots ==
 
 1. Widget options
@@ -58,11 +54,11 @@ Ensure that the feature image you've uploaded is a JPG, GIF or PNG file.
 
 == Changelog ==
 
-= 1.4.5 = 
+= 1.4.5 =
 
 * Updates screenshot
 
-= 1.4.4 = 
+= 1.4.4 =
 
 * Fixes show_readmore function
 * Adds more button link option
