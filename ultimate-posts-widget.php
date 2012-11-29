@@ -79,6 +79,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			$excerpt_length = $instance['excerpt_length'];
 			$excerpt_readmore = $instance['excerpt_readmore'];
 			$sticky = $instance['sticky'];
+			$orderby = $instance['orderby'];
 			$order = $instance['order'];
 			$show_thumbnail = $instance['show_thumbnail'];
 			$show_title = $instance['show_title'];
@@ -130,7 +131,8 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
 			$args = array(
 				'showposts' => $number,
-				'orderby' => $order,
+				'orderby' => $orderby,
+				'order' => $order,
 				'post__in' => $sticky_option,
 				'category__in' => $cats,
 				'post_type' => $types
@@ -235,6 +237,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			$instance['excerpt_length'] = strip_tags( $new_instance['excerpt_length'] );
 			$instance['excerpt_readmore'] = strip_tags( $new_instance['excerpt_readmore'] );
 			$instance['sticky'] = strip_tags( $new_instance['sticky'] );
+			$instance['orderby'] = strip_tags( $new_instance['orderby'] );
 			$instance['order'] = strip_tags( $new_instance['order'] );
 			$instance['show_morebutton'] = strip_tags( $new_instance['show_morebutton'] );
 			$instance['morebutton_url'] = strip_tags( $new_instance['morebutton_url'] );
@@ -270,6 +273,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 				$thumb_h = $instance['thumb_h'];
 				$excerpt_length = $instance['excerpt_length'];
 				$excerpt_readmore = $instance['excerpt_readmore'];
+				$orderby = $instance['orderby'];
 				$order = $instance['order'];
 				$morebutton_text = $instance['morebutton_text'];
 				$morebutton_url = $instance['morebutton_url'];
@@ -292,7 +296,8 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 				$thumb_h = 100;
 				$excerpt_length = 10;
 				$excerpt_readmore = 'Read more &rarr;';
-				$order = 'date';
+				$orderby = 'date';
+				$order = 'DESC';
 				$morebutton_text = 'View More Posts';
 				$morebutton_url = get_bloginfo('url');
 				$show_title = false;
@@ -437,12 +442,20 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			</p>
 
 			<p>
-			<label for="<?php echo $this->get_field_id('order'); ?>"><?php _e( 'Order by:' ); ?></label>
+			<label for="<?php echo $this->get_field_id('orderby'); ?>"><?php _e( 'Order By:' ); ?></label>
+			<select name="<?php echo $this->get_field_name('orderby'); ?>" id="<?php echo $this->get_field_id('orderby'); ?>" class="widefat">
+				<option value="date" <?php if( $orderby == 'date') { echo 'selected="selected"'; } ?>><?php _e('Date'); ?></option>
+				<option value="title" <?php if( $orderby == 'title') { echo 'selected="selected"'; } ?>><?php _e('Title'); ?></option>
+				<option value="comment_count" <?php if( $orderby == 'comment_count') { echo 'selected="selected"'; } ?>><?php _e('Comments'); ?></option>
+				<option value="rand" <?php if( $orderby == 'rand') { echo 'selected="selected"'; } ?>><?php _e('Random'); ?></option>
+			</select>
+			</p>
+
+			<p>
+			<label for="<?php echo $this->get_field_id('order'); ?>"><?php _e( 'Order:' ); ?></label>
 			<select name="<?php echo $this->get_field_name('order'); ?>" id="<?php echo $this->get_field_id('order'); ?>" class="widefat">
-				<option value="date" <?php if( $order == 'date') { echo 'selected="selected"'; } ?>><?php _e('Date'); ?></option>
-				<option value="title" <?php if( $order == 'title') { echo 'selected="selected"'; } ?>><?php _e('Title'); ?></option>
-				<option value="comment_count" <?php if( $order == 'comment_count') { echo 'selected="selected"'; } ?>><?php _e('Comments'); ?></option>
-				<option value="rand" <?php if( $order == 'rand') { echo 'selected="selected"'; } ?>><?php _e('Random'); ?></option>
+				<option value="DESC" <?php if( $order == 'DESC') { echo 'selected="selected"'; } ?>><?php _e('Descending'); ?></option>
+				<option value="ASC" <?php if( $order == 'ASC') { echo 'selected="selected"'; } ?>><?php _e('Ascending'); ?></option>
 			</select>
 			</p>
 
