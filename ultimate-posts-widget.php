@@ -68,7 +68,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			extract( $args );
 
 			$title = apply_filters( 'widget_title', $instance['title'] );
-			$widget_class = $instance['widget_class'];
+			$css_class = $instance['css_class'];
 			$number = $instance['number'];
 			$cpt = $instance['types'];
 			if (!empty($cpt)) $types = explode(',', $cpt);
@@ -97,11 +97,11 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			}
 
 			// if widget class
-			if ( $widget_class ) {
+			if ( $css_class ) {
         if( strpos($before_widget, 'class') === false ) {
-           $before_widget = str_replace('>', 'class="'. $widget_class . '"', $before_widget);
+           $before_widget = str_replace('>', 'class="'. $css_class . '"', $before_widget);
         } else {
-           $before_widget = str_replace('class="', 'class="'. $widget_class . ' ', $before_widget);
+           $before_widget = str_replace('class="', 'class="'. $css_class . ' ', $before_widget);
         }
       }
 
@@ -210,7 +210,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			$cats = implode(',', (array)$new_instance['cats']);
 
 			$instance['title'] = strip_tags( $new_instance['title'] );
-			$instance['widget_class'] = strip_tags( $new_instance['widget_class'] );
+			$instance['css_class'] = strip_tags( $new_instance['css_class'] );
 			$instance['number'] = strip_tags( $new_instance['number'] );
 			$instance['types'] = $types;
 			$instance['cats'] = $cats;
@@ -252,7 +252,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			// instance exist? if not set defaults
 			if ( $instance ) {
 				$title  = $instance['title'];
-				$widget_class = $instance['widget_class'];
+				$css_class = $instance['css_class'];
 				$number = $instance['number'];
 				$types  = $instance['types'];
 				$cats = $instance['cats'];
@@ -266,7 +266,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			} else {
 				//These are our defaults
 				$title  = '';
-				$widget_class = '';
+				$css_class = '';
 				$number = '5';
 				$types  = 'post';
 				$cats = '';
@@ -304,8 +304,8 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			<p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
 			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title; ?>" /></p>
 
-			<p><label for="<?php echo $this->get_field_id( 'widget_class' ); ?>"><?php _e( 'Widget Class:' ); ?></label>
-			<input class="widefat" id="<?php echo $this->get_field_id( 'widget_class' ); ?>" name="<?php echo $this->get_field_name( 'widget_class' ); ?>" type="text" value="<?php echo $widget_class; ?>" /></p>
+			<p><label for="<?php echo $this->get_field_id( 'css_class' ); ?>"><?php _e( 'Widget Class:' ); ?></label>
+			<input class="widefat" id="<?php echo $this->get_field_id( 'css_class' ); ?>" name="<?php echo $this->get_field_name( 'css_class' ); ?>" type="text" value="<?php echo $css_class; ?>" /></p>
 
 			<p><label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of posts:' ); ?></label>
 			<input id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="text" value="<?php echo $number; ?>" size="2" /></p>
