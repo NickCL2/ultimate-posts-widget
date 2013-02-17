@@ -34,31 +34,21 @@ Options:
 
 For support please use [github issues](https://github.com/bostondv/ultimate-posts-widget/issues). Visit [our website](http://pomelodesign.com), follow [@pomelod](http://twitter.com/pomelod/) or like [on facebook](http://www.facebook.com/pomelodesign/) for updates.
 
+== Frequently Asked Questions ==
+
+Nothing right now.
+
 == Screenshots ==
 
 1. Widget options
 
-== Frequently Asked Questions ==
-
-= What posts will display in the widget? =
-
-The widget will only show posts marked as sticky. Mark a post as sticky by editing the post and checking "Stick this post to the front page" under the Visibility section of the Publish box.
-
-= How do I display thumbnail images? =
-
-Turn on "Show thumbnails" in the widget and ensure that you have added a "Featured Image" to the post. To add a featured image, edit the post and find the Featured Image box, click "Set feature image" and select the image you want from the popup.
-
-= Why are images displayed as broken links? =
-
-Ensure that the feature image you've uploaded is a JPG, GIF or PNG file.
-
 == Changelog ==
 
-= 1.4.5 =
+= 1.4.5 = 
 
 * Updates screenshot
 
-= 1.4.4 =
+= 1.4.4 = 
 
 * Fixes show_readmore function
 * Adds more button link option
