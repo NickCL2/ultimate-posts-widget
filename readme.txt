@@ -3,8 +3,8 @@ Contributors: bostondv
 Donate link: http://www.pomelodesign.com/donate
 Tags: widget, recent posts, custom post types, sticky posts, featured image, post thumbnail, excerpts, category
 Requires at least: 3.0
-Tested up to: 3.4
-Stable tag: 1.4.5
+Tested up to: 3.5.1
+Stable tag: 1.5
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,9 +30,10 @@ Options:
 * Custom read more link text
 * Custom excerpt length (in words)
 * Custom featured image size
+* Feature image crop mode
 * Order by date, title, number of comments or random
 
-For support please use [github issues](https://github.com/bostondv/ultimate-posts-widget/issues). Visit [our website](http://pomelodesign.com), follow [@pomelod](http://twitter.com/pomelod/) or like [on facebook](http://www.facebook.com/pomelodesign/) for updates.
+For support please use [wordpress.org](http://wordpress.org/support/plugin/ultimate-posts-widget). Visit [our website](http://pomelodesign.com), follow [@pomelod](http://twitter.com/pomelod/) or like [on facebook](http://www.facebook.com/pomelodesign/) for updates.
 
 == Frequently Asked Questions ==
 
@@ -44,11 +45,15 @@ Nothing right now.
 
 == Changelog ==
 
-= 1.4.5 = 
+= 1.5 =
+
+* Adds crop mode option
+
+= 1.4.5 =
 
 * Updates screenshot
 
-= 1.4.4 = 
+= 1.4.4 =
 
 * Fixes show_readmore function
 * Adds more button link option

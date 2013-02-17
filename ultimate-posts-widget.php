@@ -3,7 +3,7 @@
 Plugin Name: Ultimate Posts Widget
 Plugin URI: http://pomelodesign.com/ultimate-posts-widget
 Description: The ultimate widget for displaying posts, custom post types or sticky posts with an array of options.
-Version: 1.4.5
+Version: 1.5
 Author: Pomelo Design
 Author URI: http://pomelodesign.com
 License: GPL2
@@ -24,24 +24,24 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
-	
+
 	class WP_Widget_Ultimate_Posts extends WP_Widget {
-	
+
 		function WP_Widget_Ultimate_Posts() {
-			
-			$widget_ops = array( 'classname' => 'widget_ultimate_posts', 'description' => __( 'The ultimate widget for displaying posts, custom post types or sticky posts with an array of options.' ) );
+
+			$widget_ops = array( 'classname' => 'widget_ultimate_posts', 'description' => __( 'Displays posts, custom post types or sticky posts with an array of options' ) );
 			$this->WP_Widget( 'sticky-posts', __( 'Ultimate Posts' ), $widget_ops );
 			$this->alt_option_name = 'widget_ultimate_posts';
-	
+
 			add_action( 'save_post', array( &$this, 'flush_widget_cache' ) );
 			add_action( 'deleted_post', array( &$this, 'flush_widget_cache' ) );
 			add_action( 'switch_theme', array( &$this, 'flush_widget_cache' ) );
-			
+
 		}
-	
+
 		function widget( $args, $instance ) {
 
-			if( !function_exists(get_image_path) ) {
+			if( !function_exists('get_image_path') ) {
 				function get_image_path($src) {
 					global $blog_id;
 					if(isset($blog_id) && $blog_id > 0) {
@@ -53,57 +53,52 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 					return $src;
 				}
 			}
-			
+
 			$cache = wp_cache_get( 'widget_ultimate_posts', 'widget' );
-	
+
 			if ( !is_array( $cache ) )
 				$cache = array();
-	
+
 			if ( isset( $cache[$args['widget_id']] ) ) {
 				echo $cache[$args['widget_id']];
 				return;
 			}
-	
+
 			ob_start();
 			extract( $args );
-	
+
 			$title = apply_filters( 'widget_title', $instance['title'] );
 			$number = $instance['number'];
-			$cpt = $instance['types'];		
-			if (!empty($cpt)) $types = explode(',', $cpt);
-			$categories = $instance['cats'];		
-			if (!empty($categories)) $cats = explode(',', $categories);
-			$atcat = $instance['atcat'];
+			$types = ($instance['types'] ? explode(',', $instance['types']) : '');
+			$cats = ($instance['cats'] ? explode(',', $instance['cats']) : '');
+			$atcat = $instance['atcat'] ? true : false;
 			$thumb_w = $instance['thumb_w'];
 			$thumb_h = $instance['thumb_h'];
+			$thumb_crop = $instance['thumb_crop'];
 			$excerpt_length = $instance['excerpt_length'];
 			$excerpt_readmore = $instance['excerpt_readmore'];
-			$sticky = $instance['sticky'];
+			$sticky = ($instance['sticky'] ? get_option( 'sticky_posts' ) : false);
 			$order = $instance['order'];
+			$orderby = $instance['orderby'];
 
 			// If $atcat true and in category
-			if ($atcat && is_category()) {  
-				$cats = get_query_var('cat');  
+			if ($atcat && is_category()) {
+				$cats = get_query_var('cat');
 			}
 
 			// If $atcat true and is single post
-			if ($atcat && is_single()) {  
-				$cats = '';  
-				foreach (get_the_category() as $catt) {  
-					$cats .= $catt->cat_ID.' ';   
-				}  
-				$cats = str_replace(" ", ",", trim($cats));  
-			}
-
-			// If sticky
-			if ($sticky) {
-				$sticky_option = get_option( 'sticky_posts' );
+			if ($atcat && is_single()) {
+				$cats = '';
+				foreach (get_the_category() as $catt) {
+					$cats .= $catt->cat_ID.' ';
+				}
+				$cats = str_replace(" ", ",", trim($cats));
 			}
 
 			//Excerpt more filter
-			$new_excerpt_more = create_function('$more', 'return "...";');	
+			$new_excerpt_more = create_function('$more', 'return "...";');
 			add_filter('excerpt_more', $new_excerpt_more);
-			
+
 			// Excerpt length filter
 			$new_excerpt_length = create_function('$length', "return " . $excerpt_length . ";");
 			if ( $instance["excerpt_length"] > 0 ) add_filter('excerpt_length', $new_excerpt_length);
@@ -113,20 +108,25 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
 			$args = array(
 				'showposts' => $number,
-				'orderby' => $order,
-				'post__in' => $sticky_option,
+				'order' => $order,
+				'orderby' => $orderby,
+				'post__in' => $sticky,
 				'category__in' => $cats,
 				'post_type' => $types
 			);
 
 			$r = new WP_Query( $args );
-			
+
 			if ( $r->have_posts() ) :
-				
+
 				echo '<ul>';
-				
-				while ( $r->have_posts() ) : $r->the_post(); ?>
-					
+
+				while ( $r->have_posts() ) : $r->the_post();
+
+					global $post;
+
+					?>
+
 					<li>
 
 						<?php
@@ -140,14 +140,14 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
 						<div class="upw-image">
 							<a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>">
-								<img src="<?php echo WP_PLUGIN_URL . '/ultimate-posts-widget/thumb.php?src='. get_image_path($thumbnail[0]) .'&h='.$thumb_h.'&w='.$thumb_w.'&&zc=2'; ?>" alt="<?php the_title_attribute(); ?>" width="<?php echo $thumb_w; ?>" height="<?php echo $thumb_h; ?>" />
+								<img src="<?php echo WP_PLUGIN_URL . '/ultimate-posts-widget/thumb.php?src='. get_image_path($thumbnail[0]) .'&h='.$thumb_h.'&w='.$thumb_w.'&zc='.$thumb_crop; ?>" alt="<?php the_title_attribute(); ?>" />
 							</a>
 						</div>
 
 						<?php endif; ?>
 
 						<div class="upw-content">
-							
+
 							<?php if ( get_the_title() && $instance['show_title'] ) : ?>
 								<a class="post-title" href="<?php the_permalink(); ?>" title="<?php echo esc_attr( get_the_title() ? get_the_title() : get_the_ID() ); ?>">
 									<?php the_title(); ?>
@@ -166,35 +166,37 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 						</div>
 
 					</li>
-					
+
 				<?php
 				endwhile;
 				echo '</ul>';
-				
+
 				if ( $instance['show_morebutton'] ) : ?>
 				<div class="upw-more">
 					<a href="<?php echo $instance['morebutton_url']; ?>" class="button"><?php echo $instance['morebutton_text']; ?></a>
 				</div>
 				<?php endif;
-				
+
 				// Reset the global $the_post as this query will have stomped on it
 				wp_reset_postdata();
 
 			else :
 
 				echo __('No posts found.');
-	
+
 			endif;
 
 			echo $after_widget;
-	
-			$cache[$args['widget_id']] = ob_get_flush();
+
+			if ($cache) {
+				$cache[$args['widget_id']] = ob_get_flush();
+			}
 			wp_cache_set( 'widget_ultimate_posts', $cache, 'widget' );
 		}
-	
+
 		function update( $new_instance, $old_instance ) {
 			$instance = $old_instance;
-			
+
 			//Let's turn that array into something the Wordpress database can store
 			$types = implode(',', (array)$new_instance['types']);
 			$cats = implode(',', (array)$new_instance['cats']);
@@ -210,32 +212,34 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			$instance['show_title'] = strip_tags( $new_instance['show_title'] );
 			$instance['thumb_w'] = strip_tags( $new_instance['thumb_w'] );
 			$instance['thumb_h'] = strip_tags( $new_instance['thumb_h'] );
+			$instance['thumb_crop'] = $new_instance['thumb_crop'];
 			$instance['show_readmore'] = strip_tags( $new_instance['show_readmore'] );
 			$instance['excerpt_length'] = strip_tags( $new_instance['excerpt_length'] );
 			$instance['excerpt_readmore'] = strip_tags( $new_instance['excerpt_readmore'] );
 			$instance['sticky'] = strip_tags( $new_instance['sticky'] );
-			$instance['order'] = strip_tags( $new_instance['order'] );
+			$instance['order'] = $new_instance['order'];
+			$instance['orderby'] = $new_instance['orderby'];
 			$instance['show_morebutton'] = strip_tags( $new_instance['show_morebutton'] );
 			$instance['morebutton_url'] = strip_tags( $new_instance['morebutton_url'] );
 			$instance['morebutton_text'] = strip_tags( $new_instance['morebutton_text'] );
-			
-			
+
+
 			$this->flush_widget_cache();
-	
+
 			$alloptions = wp_cache_get( 'alloptions', 'options' );
 			if ( isset( $alloptions['widget_ultimate_posts'] ) )
 				delete_option( 'widget_ultimate_posts' );
-	
+
 			return $instance;
-			
+
 		}
-	
+
 		function flush_widget_cache() {
-			
+
 			wp_cache_delete( 'widget_ultimate_posts', 'widget' );
-			
+
 		}
-	
+
 		function form( $instance ) {
 
 			// instance exist? if not set defaults
@@ -246,9 +250,11 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 				$cats = $instance['cats'];
 				$thumb_w = $instance['thumb_w'];
 				$thumb_h = $instance['thumb_h'];
+				$thumb_crop = $instance['thumb_crop'];
 				$excerpt_length = $instance['excerpt_length'];
 				$excerpt_readmore = $instance['excerpt_readmore'];
 				$order = $instance['order'];
+				$orderby = $instance['orderby'];
 				$morebutton_text = $instance['morebutton_text'];
 				$morebutton_url = $instance['morebutton_url'];
 			} else {
@@ -259,9 +265,11 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 				$cats = '';
 				$thumb_w = 100;
 				$thumb_h = 100;
+				$thumb_crop = 1;
 				$excerpt_length = 10;
 				$excerpt_readmore = 'Read more &rarr;';
-				$order = 'date';
+				$order = 'DESC';
+				$orderby = 'date';
 				$morebutton_text = 'View More Posts';
 				$morebutton_url = get_bloginfo('url');
 			}
@@ -269,7 +277,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			//Let's turn $types and $cats into an array
 			$types = explode(',', $types);
 			$cats = explode(',', $cats);
-			
+
 			//Count number of post types for select box sizing
 			$cpt_types = get_post_types( array( 'public' => true ), 'names' );
 			foreach ($cpt_types as $cpt ) {
@@ -290,7 +298,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
 			<p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
 			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title; ?>" /></p>
-	
+
 			<p><label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of posts:' ); ?></label>
 			<input id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="text" value="<?php echo $number; ?>" size="2" /></p>
 
@@ -320,8 +328,8 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 				<?php _e( 'Show read more link' ); ?>
 				</label>
 			</p>
-				
-			<p class="<?php echo $this->get_field_id('excerpt_readmore'); ?>">
+
+			<p>
 				<label for="<?php echo $this->get_field_id('excerpt_readmore'); ?>"><?php _e( 'Read more text:' ); ?></label>
 				<input class="widefat" type="text" id="<?php echo $this->get_field_id('excerpt_readmore'); ?>" name="<?php echo $this->get_field_name("excerpt_readmore"); ?>" value="<?php echo $excerpt_readmore; ?>" />
 			</p>
@@ -344,6 +352,17 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 					</label>
 				</p>
 
+				<p>
+					<label><?php _e('Crop mode:'); ?></label>
+					<br />
+					<select id="<?php echo $this->get_field_id('thumb_crop'); ?>" name="<?php echo $this->get_field_name('thumb_crop'); ?>">
+						<option value="1"<?php if($thumb_crop == 1) echo ' selected'; ?>><?php _e('Scale &amp; Crop to Fit'); ?></option>
+						<option value="0"<?php if($thumb_crop == 0) echo ' selected'; ?>><?php _e('Stretch to Fit'); ?></option>
+						<option value="2"<?php if($thumb_crop == 2) echo ' selected'; ?>><?php _e('Proportional Scale'); ?></option>
+						<option value="3"<?php if($thumb_crop == 3) echo ' selected'; ?>><?php _e('Proportional Scale No Borders'); ?></option>
+					</select>
+				</p>
+
 			<?php endif; ?>
 
 			<p>
@@ -351,12 +370,12 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 				<label for="<?php echo $this->get_field_id('show_morebutton'); ?>"> <?php _e('Show more button'); ?></label>
 			</p>
 
-			<p class="<?php echo $this->get_field_id('morebutton_text'); ?>">
+			<p>
 				<label for="<?php echo $this->get_field_id('morebutton_text'); ?>"><?php _e( 'More button text:' ); ?></label>
 				<input class="widefat" type="text" id="<?php echo $this->get_field_id('morebutton_text'); ?>" name="<?php echo $this->get_field_name('morebutton_text'); ?>" value="<?php echo $morebutton_text; ?>" />
 			</p>
 
-			<p class="<?php echo $this->get_field_id('morebutton_url'); ?>">
+			<p>
 				<label for="<?php echo $this->get_field_id('morebutton_url'); ?>"><?php _e( 'More button URL:' ); ?></label>
 				<input class="widefat" type="text" id="<?php echo $this->get_field_id('morebutton_url'); ?>" name="<?php echo $this->get_field_name('morebutton_url'); ?>" value="<?php echo $morebutton_url; ?>" />
 			</p>
@@ -374,7 +393,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			<p>
 			<label for="<?php echo $this->get_field_id('cats'); ?>"><?php _e( 'Select categories:' ); ?></label>
 			<select name="<?php echo $this->get_field_name('cats'); ?>[]" id="<?php echo $this->get_field_id('cats'); ?>" class="widefat" style="height: auto;" size="<?php echo $c ?>" multiple>
-				<?php 
+				<?php
 				$categories = get_categories( 'hide_empty=0' );
 				foreach ($categories as $category ) { ?>
 					<option value="<?php echo $category->term_id; ?>" <?php if( in_array($category->term_id, $cats)) { echo 'selected="selected"'; } ?>><?php echo $category->cat_name;?></option>
@@ -385,7 +404,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			<p>
 			<label for="<?php echo $this->get_field_id('types'); ?>"><?php _e( 'Select post type(s):' ); ?></label>
 			<select name="<?php echo $this->get_field_name('types'); ?>[]" id="<?php echo $this->get_field_id('types'); ?>" class="widefat" style="height: auto;" size="<?php echo $n ?>" multiple>
-				<?php 
+				<?php
 				$args = array( 'public' => true );
 				$post_types = get_post_types( $args, 'names' );
 				foreach ($post_types as $post_type ) { ?>
@@ -395,111 +414,127 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			</p>
 
 			<p>
-			<label for="<?php echo $this->get_field_id('order'); ?>"><?php _e( 'Order by:' ); ?></label>
-			<select name="<?php echo $this->get_field_name('order'); ?>" id="<?php echo $this->get_field_id('order'); ?>" class="widefat">
-				<option value="date" <?php if( $order == 'date') { echo 'selected="selected"'; } ?>><?php _e('Date'); ?></option>
-				<option value="title" <?php if( $order == 'title') { echo 'selected="selected"'; } ?>><?php _e('Title'); ?></option>
-				<option value="comment_count" <?php if( $order == 'comment_count') { echo 'selected="selected"'; } ?>><?php _e('Comments'); ?></option>
-				<option value="rand" <?php if( $order == 'rand') { echo 'selected="selected"'; } ?>><?php _e('Random'); ?></option>
-			</select>
+				<label for="<?php echo $this->get_field_id('orderby'); ?>"><?php _e( 'Order by:' ); ?></label>
+				<select name="<?php echo $this->get_field_name('orderby'); ?>" id="<?php echo $this->get_field_id('orderby'); ?>" class="widefat">
+					<option value="date"<?php if( $orderby == 'date') echo ' selected'; ?>><?php _e('Date'); ?></option>
+					<option value="title"<?php if( $orderby == 'title') echo ' selected'; ?>><?php _e('Title'); ?></option>
+					<option value="comment_count"<?php if( $orderby == 'comment_count') echo ' selected'; ?>><?php _e('Comments'); ?></option>
+					<option value="rand"<?php if( $orderby == 'rand') echo ' selected'; ?>><?php _e('Random'); ?></option>
+				</select>
+			</p>
+
+			<p>
+				<label for="<?php echo $this->get_field_id('order'); ?>"><?php _e( 'Order:' ); ?></label>
+				<select name="<?php echo $this->get_field_name('order'); ?>" id="<?php echo $this->get_field_id('order'); ?>" class="widefat">
+					<option value="DESC"<?php if( $order == 'DESC') echo ' selected'; ?>><?php _e('Descending'); ?></option>
+					<option value="ASC"<?php if( $order == 'ASC') echo ' selected'; ?>><?php _e('Ascending'); ?></option>
+				</select>
 			</p>
 
 			<p class="credits"><small>Developed by <a href="http://pomelodesign.com">Pomelo Design</a></small></p>
 
-			<script>
+			<?php if ( $instance ) { ?>
 
-				jQuery(document).ready(function($){
+				<script>
 
-					var show_excerpt = $("#<?php echo $this->get_field_id( 'show_excerpt' ); ?>");
-					var show_readmore = $("#<?php echo $this->get_field_id( 'show_readmore' ); ?>");
-					var show_thumbnail = $("#<?php echo $this->get_field_id( 'show_thumbnail' ); ?>");
-					var excerpt_length = $("#<?php echo $this->get_field_id( 'excerpt_length' ); ?>").parents('p');	
-					var excerpt_readmore = $("#<?php echo $this->get_field_id( 'excerpt_readmore' ); ?>").parents('p');	
-					var thumb_w = $("#<?php echo $this->get_field_id( 'thumb_w' ); ?>").parents('p');
-					var show_morebutton = $("#<?php echo $this->get_field_id( 'show_morebutton' ); ?>");
-					var morebutton_text = $("#<?php echo $this->get_field_id( 'morebutton_text' ); ?>").parents('p');
-					var morebutton_url = $("#<?php echo $this->get_field_id( 'morebutton_url' ); ?>").parents('p');
+					jQuery(document).ready(function($){
 
-					<?php 
-					// Use PHP to determine if not checked and hide if so
-					// jQuery method was acting up
-					if ( !$instance['show_excerpt'] ) {
-						echo 'excerpt_length.hide();';
-					} 
-					if ( !$instance['show_readmore'] ) {
-						echo 'excerpt_readmore.hide();';
-					} 
-					if ( !$instance['show_thumbnail'] ) {
-						echo 'thumb_w.hide();';
-					} 
-					if ( !$instance['show_morebutton'] ) {
-						echo 'morebutton_text.hide();';
-						echo 'morebutton_url.hide();';
-					}
-					?>
+						var show_excerpt = $("#<?php echo $this->get_field_id( 'show_excerpt' ); ?>");
+						var show_readmore = $("#<?php echo $this->get_field_id( 'show_readmore' ); ?>");
+						var show_thumbnail = $("#<?php echo $this->get_field_id( 'show_thumbnail' ); ?>");
+						var excerpt_length = $("#<?php echo $this->get_field_id( 'excerpt_length' ); ?>").parents('p');
+						var excerpt_readmore = $("#<?php echo $this->get_field_id( 'excerpt_readmore' ); ?>").parents('p');
+						var thumb_w = $("#<?php echo $this->get_field_id( 'thumb_w' ); ?>").parents('p');
+						var thumb_crop = $("#<?php echo $this->get_field_id( 'thumb_crop' ); ?>").parents('p');
+						var show_morebutton = $("#<?php echo $this->get_field_id( 'show_morebutton' ); ?>");
+						var morebutton_text = $("#<?php echo $this->get_field_id( 'morebutton_text' ); ?>").parents('p');
+						var morebutton_url = $("#<?php echo $this->get_field_id( 'morebutton_url' ); ?>").parents('p');
 
-					// Toggle excerpt length on click
-					show_excerpt.click(function(){
-
-						if ( $(this).is(":checked") ) {
-							excerpt_length.show("fast");
-						} else {
-							excerpt_length.hide("fast");
+						<?php
+						// Use PHP to determine if not checked and hide if so
+						// jQuery method was acting up
+						if ( !$instance['show_excerpt'] ) {
+							echo 'excerpt_length.hide();';
 						}
-
-					 });
-
-					// Toggle excerpt length on click
-					show_readmore.click(function(){
-
-						if ( $(this).is(":checked") ) {
-							excerpt_readmore.show("fast");
-						} else {
-							excerpt_readmore.hide("fast");
+						if ( !$instance['show_readmore'] ) {
+							echo 'excerpt_readmore.hide();';
 						}
-
-					 });
-
-					// Toggle excerpt length on click
-					show_thumbnail.click(function(){
-
-						if ( $(this).is(":checked") ) {
-							thumb_w.show("fast");
-						} else {
-							thumb_w.hide("fast");
+						if ( !$instance['show_thumbnail'] ) {
+							echo 'thumb_w.hide();';
+							echo 'thumb_crop.hide();';
 						}
-
-					 });
-
-					// Toggle more button on click
-					show_morebutton.click(function(){
-
-						if ( $(this).is(":checked") ) {
-							morebutton_text.show("fast");
-							morebutton_url.show("fast");
-						} else {
-							morebutton_text.hide("fast");
-							morebutton_url.hide("fast");
+						if ( !$instance['show_morebutton'] ) {
+							echo 'morebutton_text.hide();';
+							echo 'morebutton_url.hide();';
 						}
+						?>
 
-					 });
+						// Toggle excerpt length on click
+						show_excerpt.click(function(){
 
-				});
+							if ( $(this).is(":checked") ) {
+								excerpt_length.show("fast");
+							} else {
+								excerpt_length.hide("fast");
+							}
 
-			</script>
+						 });
+
+						// Toggle excerpt length on click
+						show_readmore.click(function(){
+
+							if ( $(this).is(":checked") ) {
+								excerpt_readmore.show("fast");
+							} else {
+								excerpt_readmore.hide("fast");
+							}
+
+						 });
+
+						// Toggle excerpt length on click
+						show_thumbnail.click(function(){
+
+							if ( $(this).is(":checked") ) {
+								thumb_w.show("fast");
+								thumb_crop.show("fast");
+							} else {
+								thumb_w.hide("fast");
+								thumb_crop.hide("fast");
+							}
+
+						});
+
+						// Toggle more button on click
+						show_morebutton.click(function(){
+
+							if ( $(this).is(":checked") ) {
+								morebutton_text.show("fast");
+								morebutton_url.show("fast");
+							} else {
+								morebutton_text.hide("fast");
+								morebutton_url.hide("fast");
+							}
+
+						 });
+
+					});
+
+				</script>
 
 			<?php
-			
+
+			}
+
 		}
-		
+
 	}
-	
+
 	function init_WP_Widget_Ultimate_Posts() {
-	
+
 		register_widget( 'WP_Widget_Ultimate_Posts' );
-		
+
 	}
-	
+
 	add_action( 'widgets_init', 'init_WP_Widget_Ultimate_Posts' );
 
 }
