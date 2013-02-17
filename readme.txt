@@ -23,6 +23,7 @@ Options:
 * Select number of posts to display
 * Display title
 * Display publish date
+* Display publish time
 * Display excerpt
 * Display read more link
 * Display featured image
@@ -48,6 +49,9 @@ Nothing right now.
 = 1.5 =
 
 * Adds crop mode option
+* Add show published time option
+* Now uses date / time format settings
+* Bug fixes
 
 = 1.4.5 =
 

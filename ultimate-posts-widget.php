@@ -154,8 +154,18 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 								</a>
 							<?php endif; ?>
 
-							<?php if ( $instance['show_date'] ) : ?>
-								<p class="post-date"><?php the_time("j M Y"); ?></p>
+							<?php if ( $instance['show_date'] || $instance['show_time'] ) : ?>
+								<p class="post-date">
+									<?php
+									if ( $instance['show_date'] && $instance['show_time'] ) {
+										the_time(get_option('date_format') . ' ' . get_option('time_format'));
+									} elseif ( $instance['show_date'] && !$instance['show_time'] ) {
+										the_time(get_option('date_format'));
+									} else {
+										the_time(get_option('time_format'));
+									}
+									?>
+								</p>
 							<?php endif; ?>
 
 							<?php if ( $instance['show_excerpt'] ) :
@@ -205,21 +215,22 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			$instance['number'] = strip_tags( $new_instance['number'] );
 			$instance['types'] = $types;
 			$instance['cats'] = $cats;
-			$instance['atcat'] = strip_tags( $new_instance['atcat'] );
-			$instance['show_excerpt'] = strip_tags( $new_instance['show_excerpt'] );
-			$instance['show_thumbnail'] = strip_tags( $new_instance['show_thumbnail'] );
-			$instance['show_date'] = strip_tags( $new_instance['show_date'] );
-			$instance['show_title'] = strip_tags( $new_instance['show_title'] );
+			$instance['atcat'] = $new_instance['atcat'];
+			$instance['show_excerpt'] = $new_instance['show_excerpt'];
+			$instance['show_thumbnail'] = $new_instance['show_thumbnail'];
+			$instance['show_date'] = $new_instance['show_date'];
+			$instance['show_time'] = $new_instance['show_time'];
+			$instance['show_title'] = $new_instance['show_title'];
 			$instance['thumb_w'] = strip_tags( $new_instance['thumb_w'] );
 			$instance['thumb_h'] = strip_tags( $new_instance['thumb_h'] );
 			$instance['thumb_crop'] = $new_instance['thumb_crop'];
-			$instance['show_readmore'] = strip_tags( $new_instance['show_readmore'] );
+			$instance['show_readmore'] = $new_instance['show_readmore'];
 			$instance['excerpt_length'] = strip_tags( $new_instance['excerpt_length'] );
 			$instance['excerpt_readmore'] = strip_tags( $new_instance['excerpt_readmore'] );
-			$instance['sticky'] = strip_tags( $new_instance['sticky'] );
+			$instance['sticky'] = $new_instance['sticky'];
 			$instance['order'] = $new_instance['order'];
 			$instance['orderby'] = $new_instance['orderby'];
-			$instance['show_morebutton'] = strip_tags( $new_instance['show_morebutton'] );
+			$instance['show_morebutton'] = $new_instance['show_morebutton'];
 			$instance['morebutton_url'] = strip_tags( $new_instance['morebutton_url'] );
 			$instance['morebutton_text'] = strip_tags( $new_instance['morebutton_text'] );
 
@@ -309,7 +320,12 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
 			<p>
 				<input class="checkbox" id="<?php echo $this->get_field_id( 'show_date' ); ?>" name="<?php echo $this->get_field_name( 'show_date' ); ?>" type="checkbox" <?php checked( (bool) $instance["show_date"], true ); ?> />
-				<label for="<?php echo $this->get_field_id( 'show_date' ); ?>"><?php _e( 'Show date' ); ?></label>
+				<label for="<?php echo $this->get_field_id( 'show_date' ); ?>"><?php _e( 'Show published date' ); ?></label>
+			</p>
+
+			<p>
+				<input class="checkbox" id="<?php echo $this->get_field_id( 'show_time' ); ?>" name="<?php echo $this->get_field_name( 'show_time' ); ?>" type="checkbox" <?php checked( (bool) $instance["show_time"], true ); ?> />
+				<label for="<?php echo $this->get_field_id( 'show_time' ); ?>"><?php _e( 'Show published time' ); ?></label>
 			</p>
 
 			<p>
@@ -416,9 +432,9 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			<p>
 				<label for="<?php echo $this->get_field_id('orderby'); ?>"><?php _e( 'Order by:' ); ?></label>
 				<select name="<?php echo $this->get_field_name('orderby'); ?>" id="<?php echo $this->get_field_id('orderby'); ?>" class="widefat">
-					<option value="date"<?php if( $orderby == 'date') echo ' selected'; ?>><?php _e('Date'); ?></option>
+					<option value="date"<?php if( $orderby == 'date') echo ' selected'; ?>><?php _e('Published Date'); ?></option>
 					<option value="title"<?php if( $orderby == 'title') echo ' selected'; ?>><?php _e('Title'); ?></option>
-					<option value="comment_count"<?php if( $orderby == 'comment_count') echo ' selected'; ?>><?php _e('Comments'); ?></option>
+					<option value="comment_count"<?php if( $orderby == 'comment_count') echo ' selected'; ?>><?php _e('Comment Count'); ?></option>
 					<option value="rand"<?php if( $orderby == 'rand') echo ' selected'; ?>><?php _e('Random'); ?></option>
 				</select>
 			</p>
