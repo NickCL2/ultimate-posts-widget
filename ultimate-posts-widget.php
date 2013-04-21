@@ -3,7 +3,7 @@
 Plugin Name: Ultimate Posts Widget
 Plugin URI: http://pomelodesign.com/ultimate-posts-widget
 Description: The ultimate widget for displaying posts, custom post types or sticky posts with an array of options.
-Version: 1.5
+Version: 1.5.1
 Author: Pomelo Design
 Author URI: http://pomelodesign.com
 License: GPL2
@@ -134,13 +134,13 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 									 current_theme_supports("post-thumbnails") &&
 									 $instance["show_thumbnail"] &&
 									 has_post_thumbnail() ) :
-							$thumbnail = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID),'full');
+							$thumbnail = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID),'large');
 							$plugin_dir = 'ultimate-posts-widget';
 						?>
 
 						<div class="upw-image">
 							<a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>">
-								<img src="<?php echo WP_PLUGIN_URL . '/ultimate-posts-widget/thumb.php?src='. get_image_path($thumbnail[0]) .'&h='.$thumb_h.'&w='.$thumb_w.'&zc='.$thumb_crop; ?>" alt="<?php the_title_attribute(); ?>" />
+								<img src="<?php echo WP_PLUGIN_URL . '/ultimate-posts-widget/thumb.php?src='. get_image_path($thumbnail[0]) .'&amp;h='.$thumb_h.'&amp;w='.$thumb_w.'&amp;zc='.$thumb_crop; ?>" alt="<?php the_title_attribute(); ?>" />
 							</a>
 						</div>
 
