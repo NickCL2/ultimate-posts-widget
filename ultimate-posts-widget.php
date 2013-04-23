@@ -29,13 +29,15 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
 		function WP_Widget_Ultimate_Posts() {
 
-			$widget_ops = array( 'classname' => 'widget_ultimate_posts', 'description' => __( 'Displays posts, custom post types or sticky posts with an array of options' ) );
-			$this->WP_Widget( 'sticky-posts', __( 'Ultimate Posts' ), $widget_ops );
+			$widget_ops = array( 'classname' => 'widget_ultimate_posts', 'description' => __( 'Displays list of posts with an array of options', 'upw' ) );
+			$this->WP_Widget( 'sticky-posts', __( 'Ultimate Posts', 'upw' ), $widget_ops );
 			$this->alt_option_name = 'widget_ultimate_posts';
 
 			add_action( 'save_post', array( &$this, 'flush_widget_cache' ) );
 			add_action( 'deleted_post', array( &$this, 'flush_widget_cache' ) );
 			add_action( 'switch_theme', array( &$this, 'flush_widget_cache' ) );
+
+			load_plugin_textdomain('upw', false, basename( dirname( __FILE__ ) ) . '/languages' );
 
 		}
 
@@ -196,14 +198,14 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
 							<?php if ( $instance['show_cats'] ) : ?>
 								<p class="post-cats">
-									<span class="post-cats-label">Categories:</span>
+									<span class="post-cats-label"><?php _e('Categories', 'upw'); ?>:</span>
 									<span class="post-cats-list"><?php the_category(', '); ?></span>
 								</p>
 							<?php endif; ?>
 
 							<?php if ( $instance['show_tags'] ) : ?>
 								<p class="post-tags">
-									<span class="post-tags-label">Tags:</span>
+									<span class="post-tags-label"><?php _e('Tags', 'upw'); ?>:</span>
 									<?php the_tags('<span class="post-tags-list">', ', ', '</span>'); ?>
 								</p>
 							<?php endif; ?>
@@ -226,7 +228,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
 			else :
 
-				echo __('No posts found.');
+				echo __('No posts found.', 'upw');
 
 			endif;
 
@@ -320,10 +322,10 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 				$thumb_h = 100;
 				$thumb_crop = 1;
 				$excerpt_length = 10;
-				$excerpt_readmore = 'Read more &rarr;';
+				$excerpt_readmore = __('Read more &rarr;', 'upw');
 				$order = 'DESC';
 				$orderby = 'date';
-				$morebutton_text = 'View More Posts';
+				$morebutton_text = __('View More Posts', 'upw');
 				$morebutton_url = get_bloginfo('url');
 				$sticky = 'show';
 				$instance['show_title'] = false;
@@ -360,78 +362,78 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
 			?>
 
-			<p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
+			<p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title', 'upw' ); ?>:</label>
 			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title; ?>" /></p>
 
-			<p><label for="<?php echo $this->get_field_id( 'title_link' ); ?>"><?php _e( 'Title URL:' ); ?></label>
+			<p><label for="<?php echo $this->get_field_id( 'title_link' ); ?>"><?php _e( 'Title URL', 'upw' ); ?>:</label>
 			<input class="widefat" id="<?php echo $this->get_field_id( 'title_link' ); ?>" name="<?php echo $this->get_field_name( 'title_link' ); ?>" type="text" value="<?php echo $title_link; ?>" /></p>
 
-			<p><label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of posts:' ); ?></label>
+			<p><label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of posts', 'upw' ); ?>:</label>
 			<input id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="text" value="<?php echo $number; ?>" size="2" /></p>
 
 			<p>
 				<input class="checkbox" id="<?php echo $this->get_field_id( 'show_title' ); ?>" name="<?php echo $this->get_field_name( 'show_title' ); ?>" type="checkbox" <?php checked( (bool) $instance["show_title"], true ); ?> />
-				<label for="<?php echo $this->get_field_id( 'show_title' ); ?>"><?php _e( 'Show title' ); ?></label>
+				<label for="<?php echo $this->get_field_id( 'show_title' ); ?>"><?php _e( 'Show title', 'upw' ); ?></label>
 			</p>
 
 			<p>
 				<input class="checkbox" id="<?php echo $this->get_field_id( 'show_date' ); ?>" name="<?php echo $this->get_field_name( 'show_date' ); ?>" type="checkbox" <?php checked( (bool) $instance["show_date"], true ); ?> />
-				<label for="<?php echo $this->get_field_id( 'show_date' ); ?>"><?php _e( 'Show published date' ); ?></label>
+				<label for="<?php echo $this->get_field_id( 'show_date' ); ?>"><?php _e( 'Show published date', 'upw' ); ?></label>
 			</p>
 
 			<p>
 				<input class="checkbox" id="<?php echo $this->get_field_id( 'show_time' ); ?>" name="<?php echo $this->get_field_name( 'show_time' ); ?>" type="checkbox" <?php checked( (bool) $instance["show_time"], true ); ?> />
-				<label for="<?php echo $this->get_field_id( 'show_time' ); ?>"><?php _e( 'Show published time' ); ?></label>
+				<label for="<?php echo $this->get_field_id( 'show_time' ); ?>"><?php _e( 'Show published time', 'upw' ); ?></label>
 			</p>
 
 			<p>
 				<input class="checkbox" id="<?php echo $this->get_field_id( 'show_excerpt' ); ?>" name="<?php echo $this->get_field_name( 'show_excerpt' ); ?>" type="checkbox" <?php checked( (bool) $instance["show_excerpt"], true ); ?> />
-				<label for="<?php echo $this->get_field_id( 'show_excerpt' ); ?>"><?php _e( 'Show excerpt' ); ?></label>
+				<label for="<?php echo $this->get_field_id( 'show_excerpt' ); ?>"><?php _e( 'Show excerpt', 'upw' ); ?></label>
 			</p>
 
 			<p>
-				<label for="<?php echo $this->get_field_id("excerpt_length"); ?>"><?php _e( 'Excerpt length (in words):' ); ?></label>
-				<input style="text-align: center;" type="text" id="<?php echo $this->get_field_id("excerpt_length"); ?>" name="<?php echo $this->get_field_name("excerpt_length"); ?>" value="<?php echo $excerpt_length; ?>" size="3" />
+				<label for="<?php echo $this->get_field_id('excerpt_length'); ?>"><?php _e( 'Excerpt length (in words)', 'upw' ); ?>:</label>
+				<input style="text-align: center;" type="text" id="<?php echo $this->get_field_id('excerpt_length'); ?>" name="<?php echo $this->get_field_name('excerpt_length'); ?>" value="<?php echo $excerpt_length; ?>" size="3" />
 			</p>
 
 			<p>
 				<label for="<?php echo $this->get_field_id('show_readmore'); ?>">
-				<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id("show_readmore"); ?>" name="<?php echo $this->get_field_name("show_readmore"); ?>"<?php checked( (bool) $instance["show_readmore"], true ); ?> />
-				<?php _e( 'Show read more link' ); ?>
+				<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('show_readmore'); ?>" name="<?php echo $this->get_field_name('show_readmore'); ?>"<?php checked( (bool) $instance["show_readmore"], true ); ?> />
+				<?php _e( 'Show read more link', 'upw' ); ?>
 				</label>
 			</p>
 
 			<p>
-				<label for="<?php echo $this->get_field_id('excerpt_readmore'); ?>"><?php _e( 'Read more text:' ); ?></label>
-				<input class="widefat" type="text" id="<?php echo $this->get_field_id('excerpt_readmore'); ?>" name="<?php echo $this->get_field_name("excerpt_readmore"); ?>" value="<?php echo $excerpt_readmore; ?>" />
+				<label for="<?php echo $this->get_field_id('excerpt_readmore'); ?>"><?php _e( 'Read more text', 'upw' ); ?>:</label>
+				<input class="widefat" type="text" id="<?php echo $this->get_field_id('excerpt_readmore'); ?>" name="<?php echo $this->get_field_name('excerpt_readmore'); ?>" value="<?php echo $excerpt_readmore; ?>" />
 			</p>
 
 			<?php if ( function_exists('the_post_thumbnail') && current_theme_supports( 'post-thumbnails' ) ) : ?>
 
 				<p>
 					<input class="checkbox" id="<?php echo $this->get_field_id( 'show_thumbnail' ); ?>" name="<?php echo $this->get_field_name( 'show_thumbnail' ); ?>" type="checkbox" <?php checked( (bool) $instance["show_thumbnail"], true ); ?> />
-					<label for="<?php echo $this->get_field_id( 'show_thumbnail' ); ?>"><?php _e( 'Show thumbnail' ); ?></label>
+					<label for="<?php echo $this->get_field_id( 'show_thumbnail' ); ?>"><?php _e( 'Show thumbnail', 'upw' ); ?></label>
 				</p>
 
 				<p>
-					<label><?php _e('Thumbnail size:'); ?></label>
+					<label><?php _e('Thumbnail size', 'upw'); ?>:</label>
 					<br />
 					<label for="<?php echo $this->get_field_id('thumb_w'); ?>">
-						W: <input class="widefat" style="width:40%;" type="text" id="<?php echo $this->get_field_id('thumb_w'); ?>" name="<?php echo $this->get_field_name('thumb_w'); ?>" value="<?php echo $thumb_w; ?>" />
+						<?php _e('W', 'upw'); ?>: <input class="widefat" style="width:40%;" type="text" id="<?php echo $this->get_field_id('thumb_w'); ?>" name="<?php echo $this->get_field_name('thumb_w'); ?>" value="<?php echo $thumb_w; ?>" />
 					</label>
 					<label for="<?php echo $this->get_field_id('thumb_h'); ?>">
-						H: <input class="widefat" style="width:40%;" type="text" id="<?php echo $this->get_field_id('thumb_h'); ?>" name="<?php echo $this->get_field_name('thumb_h'); ?>" value="<?php echo $thumb_h; ?>" />
+						<?php _e('H', 'upw'); ?>: <input class="widefat" style="width:40%;" type="text" id="<?php echo $this->get_field_id('thumb_h'); ?>" name="<?php echo $this->get_field_name('thumb_h'); ?>" value="<?php echo $thumb_h; ?>" />
 					</label>
 				</p>
 
 				<p>
-					<label><?php _e('Crop mode:'); ?></label>
+					<label><?php _e('Crop mode', 'upw'); ?>:</label>
 					<br />
 					<select id="<?php echo $this->get_field_id('thumb_crop'); ?>" name="<?php echo $this->get_field_name('thumb_crop'); ?>">
-						<option value="1"<?php if($thumb_crop == 1) echo ' selected'; ?>><?php _e('Scale &amp; Crop to Fit'); ?></option>
-						<option value="0"<?php if($thumb_crop == 0) echo ' selected'; ?>><?php _e('Stretch to Fit'); ?></option>
-						<option value="2"<?php if($thumb_crop == 2) echo ' selected'; ?>><?php _e('Proportional Scale'); ?></option>
-						<option value="3"<?php if($thumb_crop == 3) echo ' selected'; ?>><?php _e('Proportional Scale No Borders'); ?></option>
+						<option value="1"<?php if($thumb_crop == 1) echo ' selected'; ?>><?php _e('Scale &amp; Crop to Fit', 'upw'); ?></option>
+						<option value="0"<?php if($thumb_crop == 0) echo ' selected'; ?>><?php _e('Stretch to Fit', 'upw'); ?></option>
+						<option value="2"<?php if($thumb_crop == 2) echo ' selected'; ?>><?php _e('Proportional Scale', 'upw'); ?></option>
+						<option value="3"<?php if($thumb_crop == 3) echo ' selected'; ?>><?php _e('Proportional Scale No Borders', 'upw'); ?></option>
 					</select>
 				</p>
 
@@ -439,36 +441,36 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
 			<p>
 				<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('show_morebutton'); ?>" name="<?php echo $this->get_field_name('show_morebutton'); ?>" <?php checked( (bool) $instance['show_morebutton'], true ); ?> />
-				<label for="<?php echo $this->get_field_id('show_morebutton'); ?>"> <?php _e('Show more button'); ?></label>
+				<label for="<?php echo $this->get_field_id('show_morebutton'); ?>"> <?php _e('Show more button', 'upw'); ?></label>
 			</p>
 
 			<p>
-				<label for="<?php echo $this->get_field_id('morebutton_text'); ?>"><?php _e( 'More button text:' ); ?></label>
+				<label for="<?php echo $this->get_field_id('morebutton_text'); ?>"><?php _e( 'More button text', 'upw' ); ?>:</label>
 				<input class="widefat" type="text" id="<?php echo $this->get_field_id('morebutton_text'); ?>" name="<?php echo $this->get_field_name('morebutton_text'); ?>" value="<?php echo $morebutton_text; ?>" />
 			</p>
 
 			<p>
-				<label for="<?php echo $this->get_field_id('morebutton_url'); ?>"><?php _e( 'More button URL:' ); ?></label>
+				<label for="<?php echo $this->get_field_id('morebutton_url'); ?>"><?php _e( 'More button URL', 'upw' ); ?>:</label>
 				<input class="widefat" type="text" id="<?php echo $this->get_field_id('morebutton_url'); ?>" name="<?php echo $this->get_field_name('morebutton_url'); ?>" value="<?php echo $morebutton_url; ?>" />
 			</p>
 
 			<p>
 				<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('atcat'); ?>" name="<?php echo $this->get_field_name('atcat'); ?>" <?php checked( (bool) $instance['atcat'], true ); ?> />
-				<label for="<?php echo $this->get_field_id('atcat'); ?>"> <?php _e('Show posts only from current category');?></label>
+				<label for="<?php echo $this->get_field_id('atcat'); ?>"> <?php _e('Show posts only from current category', 'upw');?></label>
 			</p>
 
 			<p>
 				<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('show_cats'); ?>" name="<?php echo $this->get_field_name('show_cats'); ?>" <?php checked( (bool) $instance['show_cats'], true ); ?> />
-				<label for="<?php echo $this->get_field_id('show_cats'); ?>"> <?php _e('Show post categories'); ?></label>
+				<label for="<?php echo $this->get_field_id('show_cats'); ?>"> <?php _e('Show post categories', 'upw'); ?></label>
 			</p>
 
 			<p>
 				<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('show_tags'); ?>" name="<?php echo $this->get_field_name('show_tags'); ?>" <?php checked( (bool) $instance['show_tags'], true ); ?> />
-				<label for="<?php echo $this->get_field_id('show_tags'); ?>"> <?php _e('Show post tags'); ?></label>
+				<label for="<?php echo $this->get_field_id('show_tags'); ?>"> <?php _e('Show post tags', 'upw'); ?></label>
 			</p>
 
 			<p>
-			<label for="<?php echo $this->get_field_id('cats'); ?>"><?php _e( 'Select categories:' ); ?></label>
+			<label for="<?php echo $this->get_field_id('cats'); ?>"><?php _e( 'Select categories', 'upw' ); ?>:</label>
 			<select name="<?php echo $this->get_field_name('cats'); ?>[]" id="<?php echo $this->get_field_id('cats'); ?>" class="widefat" style="height: auto;" size="<?php echo $c ?>" multiple>
 				<?php
 				$categories = get_categories( 'hide_empty=0' );
@@ -479,7 +481,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			</p>
 
 			<p>
-			<label for="<?php echo $this->get_field_id('types'); ?>"><?php _e( 'Select post type(s):' ); ?></label>
+			<label for="<?php echo $this->get_field_id('types'); ?>"><?php _e( 'Select post types', 'upw' ); ?>:</label>
 			<select name="<?php echo $this->get_field_name('types'); ?>[]" id="<?php echo $this->get_field_id('types'); ?>" class="widefat" style="height: auto;" size="<?php echo $n ?>" multiple>
 				<?php
 				$args = array( 'public' => true );
@@ -491,33 +493,33 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			</p>
 
 			<p>
-				<label for="<?php echo $this->get_field_id('sticky'); ?>"><?php _e( 'Sticky posts:' ); ?></label>
+				<label for="<?php echo $this->get_field_id('sticky'); ?>"><?php _e( 'Sticky posts', 'upw' ); ?>:</label>
 				<select name="<?php echo $this->get_field_name('sticky'); ?>" id="<?php echo $this->get_field_id('sticky'); ?>" class="widefat">
-					<option value="show"<?php if( $sticky === 'show') echo ' selected'; ?>><?php _e('Show All Posts'); ?></option>
-					<option value="hide"<?php if( $sticky == 'hide') echo ' selected'; ?>><?php _e('Hide Sticky Posts'); ?></option>
-					<option value="only"<?php if( $sticky == 'only') echo ' selected'; ?>><?php _e('Show Only Sticky Posts'); ?></option>
+					<option value="show"<?php if( $sticky === 'show') echo ' selected'; ?>><?php _e('Show All Posts', 'upw'); ?></option>
+					<option value="hide"<?php if( $sticky == 'hide') echo ' selected'; ?>><?php _e('Hide Sticky Posts', 'upw'); ?></option>
+					<option value="only"<?php if( $sticky == 'only') echo ' selected'; ?>><?php _e('Show Only Sticky Posts', 'upw'); ?></option>
 				</select>
 			</p>
 
 			<p>
-				<label for="<?php echo $this->get_field_id('orderby'); ?>"><?php _e( 'Order by:' ); ?></label>
+				<label for="<?php echo $this->get_field_id('orderby'); ?>"><?php _e( 'Order by', 'upw' ); ?>:</label>
 				<select name="<?php echo $this->get_field_name('orderby'); ?>" id="<?php echo $this->get_field_id('orderby'); ?>" class="widefat">
-					<option value="date"<?php if( $orderby == 'date') echo ' selected'; ?>><?php _e('Published Date'); ?></option>
-					<option value="title"<?php if( $orderby == 'title') echo ' selected'; ?>><?php _e('Title'); ?></option>
-					<option value="comment_count"<?php if( $orderby == 'comment_count') echo ' selected'; ?>><?php _e('Comment Count'); ?></option>
+					<option value="date"<?php if( $orderby == 'date') echo ' selected'; ?>><?php _e('Published Date', 'upw'); ?></option>
+					<option value="title"<?php if( $orderby == 'title') echo ' selected'; ?>><?php _e('Title', 'upw'); ?></option>
+					<option value="comment_count"<?php if( $orderby == 'comment_count') echo ' selected'; ?>><?php _e('Comment Count', 'upw'); ?></option>
 					<option value="rand"<?php if( $orderby == 'rand') echo ' selected'; ?>><?php _e('Random'); ?></option>
 				</select>
 			</p>
 
 			<p>
-				<label for="<?php echo $this->get_field_id('order'); ?>"><?php _e( 'Order:' ); ?></label>
+				<label for="<?php echo $this->get_field_id('order'); ?>"><?php _e( 'Order', 'upw' ); ?>:</label>
 				<select name="<?php echo $this->get_field_name('order'); ?>" id="<?php echo $this->get_field_id('order'); ?>" class="widefat">
-					<option value="DESC"<?php if( $order == 'DESC') echo ' selected'; ?>><?php _e('Descending'); ?></option>
-					<option value="ASC"<?php if( $order == 'ASC') echo ' selected'; ?>><?php _e('Ascending'); ?></option>
+					<option value="DESC"<?php if( $order == 'DESC') echo ' selected'; ?>><?php _e('Descending', 'upw'); ?></option>
+					<option value="ASC"<?php if( $order == 'ASC') echo ' selected'; ?>><?php _e('Ascending', 'upw'); ?></option>
 				</select>
 			</p>
 
-			<p class="credits"><small>Developed by <a href="http://pomelodesign.com">Pomelo Design</a></small></p>
+			<p class="credits"><small><?php _e('Developed by', 'upw'); ?> <a href="http://pomelodesign.com">Pomelo Design</a></small></p>
 
 			<?php if ( $instance ) { ?>
 
