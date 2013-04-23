@@ -68,6 +68,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			extract( $args );
 
 			$title = apply_filters( 'widget_title', $instance['title'] );
+			$title_link = $instance['title_link'];
 			$number = $instance['number'];
 			$types = ($instance['types'] ? explode(',', $instance['types']) : '');
 			$cats = ($instance['cats'] ? explode(',', $instance['cats']) : '');
@@ -104,7 +105,13 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			if ( $instance["excerpt_length"] > 0 ) add_filter('excerpt_length', $new_excerpt_length);
 
 			echo $before_widget;
-			if ( $title ) echo $before_title . $title . $after_title;
+			if ( $title ) {
+				echo $before_title;
+				if ( $title_link ) echo "<a href='$title_link'>";
+				echo $title;
+				if ( $title_link ) echo "</a>";
+				echo $after_title;
+			}
 
 			$args = array(
 				'showposts' => $number,
@@ -212,6 +219,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			$cats = implode(',', (array)$new_instance['cats']);
 
 			$instance['title'] = strip_tags( $new_instance['title'] );
+			$instance['title_link'] = strip_tags( $new_instance['title_link'] );
 			$instance['number'] = strip_tags( $new_instance['number'] );
 			$instance['types'] = $types;
 			$instance['cats'] = $cats;
@@ -256,6 +264,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			// instance exist? if not set defaults
 			if ( $instance ) {
 				$title  = $instance['title'];
+				$title_link  = $instance['title_link'];
 				$number = $instance['number'];
 				$types  = $instance['types'];
 				$cats = $instance['cats'];
@@ -271,6 +280,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			} else {
 				//These are our defaults
 				$title  = '';
+				$title_link = '';
 				$number = '5';
 				$types  = 'post';
 				$cats = '';
@@ -309,6 +319,9 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
 			<p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
 			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title; ?>" /></p>
+
+			<p><label for="<?php echo $this->get_field_id( 'title_link' ); ?>"><?php _e( 'Title URL:' ); ?></label>
+			<input class="widefat" id="<?php echo $this->get_field_id( 'title_link' ); ?>" name="<?php echo $this->get_field_name( 'title_link' ); ?>" type="text" value="<?php echo $title_link; ?>" /></p>
 
 			<p><label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of posts:' ); ?></label>
 			<input id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="text" value="<?php echo $number; ?>" size="2" /></p>
