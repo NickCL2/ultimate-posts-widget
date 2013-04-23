@@ -326,6 +326,16 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 				$morebutton_text = 'View More Posts';
 				$morebutton_url = get_bloginfo('url');
 				$sticky = 'show';
+				$instance['show_title'] = false;
+				$instance['show_date'] = false;
+				$instance['show_time'] = false;
+				$instance['show_excerpt'] = false;
+				$instance['show_readmore'] = false;
+				$instance['show_thumbnail'] = false;
+				$instance['show_morebutton'] = false;
+				$instance['atcat'] = false;
+				$instance['show_cats'] = false;
+				$instance['show_tags'] = false;
 			}
 
 			//Let's turn $types and $cats into an array
