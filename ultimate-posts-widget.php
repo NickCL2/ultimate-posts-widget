@@ -78,9 +78,19 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			$thumb_crop = $instance['thumb_crop'];
 			$excerpt_length = $instance['excerpt_length'];
 			$excerpt_readmore = $instance['excerpt_readmore'];
-			$sticky = ($instance['sticky'] ? get_option( 'sticky_posts' ) : false);
+			//$sticky = ($instance['sticky'] ? get_option( 'sticky_posts' ) : false);
+			$sticky = $instance['sticky'];
 			$order = $instance['order'];
 			$orderby = $instance['orderby'];
+
+			// Sticky posts
+			if ($sticky == 'only') {
+				$sticky_query = array( 'post__in' => get_option( 'sticky_posts' ) );
+			} elseif ($sticky == 'hide') {
+				$sticky_query = array( 'post__not_in' => get_option( 'sticky_posts' ) );
+			} else {
+				$sticky_query = null;
+			}
 
 			// If $atcat true and in category
 			if ($atcat && is_category()) {
@@ -117,10 +127,13 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 				'showposts' => $number,
 				'order' => $order,
 				'orderby' => $orderby,
-				'post__in' => $sticky,
 				'category__in' => $cats,
 				'post_type' => $types
 			);
+
+			if (!empty($sticky_query)) {
+				$args[key($sticky_query)] = reset($sticky_query);
+			}
 
 			$r = new WP_Query( $args );
 
@@ -277,6 +290,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 				$orderby = $instance['orderby'];
 				$morebutton_text = $instance['morebutton_text'];
 				$morebutton_url = $instance['morebutton_url'];
+				$sticky = $instance['sticky'];
 			} else {
 				//These are our defaults
 				$title  = '';
@@ -293,6 +307,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 				$orderby = 'date';
 				$morebutton_text = 'View More Posts';
 				$morebutton_url = get_bloginfo('url');
+				$sticky = 'show';
 			}
 
 			//Let's turn $types and $cats into an array
@@ -410,11 +425,6 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			</p>
 
 			<p>
-				<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('sticky'); ?>" name="<?php echo $this->get_field_name('sticky'); ?>" <?php checked( (bool) $instance['sticky'], true ); ?> />
-				<label for="<?php echo $this->get_field_id('sticky'); ?>"> <?php _e('Show only sticky posts'); ?></label>
-			</p>
-
-			<p>
 				<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('atcat'); ?>" name="<?php echo $this->get_field_name('atcat'); ?>" <?php checked( (bool) $instance['atcat'], true ); ?> />
 				<label for="<?php echo $this->get_field_id('atcat'); ?>"> <?php _e('Show posts only from current category');?></label>
 			</p>
@@ -440,6 +450,15 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 					<option value="<?php echo $post_type; ?>" <?php if( in_array($post_type, $types)) { echo 'selected="selected"'; } ?>><?php echo $post_type;?></option>
 				<?php }	?>
 			</select>
+			</p>
+
+			<p>
+				<label for="<?php echo $this->get_field_id('sticky'); ?>"><?php _e( 'Sticky posts:' ); ?></label>
+				<select name="<?php echo $this->get_field_name('sticky'); ?>" id="<?php echo $this->get_field_id('sticky'); ?>" class="widefat">
+					<option value="show"<?php if( $sticky === 'show') echo ' selected'; ?>><?php _e('Show All Posts'); ?></option>
+					<option value="hide"<?php if( $sticky == 'hide') echo ' selected'; ?>><?php _e('Hide Sticky Posts'); ?></option>
+					<option value="only"<?php if( $sticky == 'only') echo ' selected'; ?>><?php _e('Show Only Sticky Posts'); ?></option>
+				</select>
 			</p>
 
 			<p>
