@@ -4,7 +4,7 @@ Donate link: http://www.pomelodesign.com/donate
 Tags: widget, recent posts, custom post types, sticky posts, featured image, post thumbnail, excerpts, category
 Requires at least: 3.0
 Tested up to: 3.5.1
-Stable tag: 1.5.1
+Stable tag: 1.6
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,6 +28,9 @@ Options:
 * Display read more link
 * Display featured image
 * Display more button link
+* Display post categories
+* Display post tags
+* Custom widget title link
 * Custom read more link text
 * Custom excerpt length (in words)
 * Custom featured image size
@@ -57,6 +60,15 @@ Still stuck? See [additional troubleshooting tips](http://www.binarymoon.co.uk/2
 1. Widget options
 
 == Changelog ==
+
+= 1.6 =
+
+* Added localization support
+* Added show post categories option
+* Added show post tags option
+* Added custom widget title URL option
+* Improved filter controls for sticky posts
+* Bug fixes
 
 = 1.5.1 =
 
