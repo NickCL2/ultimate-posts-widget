@@ -24,6 +24,7 @@ Options:
 * Display title
 * Display publish date
 * Display publish time
+* Display post author
 * Display excerpt
 * Display read more link
 * Display featured image
