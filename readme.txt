@@ -37,7 +37,7 @@ Options:
 * Feature image crop mode
 * Order by date, title, number of comments or random
 
-For support please use [wordpress.org](http://wordpress.org/support/plugin/ultimate-posts-widget). Visit [our website](http://pomelodesign.com), follow [@pomelod](http://twitter.com/pomelod/) or like [on facebook](http://www.facebook.com/pomelodesign/) for updates.
+For support please use [wordpress.org](http://wordpress.org/support/plugin/ultimate-posts-widget). Visit [our website](http://pomelodesign.com), follow [@bostondv](http://twitter.com/bostondv/) or like [on facebook](http://www.facebook.com/pomelodesign/) for updates.
 
 Fork or contribute on [Github](https://github.com/bostondv/ultimate-posts-widget)
 
