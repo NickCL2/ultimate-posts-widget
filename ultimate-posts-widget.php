@@ -42,9 +42,9 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 		}
 
 		function widget( $args, $instance ) {
-			
+
 			global $post;
-			$current_post_id =  $post -> ID;
+			$current_post_id =  $post->ID;
 
 			if( !function_exists('get_image_path') ) {
 				function get_image_path($src) {
@@ -149,7 +149,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
 					?>
 
-					<li class="<?php echo ($post->ID == $current_post_id && is_single())?'current_post_item':'' ?>">
+					<li class="<?php echo ($post->ID == $current_post_id && is_single())?'current-post-item':'' ?>">
 
 						<?php
 							if ( function_exists('the_post_thumbnail') &&
