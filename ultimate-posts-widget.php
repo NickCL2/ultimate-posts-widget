@@ -192,6 +192,13 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 								</p>
 							<?php endif; ?>
 
+							<?php if( $instance['show_author'] ) : ?>
+								<p class="post-author">
+									<span class="post-author-label"><?php _e('By', 'upw'); ?>:</span>
+									<?php the_author_posts_link(); ?>
+								</p>
+							<?php endif; ?>
+
 							<?php if ( $instance['show_excerpt'] ) :
 								if ( $instance['show_readmore'] ) : $linkmore = ' <a href="'.get_permalink().'" class="more-link">'.$excerpt_readmore.'</a>'; else: $linkmore =''; endif; ?>
 								<p class="post-excerpt"><?php echo get_the_excerpt() . $linkmore; ?></p>
@@ -259,6 +266,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			$instance['show_date'] = $new_instance['show_date'];
 			$instance['show_time'] = $new_instance['show_time'];
 			$instance['show_title'] = $new_instance['show_title'];
+			$instance['show_author'] = $new_instance['show_author'];
 			$instance['thumb_w'] = strip_tags( $new_instance['thumb_w'] );
 			$instance['thumb_h'] = strip_tags( $new_instance['thumb_h'] );
 			$instance['thumb_crop'] = $new_instance['thumb_crop'];
@@ -332,6 +340,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 				$instance['show_title'] = false;
 				$instance['show_date'] = false;
 				$instance['show_time'] = false;
+				$instance['show_author'] = false;
 				$instance['show_excerpt'] = false;
 				$instance['show_readmore'] = false;
 				$instance['show_thumbnail'] = false;
@@ -385,6 +394,11 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			<p>
 				<input class="checkbox" id="<?php echo $this->get_field_id( 'show_time' ); ?>" name="<?php echo $this->get_field_name( 'show_time' ); ?>" type="checkbox" <?php checked( (bool) $instance["show_time"], true ); ?> />
 				<label for="<?php echo $this->get_field_id( 'show_time' ); ?>"><?php _e( 'Show published time', 'upw' ); ?></label>
+			</p>
+
+			<p>
+				<input class="checkbox" id="<?php echo $this->get_field_id( 'show_author' ); ?>" name="<?php echo $this->get_field_name( 'show_author' ); ?>" type="checkbox" <?php checked( (bool) $instance["show_author"], true ); ?> />
+				<label for="<?php echo $this->get_field_id( 'show_author' ); ?>"><?php _e( 'Show post author', 'upw' ); ?></label>
 			</p>
 
 			<p>
