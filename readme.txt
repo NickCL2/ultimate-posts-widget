@@ -3,8 +3,8 @@ Contributors: bostondv
 Donate link: http://www.pomelodesign.com/donate
 Tags: widget, recent posts, custom post types, sticky posts, featured image, post thumbnail, excerpts, category
 Requires at least: 3.0
-Tested up to: 3.5.1
-Stable tag: 1.6
+Tested up to: 3.6
+Stable tag: 1.7
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,12 @@ Still stuck? See [additional troubleshooting tips](http://www.binarymoon.co.uk/2
 1. Widget options
 
 == Changelog ==
+
+= 1.7 =
+
+* Added show author option
+* Added class to highlight current post
+* Fixed PHP error notices
 
 = 1.6 =
 
