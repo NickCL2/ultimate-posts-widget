@@ -193,6 +193,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
 							<?php if( $instance['show_author'] ) : ?>
 								<p class="post-author">
+									<span class="post-author-label"><?php _e('By', 'upw'); ?>:</span>
 									<?php the_author_posts_link(); ?>
 								</p>
 							<?php endif; ?>
