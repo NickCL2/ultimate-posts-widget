@@ -38,7 +38,7 @@ Options:
 * Feature image crop mode
 * Order by date, title, number of comments or random
 
-For support please use [wordpress.org](http://wordpress.org/support/plugin/ultimate-posts-widget). Visit [our website](http://pomelodesign.com), follow [@bostondv](http://twitter.com/bostondv/) or like [on facebook](http://www.facebook.com/pomelodesign/) for updates.
+For support please use [wordpress.org](http://wordpress.org/support/plugin/ultimate-posts-widget). Visit [our website](http://pomelodesign.com), follow [@bostondv](http://twitter.com/bostondv/) for updates.
 
 Fork or contribute on [Github](https://github.com/bostondv/ultimate-posts-widget)
 
@@ -48,11 +48,11 @@ Fork or contribute on [Github](https://github.com/bostondv/ultimate-posts-widget
 
 This plugin uses the [TimThumb library](http://www.binarymoon.co.uk/projects/timthumb/) to resize post thumbnails. Please review these requirements and troubleshooting tips if you are having problems displaying thumbnails.
 
+* Right click > view image - If an image isn't loading then this is the first thing you should do. 9 times out of 10 it will tell you what the problem is in an easy to read error message.
 * JetPack plugin - There is a known conflict between JetPack's "Photon" component, please disable it for compatibility with TimThumb.
 * Server requirements - PHP and the GD image library must be installed on your web server. Normally most web servers include them by default.
 * Cache permissions - The cache directory `wp-content/plugins/ultimate-posts-widget/cache` should be set to 777 or if that doesn't work, you may find 755 is ok.
 * Image sizes - TimThumb is configured to only work for images smaller than 1500 x 1500. The plugin and automatically selects the "Large" size from Settings > Media, if it is greater than 1500 x 1500 you will need to reduce the size or modify the configuration in `thumb.php` to support larger image sizes.
-* Right click > view image - If an image isn't loading then this is the first thing you should do. 9 times out of 10 it will tell you what the problem is in an easy to read error message.
 * Tilde(~) in url - Timthumb has a known issue with this, please use a url without a tilde until a fix is available. [Bug report](https://code.google.com/p/timthumb/issues/detail?id=263)
 
 Still stuck? See [additional troubleshooting tips](http://www.binarymoon.co.uk/2010/11/timthumb-hints-tips/) from the TimThumb author.
