@@ -86,7 +86,10 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			$sticky = $instance['sticky'];
 			$order = $instance['order'];
 			$orderby = $instance['orderby'];
-
+			
+			//To handle custom fields of any post type
+			$custom_field = $instance['custom_field'];
+			
 			// Sticky posts
 			if ($sticky == 'only') {
 				$sticky_query = array( 'post__in' => get_option( 'sticky_posts' ) );
@@ -177,6 +180,29 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 									</a>
 								</p>
 							<?php endif; ?>
+							
+							<?php if ( $instance['custom_field'] ) {
+							//Display the values of custom fields, according to the comma-separated list of field names 
+								$custom_field_name = explode(",", $instance['custom_field']);
+								foreach ($custom_field_name as $name) { 
+									$name = trim($name);
+									$custom_field_values = get_post_meta($post->ID, $name, true);
+									if ($custom_field_values) { ?>
+										<p class="post-<?php echo "$name" ?>">	
+										<?php if (!is_array($custom_field_values)) {
+											echo $custom_field_values;
+										} else {
+											$count = count($custom_field_values);
+								                	$last_value = end($custom_field_values);
+								                	foreach ( $custom_field_values as $value) {
+								                        	echo $value;
+								                        	if ($value != $last_value) echo ", ";
+								                	}
+										}?>
+										</p>
+									<?php }
+								} 
+							} ?>
 
 							<?php if ( $instance['show_date'] || $instance['show_time'] ) : ?>
 								<p class="post-date">
@@ -277,7 +303,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			$instance['morebutton_text'] = strip_tags( $new_instance['morebutton_text'] );
 			$instance['show_cats'] = isset( $new_instance['show_cats'] );
 			$instance['show_tags'] = isset( $new_instance['show_tags'] );
-
+			$instance['custom_field'] = strip_tags( $new_instance['custom_field'] );
 
 			$this->flush_widget_cache();
 
@@ -324,6 +350,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 				'show_excerpt' => false,
 				'show_readmore' => false,
 				'show_thumbnail' => false,
+				'custom_field' => '',
 				'show_morebutton' => false
 			) );
 
@@ -354,6 +381,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 			$show_readmore = $instance['show_readmore'];
 			$show_thumbnail = $instance['show_thumbnail'];
 			$show_morebutton = $instance['show_morebutton'];
+			$custom_field = strip_tags($instance['custom_field']);
 
 			//Let's turn $types and $cats into an array
 			$types = explode(',', $types);
@@ -538,6 +566,9 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 					<option value="ASC"<?php if( $order == 'ASC') echo ' selected'; ?>><?php _e('Ascending', 'upw'); ?></option>
 				</select>
 			</p>
+
+			<p><label for="<?php echo $this->get_field_id( 'custom_field' ); ?>"><?php _e( 'Comma-separated list of Meta Value Names', 'upw' ); ?>:</label>
+			<input class="widefat" id="<?php echo $this->get_field_id( 'custom_field' ); ?>" name="<?php echo $this->get_field_name( 'custom_field' ); ?>" type="text" value="<?php echo $custom_field; ?>" /></p>
 
 			<p class="credits"><small><?php _e('Developed by', 'upw'); ?> <a href="http://pomelodesign.com">Pomelo Design</a></small></p>
 
