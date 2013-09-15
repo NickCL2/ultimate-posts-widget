@@ -1,10 +1,10 @@
 === Ultimate Posts Widget ===
 Contributors: bostondv
 Donate link: http://www.pomelodesign.com/donate
-Tags: widget, recent posts, custom post types, sticky posts, featured image, post thumbnail, excerpts, category
+Tags: widget, recent posts, custom post types, sticky posts, featured image, post thumbnail, excerpts, category, custom fields
 Requires at least: 3.0
-Tested up to: 3.6
-Stable tag: 1.7
+Tested up to: 3.6.1
+Stable tag: 1.8
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,6 +31,7 @@ Options:
 * Display more button link
 * Display post categories
 * Display post tags
+* Display custom fields
 * Custom widget title link
 * Custom read more link text
 * Custom excerpt length (in words)
@@ -54,6 +55,7 @@ This plugin uses the [TimThumb library](http://www.binarymoon.co.uk/projects/tim
 * Cache permissions - The cache directory `wp-content/plugins/ultimate-posts-widget/cache` should be set to 777 or if that doesn't work, you may find 755 is ok.
 * Image sizes - TimThumb is configured to only work for images smaller than 1500 x 1500. The plugin and automatically selects the "Large" size from Settings > Media, if it is greater than 1500 x 1500 you will need to reduce the size or modify the configuration in `thumb.php` to support larger image sizes.
 * Tilde(~) in url - Timthumb has a known issue with this, please use a url without a tilde until a fix is available. [Bug report](https://code.google.com/p/timthumb/issues/detail?id=263)
+* Thumbnail images only work with WordPress' native post thumbnail / featured image. Many theme use a custom image field for thumbnails, these are not supported.
 
 Still stuck? See [additional troubleshooting tips](http://www.binarymoon.co.uk/2010/11/timthumb-hints-tips/) from the TimThumb author.
 
@@ -62,6 +64,13 @@ Still stuck? See [additional troubleshooting tips](http://www.binarymoon.co.uk/2
 1. Widget options
 
 == Changelog ==
+
+= 1.8 =
+
+* Add custom field display
+* Re-organized widget options
+* Use proper alt tag for image thumbnails
+* Better title attribute for links
 
 = 1.7 =
 
