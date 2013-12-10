@@ -489,13 +489,13 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       </p>
 
       <p>
-        <input class="checkbox" id="<?php echo $this->get_field_id( 'show_content' ); ?>" name="<?php echo $this->get_field_name( 'show_content' ); ?>" type="checkbox" <?php checked( (bool) $show_content, true ); ?> />
-        <label for="<?php echo $this->get_field_id( 'show_content' ); ?>"><?php _e( 'Show content', 'upw' ); ?></label>
+        <label for="<?php echo $this->get_field_id('excerpt_length'); ?>"><?php _e( 'Excerpt length (in words)', 'upw' ); ?>:</label>
+        <input style="text-align: center;" type="text" id="<?php echo $this->get_field_id('excerpt_length'); ?>" name="<?php echo $this->get_field_name('excerpt_length'); ?>" value="<?php echo $excerpt_length; ?>" size="3" />
       </p>
 
       <p>
-        <label for="<?php echo $this->get_field_id('excerpt_length'); ?>"><?php _e( 'Excerpt length (in words)', 'upw' ); ?>:</label>
-        <input style="text-align: center;" type="text" id="<?php echo $this->get_field_id('excerpt_length'); ?>" name="<?php echo $this->get_field_name('excerpt_length'); ?>" value="<?php echo $excerpt_length; ?>" size="3" />
+        <input class="checkbox" id="<?php echo $this->get_field_id( 'show_content' ); ?>" name="<?php echo $this->get_field_name( 'show_content' ); ?>" type="checkbox" <?php checked( (bool) $show_content, true ); ?> />
+        <label for="<?php echo $this->get_field_id( 'show_content' ); ?>"><?php _e( 'Show content', 'upw' ); ?></label>
       </p>
 
       <p>
