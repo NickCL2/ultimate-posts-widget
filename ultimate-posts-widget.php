@@ -3,7 +3,7 @@
 Plugin Name: Ultimate Posts Widget
 Plugin URI: http://wordpress.org/plugins/ultimate-posts-widget/
 Description: The ultimate widget for displaying posts, custom post types or sticky posts with an array of options.
-Version: 1.8
+Version: 1.8.1
 Author: Boston Dell-Vandenberg
 Author URI: http://pomelodesign.com
 License: GPL2
@@ -218,6 +218,10 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
                 <p class="post-excerpt"><?php echo get_the_excerpt() . $linkmore; ?></p>
               <?php endif; ?>
 
+              <?php if ( $instance['show_content'] ) : ?>
+                <p class="post-content"><?php the_content() ?></p>
+              <?php endif; ?>
+
               <?php if ( $instance['show_cats'] ) : ?>
                 <p class="post-cats">
                   <span class="post-cats-label"><?php _e('Categories', 'upw'); ?>:</span>
@@ -294,6 +298,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       $instance['cats'] = (isset( $new_instance['cats'] )) ? implode(',', (array) $new_instance['cats']) : '';
       $instance['atcat'] = isset( $new_instance['atcat'] );
       $instance['show_excerpt'] = isset( $new_instance['show_excerpt'] );
+      $instance['show_content'] = isset( $new_instance['show_content'] );
       $instance['show_thumbnail'] = isset( $new_instance['show_thumbnail'] );
       $instance['show_date'] = isset( $new_instance['show_date'] );
       $instance['show_time'] = isset( $new_instance['show_time'] );
@@ -358,6 +363,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
         'show_time' => false,
         'show_author' => false,
         'show_excerpt' => false,
+        'show_content' => false,
         'show_readmore' => false,
         'show_thumbnail' => false,
         'custom_fields' => '',
@@ -388,6 +394,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       $show_time = $instance['show_time'];
       $show_author = $instance['show_author'];
       $show_excerpt = $instance['show_excerpt'];
+      $show_content = $instance['show_content'];
       $show_readmore = $instance['show_readmore'];
       $show_thumbnail = $instance['show_thumbnail'];
       $show_morebutton = $instance['show_morebutton'];
@@ -479,6 +486,11 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       <p>
         <input class="checkbox" id="<?php echo $this->get_field_id( 'show_excerpt' ); ?>" name="<?php echo $this->get_field_name( 'show_excerpt' ); ?>" type="checkbox" <?php checked( (bool) $show_excerpt, true ); ?> />
         <label for="<?php echo $this->get_field_id( 'show_excerpt' ); ?>"><?php _e( 'Show excerpt', 'upw' ); ?></label>
+      </p>
+
+      <p>
+        <input class="checkbox" id="<?php echo $this->get_field_id( 'show_content' ); ?>" name="<?php echo $this->get_field_name( 'show_content' ); ?>" type="checkbox" <?php checked( (bool) $show_content, true ); ?> />
+        <label for="<?php echo $this->get_field_id( 'show_content' ); ?>"><?php _e( 'Show content', 'upw' ); ?></label>
       </p>
 
       <p>

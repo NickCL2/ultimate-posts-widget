@@ -4,7 +4,7 @@ Donate link: http://www.pomelodesign.com/donate
 Tags: widget, recent posts, custom post types, sticky posts, featured image, post thumbnail, excerpts, category, custom fields
 Requires at least: 3.0
 Tested up to: 3.6.1
-Stable tag: 1.8
+Stable tag: 1.8.1
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,6 +26,7 @@ Options:
 * Display publish time
 * Display post author
 * Display excerpt
+* Display content
 * Display read more link
 * Display featured image
 * Display more button link
@@ -64,6 +65,10 @@ Still stuck? See [additional troubleshooting tips](http://www.binarymoon.co.uk/2
 1. Widget options
 
 == Changelog ==
+
+= 1.8.1 =
+
+* Add content display option
 
 = 1.8 =
 
