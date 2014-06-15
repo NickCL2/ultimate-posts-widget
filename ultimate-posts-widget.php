@@ -175,7 +175,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
             ?>
 
             <div class="upw-image">
-              <a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(array('before'=>'Permalink to: ')); ?>">
+              <a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>">
                 <img src="<?php echo WP_PLUGIN_URL . '/ultimate-posts-widget/thumb.php?src='. get_image_path($thumbnail[0]) .'&amp;h='.$thumb_h.'&amp;w='.$thumb_w.'&amp;zc='.$thumb_crop; ?>" alt="<?php echo $thumbnail_alt; ?>" />
               </a>
             </div>
@@ -186,7 +186,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
               <?php if ( get_the_title() && $instance['show_title'] ) : ?>
                 <p class="post-title">
-                  <a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(array('before'=>'Permalink to: ')); ?>">
+                  <a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>">
                     <?php the_title(); ?>
                   </a>
                 </p>
@@ -214,7 +214,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
               <?php endif; ?>
 
               <?php if ( $instance['show_excerpt'] ) :
-                if ( $instance['show_readmore'] ) : $linkmore = ' <a href="'.get_permalink().'" class="more-link" title="'.the_title_attribute(array('before'=>'Permalink to: ', 'echo'=>false)).'">'.$excerpt_readmore.'</a>'; else: $linkmore =''; endif; ?>
+                if ( $instance['show_readmore'] ) : $linkmore = ' <a href="'.get_permalink().'" class="more-link" title="'.the_title_attribute(array('echo'=>false)).'">'.$excerpt_readmore.'</a>'; else: $linkmore =''; endif; ?>
                 <p class="post-excerpt"><?php echo get_the_excerpt() . $linkmore; ?></p>
               <?php endif; ?>
 
