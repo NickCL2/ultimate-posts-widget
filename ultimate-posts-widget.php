@@ -98,6 +98,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       $sticky = $instance['sticky'];
       $order = $instance['order'];
       $orderby = $instance['orderby'];
+      $meta_key = $instance['meta_key'];
       $custom_fields = $instance['custom_fields'];
       
       // Sticky posts
@@ -147,6 +148,10 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
         'category__in' => $cats,
         'post_type' => $types
       );
+
+      if ($orderby === 'meta_value') {
+        $args['meta_key'] = $meta_key;
+      }
 
       if (!empty($sticky_query)) {
         $args[key($sticky_query)] = reset($sticky_query);
@@ -313,6 +318,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       $instance['sticky'] = $new_instance['sticky'];
       $instance['order'] = $new_instance['order'];
       $instance['orderby'] = $new_instance['orderby'];
+      $instance['meta_key'] = $new_instance['meta_key'];
       $instance['show_morebutton'] = isset( $new_instance['show_morebutton'] );
       $instance['morebutton_url'] = strip_tags( $new_instance['morebutton_url'] );
       $instance['morebutton_text'] = strip_tags( $new_instance['morebutton_text'] );
@@ -353,6 +359,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
         'excerpt_readmore' => __('Read more &rarr;', 'upw'),
         'order' => 'DESC',
         'orderby' => 'date',
+        'meta_key' => '',
         'morebutton_text' => __('View More Posts', 'upw'),
         'morebutton_url' => site_url(),
         'sticky' => 'show',
@@ -384,6 +391,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       $excerpt_readmore = strip_tags($instance['excerpt_readmore']);
       $order = $instance['order'];
       $orderby = $instance['orderby'];
+      $meta_key = $instance['meta_key'];
       $morebutton_text = strip_tags($instance['morebutton_text']);
       $morebutton_url = strip_tags($instance['morebutton_url']);
       $sticky = $instance['sticky'];
@@ -607,9 +615,15 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
           <option value="title"<?php if( $orderby == 'title') echo ' selected'; ?>><?php _e('Title', 'upw'); ?></option>
           <option value="comment_count"<?php if( $orderby == 'comment_count') echo ' selected'; ?>><?php _e('Comment Count', 'upw'); ?></option>
           <option value="rand"<?php if( $orderby == 'rand') echo ' selected'; ?>><?php _e('Random'); ?></option>
+          <option value="meta_value"<?php if( $orderby == 'meta_value') echo ' selected'; ?>><?php _e('Custom Field', 'upw'); ?></option>
         </select>
       </p>
 
+      <p<?php if( $orderby !== 'meta_value') { echo ' style="display:none;"'; } ?>>
+        <label for="<?php echo $this->get_field_id( 'meta_key' ); ?>"><?php _e('Custom Field', 'upw'); ?>:</label>
+        <input class="widefat" id="<?php echo $this->get_field_id('meta_key'); ?>" name="<?php echo $this->get_field_name('meta_key'); ?>" type="text" value="<?php echo $meta_key; ?>" />
+      </p>
+      
       <p>
         <select name="<?php echo $this->get_field_name('order'); ?>" id="<?php echo $this->get_field_id('order'); ?>" class="widefat">
           <option value="DESC"<?php if( $order == 'DESC') echo ' selected'; ?>><?php _e('Descending', 'upw'); ?></option>
@@ -635,7 +649,8 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
             var show_morebutton = $("#<?php echo $this->get_field_id( 'show_morebutton' ); ?>");
             var morebutton_text = $("#<?php echo $this->get_field_id( 'morebutton_text' ); ?>").parents('p');
             var morebutton_url = $("#<?php echo $this->get_field_id( 'morebutton_url' ); ?>").parents('p');
-
+            var order = $("#<?php echo $this->get_field_id('orderby'); ?>");
+            var meta_key = $("#<?php echo $this->get_field_id( 'meta_key' ); ?>").parents('p');
             <?php
             // Use PHP to determine if not checked and hide if so
             // jQuery method was acting up
@@ -652,6 +667,9 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
             if ( !$show_morebutton ) {
               echo 'morebutton_text.hide();';
               echo 'morebutton_url.hide();';
+            }
+            if ( $orderby !== 'meta_value' ) {
+                echo 'meta_key.hide();';
             }
             ?>
 
@@ -699,6 +717,17 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
               } else {
                 morebutton_text.hide("fast");
                 morebutton_url.hide("fast");
+              }
+
+            });
+
+            // Show or hide custom field meta_key value on order change
+            order.change(function(){
+
+              if ( $(this).val() === "meta_value") {
+                meta_key.show("fast");
+              } else {
+                meta_key.hide("fast");
               }
 
              });
