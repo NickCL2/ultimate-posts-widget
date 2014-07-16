@@ -38,7 +38,7 @@ Options:
 * Custom excerpt length (in words)
 * Custom featured image size
 * Feature image crop mode
-* Order by date, title, number of comments or random
+* Order by date, title, number of comments, random or custom field
 
 For support please use [wordpress.org](http://wordpress.org/support/plugin/ultimate-posts-widget). Visit [our website](http://pomelodesign.com), follow [@bostondv](http://twitter.com/bostondv/) for updates.
 
