@@ -4,7 +4,7 @@ Donate link: http://www.pomelodesign.com/donate
 Tags: widget, recent posts, custom post types, sticky posts, featured image, post thumbnail, excerpts, category, custom fields
 Requires at least: 3.0
 Tested up to: 3.9
-Stable tag: 1.8.1
+Stable tag: 1.9.0
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -65,6 +65,12 @@ Still stuck? See [additional troubleshooting tips](http://www.binarymoon.co.uk/2
 1. Widget options
 
 == Changelog ==
+
+= 1.9.0 =
+
+* Adds option to order by custom field (thanks @enekochan)
+* Remove "Permalink to:" from link titles (thanks @wirelessgizmo)
+* Sweedish translation (thanks @brstp)
 
 = 1.8.1 =
 
