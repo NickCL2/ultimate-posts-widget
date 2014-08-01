@@ -85,6 +85,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       extract( $args );
 
       $title = apply_filters( 'widget_title', $instance['title'] );
+      $class = $instance['class'];
       $title_link = $instance['title_link'];
       $number = $instance['number'];
       $types = ($instance['types'] ? explode(',', $instance['types']) : '');
@@ -131,7 +132,10 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       // Excerpt length filter
       $new_excerpt_length = create_function('$length', "return " . $excerpt_length . ";");
       if ( $instance["excerpt_length"] > 0 ) add_filter('excerpt_length', $new_excerpt_length);
-
+      if( $class )
+      {
+        $before_widget = str_replace('class="', 'class="'. $class . ' ', $before_widget);
+      }
       echo $before_widget;
       if ( $title ) {
         echo $before_title;
@@ -297,6 +301,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       $instance = $old_instance;
 
       $instance['title'] = strip_tags( $new_instance['title'] );
+      $instance['class'] = strip_tags( $new_instance['class']);
       $instance['title_link'] = strip_tags( $new_instance['title_link'] );
       $instance['number'] = strip_tags( $new_instance['number'] );
       $instance['types'] = (isset( $new_instance['types'] )) ? implode(',', (array) $new_instance['types']) : '';
@@ -347,6 +352,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       // Set default arguments
       $instance = wp_parse_args( (array) $instance, array(
         'title' => '',
+        'class' => '',
         'title_link' => '' ,
         'number' => '5',
         'types' => 'post',
@@ -379,6 +385,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
       // Or use the instance
       $title  = strip_tags($instance['title']);
+      $class  = strip_tags($instance['class']);
       $title_link  = strip_tags($instance['title_link']);
       $number = strip_tags($instance['number']);
       $types  = $instance['types'];
@@ -436,6 +443,11 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
           border-top: 1px solid #DFDFDF;
         }
       </style>
+      
+      <p>
+        <label for="<?php echo $this->get_field_id( 'class' ); ?>"><?php _e( 'CSS class', 'upw' ); ?>:</label>
+        <input class="widefat" id="<?php echo $this->get_field_id( 'class' ); ?>" name="<?php echo $this->get_field_name( 'class' ); ?>" type="text" value="<?php echo $class; ?>" />
+      </p>
 
       <p>
         <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title', 'upw' ); ?>:</label>
