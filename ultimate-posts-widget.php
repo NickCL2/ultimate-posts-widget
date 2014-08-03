@@ -89,7 +89,9 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       $number = $instance['number'];
       $types = ($instance['types'] ? explode(',', $instance['types']) : '');
       $cats = ($instance['cats'] ? explode(',', $instance['cats']) : '');
+      $tags = ($instance['tags'] ? explode(',', $instance['tags']) : '');
       $atcat = $instance['atcat'] ? true : false;
+      $attag = $instance['attag'] ? true : false;
       $thumb_w = $instance['thumb_w'];
       $thumb_h = $instance['thumb_h'];
       $thumb_crop = $instance['thumb_crop'];
@@ -119,9 +121,23 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       if ($atcat && is_single()) {
         $cats = '';
         foreach (get_the_category() as $catt) {
-          $cats .= $catt->cat_ID.' ';
+          $cats .= $catt->term_id.' ';
         }
         $cats = str_replace(" ", ",", trim($cats));
+      }
+
+      // If $attag true and in tag
+      if ($attag && is_tag()) {
+        $tags = get_query_var('tag_id');
+      }
+
+      // If $attag true and is single post
+      if ($attag && is_single()) {
+        $tags = '';
+        foreach (get_the_tags() as $tagg) {
+          $tags .= $tagg->term_id.' ';
+        }
+        $tags = str_replace(" ", ",", trim($tags));
       }
 
       //Excerpt more filter
@@ -146,6 +162,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
         'order' => $order,
         'orderby' => $orderby,
         'category__in' => $cats,
+        'tag__in' => $tags,
         'post_type' => $types
       );
 
@@ -301,7 +318,9 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       $instance['number'] = strip_tags( $new_instance['number'] );
       $instance['types'] = (isset( $new_instance['types'] )) ? implode(',', (array) $new_instance['types']) : '';
       $instance['cats'] = (isset( $new_instance['cats'] )) ? implode(',', (array) $new_instance['cats']) : '';
+      $instance['tags'] = (isset( $new_instance['tags'] )) ? implode(',', (array) $new_instance['tags']) : '';
       $instance['atcat'] = isset( $new_instance['atcat'] );
+      $instance['attag'] = isset( $new_instance['attag'] );
       $instance['show_excerpt'] = isset( $new_instance['show_excerpt'] );
       $instance['show_content'] = isset( $new_instance['show_content'] );
       $instance['show_thumbnail'] = isset( $new_instance['show_thumbnail'] );
@@ -351,7 +370,9 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
         'number' => '5',
         'types' => 'post',
         'cats' => '',
+        'tags' => '',
         'atcat' => false,
+        'attag' => false,
         'thumb_w' => 100,
         'thumb_h' => 100,
         'thumb_crop' => 1,
@@ -365,11 +386,11 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
         'sticky' => 'show',
         'show_cats' => false,
         'show_tags' => false,
-        'show_title' => false,
-        'show_date' => false,
+        'show_title' => true,
+        'show_date' => true,
         'show_time' => false,
         'show_author' => false,
-        'show_excerpt' => false,
+        'show_excerpt' => true,
         'show_content' => false,
         'show_readmore' => false,
         'show_thumbnail' => false,
@@ -383,7 +404,9 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       $number = strip_tags($instance['number']);
       $types  = $instance['types'];
       $cats = $instance['cats'];
+      $tags = $instance['tags'];
       $atcat = $instance['atcat'];
+      $attag = $instance['attag'];
       $thumb_w = strip_tags($instance['thumb_w']);
       $thumb_h = strip_tags($instance['thumb_h']);
       $thumb_crop = strip_tags($instance['thumb_crop']);
@@ -408,25 +431,46 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       $show_morebutton = $instance['show_morebutton'];
       $custom_fields = strip_tags($instance['custom_fields']);
 
-      //Let's turn $types and $cats into an array
+      // Let's turn $types, $cats, and $tags into an array
       $types = explode(',', $types);
       $cats = explode(',', $cats);
+      $tags = explode(',', $tags);
 
-      //Count number of post types for select box sizing
+      // Count number of post types for select box sizing
       $cpt_types = get_post_types( array( 'public' => true ), 'names' );
-      foreach ($cpt_types as $cpt ) {
-         $cpt_ar[] = $cpt;
+      if ($cpt_types) {
+        foreach ($cpt_types as $cpt ) {
+          $cpt_ar[] = $cpt;
+        }
+        $n = count($cpt_ar);
+        if($n > 10) { $n = 10; }
+      } else {
+        $n = 3;
       }
-      $n = count($cpt_ar);
-      if($n > 10) { $n = 10; }
 
-      //Count number of categories for select box sizing
+      // Count number of categories for select box sizing
       $cat_list = get_categories( 'hide_empty=0' );
-      foreach ($cat_list as $cat ) {
-         $cat_ar[] = $cat;
+      if ($cat_list) {
+        foreach ($cat_list as $cat) {
+          $cat_ar[] = $cat;
+        }
+        $c = count($cat_ar);
+        if($c > 10) { $c = 10; }
+      } else {
+        $c = 3;
       }
-      $c = count($cat_ar);
-      if($c > 10) { $c = 10; }
+
+      // Count number of tags for select box sizing
+      $tag_list = get_tags( 'hide_empty=0' );
+      if ($tag_list) {
+        foreach ($tag_list as $tag) {
+          $tag_ar[] = $tag;
+        }
+        $t = count($tag_ar);
+        if($t > 10) { $t = 10; }
+      } else {
+        $t = 3;
+      }
 
       ?>
 
@@ -568,21 +612,39 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
       <h4>Filters</h4>
 
-      <p>
-        <input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('atcat'); ?>" name="<?php echo $this->get_field_name('atcat'); ?>" <?php checked( (bool) $atcat, true ); ?> />
-        <label for="<?php echo $this->get_field_id('atcat'); ?>"> <?php _e('Show posts only from current category', 'upw');?></label>
-      </p>
+      <?php if ($cat_list) : ?>
+        <p>
+          <input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('atcat'); ?>" name="<?php echo $this->get_field_name('atcat'); ?>" <?php checked( (bool) $atcat, true ); ?> />
+          <label for="<?php echo $this->get_field_id('atcat'); ?>"> <?php _e('Show posts only from current category', 'upw');?></label>
+        </p>
 
-      <p>
-        <label for="<?php echo $this->get_field_id('cats'); ?>"><?php _e( 'Categories', 'upw' ); ?>:</label>
-        <select name="<?php echo $this->get_field_name('cats'); ?>[]" id="<?php echo $this->get_field_id('cats'); ?>" class="widefat" style="height: auto;" size="<?php echo $c ?>" multiple>
-          <?php
-          $categories = get_categories( 'hide_empty=0' );
-          foreach ($categories as $category ) { ?>
-            <option value="<?php echo $category->term_id; ?>" <?php if( in_array($category->term_id, $cats)) { echo 'selected="selected"'; } ?>><?php echo $category->cat_name;?></option>
-          <?php } ?>
-        </select>
-      </p>
+        <p>
+          <label for="<?php echo $this->get_field_id('cats'); ?>"><?php _e( 'Categories', 'upw' ); ?>:</label>
+          <select name="<?php echo $this->get_field_name('cats'); ?>[]" id="<?php echo $this->get_field_id('cats'); ?>" class="widefat" style="height: auto;" size="<?php echo $c ?>" multiple>
+            <?php
+            foreach ($cat_list as $category) { ?>
+              <option value="<?php echo $category->term_id; ?>" <?php if( in_array($category->term_id, $cats)) { echo 'selected="selected"'; } ?>><?php echo $category->name;?></option>
+            <?php } ?>
+          </select>
+        </p>
+      <?php endif; ?>
+
+      <?php if ($tag_list) : ?>
+        <p>
+          <input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('attag'); ?>" name="<?php echo $this->get_field_name('attag'); ?>" <?php checked( (bool) $attag, true ); ?> />
+          <label for="<?php echo $this->get_field_id('attag'); ?>"> <?php _e('Show posts only from current tag', 'upw');?></label>
+        </p>
+
+        <p>
+          <label for="<?php echo $this->get_field_id('tags'); ?>"><?php _e( 'Tags', 'upw' ); ?>:</label>
+          <select name="<?php echo $this->get_field_name('tags'); ?>[]" id="<?php echo $this->get_field_id('tags'); ?>" class="widefat" style="height: auto;" size="<?php echo $t ?>" multiple>
+            <?php
+            foreach ($tag_list as $tag) { ?>
+              <option value="<?php echo $tag->term_id; ?>" <?php if( in_array($tag->term_id, $tags)) { echo 'selected="selected"'; } ?>><?php echo $tag->name;?></option>
+            <?php } ?>
+          </select>
+        </p>
+      <?php endif; ?>
 
       <p>
         <label for="<?php echo $this->get_field_id('types'); ?>"><?php _e( 'Post types', 'upw' ); ?>:</label>
