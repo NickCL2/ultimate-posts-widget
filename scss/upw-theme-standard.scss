@@ -61,23 +61,7 @@
 
 }
 
-.upw-more {
-  margin-top: 1.5rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid #ddd;
-  .button {
-    display: inline-block;
-    padding: 4px 6px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    text-decoration: none;
-    line-height: 1.5;
-    &:hover,
-    &:focus {
-      background-color: #eee;
-    }
-    &:active {
-      background-color: #ccc;
-    }
-  }
+.upw-before,
+.upw-after {
+  margin-bottom: 1rem;
 }

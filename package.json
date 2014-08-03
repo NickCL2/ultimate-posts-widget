@@ -14,7 +14,7 @@
   },
   "licenses": [
     {
-      "type": "GPL",
+      "type": "GPL2",
       "url": "http://www.gnu.org/licenses/gpl-2.0.html"
     }
   ],
@@ -28,6 +28,7 @@
     "gulp-rename": "^1.2.0",
     "gulp-ruby-sass": "^0.7.1",
     "gulp-size": "^1.0.0",
+    "gulp-uglifyjs": "^0.4.2",
     "gulp-util": "^3.0.0"
   }
 }
