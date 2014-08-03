@@ -1,2 +1,4 @@
 .svn
 cache/timthumb_int*
+node_modules
+.sass-cache

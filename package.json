@@ -1,0 +1,33 @@
+{
+  "name": "ultimate-posts-widget",
+  "version": "2.0.0",
+  "contributors": [
+    "Boston Dell-Vandenberg <boston@pomelodesign.com>"
+  ],
+  "homepage": "http://wordpress.org/plugins/ultimate-posts-widget",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bostondv/ultimate-posts-widget.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bostondv/ultimate-posts-widget/issues"
+  },
+  "licenses": [
+    {
+      "type": "GPL",
+      "url": "http://www.gnu.org/licenses/gpl-2.0.html"
+    }
+  ],
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.6",
+    "gulp-autoprefixer": "^0.0.8",
+    "gulp-minify-css": "^0.3.7",
+    "gulp-rename": "^1.2.0",
+    "gulp-ruby-sass": "^0.7.1",
+    "gulp-size": "^1.0.0",
+    "gulp-util": "^3.0.0"
+  }
+}

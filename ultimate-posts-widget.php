@@ -49,6 +49,10 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       add_action( 'deleted_post', array( &$this, 'flush_widget_cache' ) );
       add_action( 'switch_theme', array( &$this, 'flush_widget_cache' ) );
 
+      if (apply_filters('upw_use_default_css', true) && !is_admin()) {
+        add_action('wp_enqueue_scripts', 'upw_enqueue_styles');
+      }
+
       load_plugin_textdomain('upw', false, basename( dirname( __FILE__ ) ) . '/languages' );
 
     }
@@ -57,19 +61,6 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
       global $post;
       $current_post_id =  $post->ID;
-
-      if( !function_exists('get_image_path') ) {
-        function get_image_path($src) {
-          global $blog_id;
-          if(isset($blog_id) && $blog_id > 0) {
-            $imageParts = explode('/files/' , $src);
-            if(isset($imageParts[1])) {
-              $src = '/blogs.dir/' . $blog_id . '/files/' . $imageParts[1];
-            }
-          }
-          return $src;
-        }
-      }
 
       $cache = wp_cache_get( 'widget_ultimate_posts', 'widget' );
 
@@ -90,9 +81,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       $types = ($instance['types'] ? explode(',', $instance['types']) : '');
       $cats = ($instance['cats'] ? explode(',', $instance['cats']) : '');
       $atcat = $instance['atcat'] ? true : false;
-      $thumb_w = $instance['thumb_w'];
-      $thumb_h = $instance['thumb_h'];
-      $thumb_crop = $instance['thumb_crop'];
+      $thumb_size = $instance['thumb_size'];
       $excerpt_length = $instance['excerpt_length'];
       $excerpt_readmore = $instance['excerpt_readmore'];
       $sticky = $instance['sticky'];
@@ -157,133 +146,23 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
         $args[key($sticky_query)] = reset($sticky_query);
       }
 
-      $r = new WP_Query( $args );
+      $args = apply_filters('upw_wp_query_args', $args);
 
-      if ( $r->have_posts() ) :
+      $upw_query = new WP_Query($args);
 
-        echo '<ul>';
+      if ($instance['template'] === 'custom') {
+        $custom_template_path = apply_filters('upw_custom_template_path',  '/upw/' . $instance['template_custom'] . '.php');
+        if (locate_template($custom_template_path)) {
+          require_once(get_stylesheet_directory() . $custom_template_path);
+        } else {
+          require_once('templates/standard.php');
+        }
+      } else {
+        require_once('templates/' . $instance['template'] . '.php');
+      }
 
-        while ( $r->have_posts() ) : $r->the_post();
-
-          ?>
-
-          <li class="<?php echo ($post->ID == $current_post_id && is_single())?'current-post-item':'' ?>">
-
-            <?php
-              if ( function_exists('the_post_thumbnail') &&
-                   current_theme_supports("post-thumbnails") &&
-                   $instance["show_thumbnail"] &&
-                   has_post_thumbnail() ) :
-              $thumbnail = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID),'large');
-              $thumbnail_alt = get_post_meta(get_post_thumbnail_id($post->ID), '_wp_attachment_image_alt', true);
-              $plugin_dir = 'ultimate-posts-widget';
-            ?>
-
-            <div class="upw-image">
-              <a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>">
-                <img src="<?php echo WP_PLUGIN_URL . '/ultimate-posts-widget/thumb.php?src='. get_image_path($thumbnail[0]) .'&amp;h='.$thumb_h.'&amp;w='.$thumb_w.'&amp;zc='.$thumb_crop; ?>" alt="<?php echo $thumbnail_alt; ?>" />
-              </a>
-            </div>
-
-            <?php endif; ?>
-
-            <div class="upw-content">
-
-              <?php if ( get_the_title() && $instance['show_title'] ) : ?>
-                <p class="post-title">
-                  <a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>">
-                    <?php the_title(); ?>
-                  </a>
-                </p>
-              <?php endif; ?>
-
-              <?php if ( $instance['show_date'] || $instance['show_time'] ) : ?>
-                <p class="post-date">
-                  <?php
-                  if ( $instance['show_date'] && $instance['show_time'] ) {
-                    the_time(get_option('date_format') . ' ' . get_option('time_format'));
-                  } elseif ( $instance['show_date'] && !$instance['show_time'] ) {
-                    the_time(get_option('date_format'));
-                  } else {
-                    the_time(get_option('time_format'));
-                  }
-                  ?>
-                </p>
-              <?php endif; ?>
-
-              <?php if( $instance['show_author'] ) : ?>
-                <p class="post-author">
-                  <span class="post-author-label"><?php _e('By', 'upw'); ?>:</span>
-                  <?php the_author_posts_link(); ?>
-                </p>
-              <?php endif; ?>
-
-              <?php if ( $instance['show_excerpt'] ) :
-                if ( $instance['show_readmore'] ) : $linkmore = ' <a href="'.get_permalink().'" class="more-link" title="'.the_title_attribute(array('echo'=>false)).'">'.$excerpt_readmore.'</a>'; else: $linkmore =''; endif; ?>
-                <p class="post-excerpt"><?php echo get_the_excerpt() . $linkmore; ?></p>
-              <?php endif; ?>
-
-              <?php if ( $instance['show_content'] ) : ?>
-                <p class="post-content"><?php the_content() ?></p>
-              <?php endif; ?>
-
-              <?php if ( $instance['show_cats'] ) : ?>
-                <p class="post-cats">
-                  <span class="post-cats-label"><?php _e('Categories', 'upw'); ?>:</span>
-                  <span class="post-cats-list"><?php the_category(', '); ?></span>
-                </p>
-              <?php endif; ?>
-
-              <?php if ( $instance['show_tags'] ) : ?>
-                <p class="post-tags">
-                  <span class="post-tags-label"><?php _e('Tags', 'upw'); ?>:</span>
-                  <?php the_tags('<span class="post-tags-list">', ', ', '</span>'); ?>
-                </p>
-              <?php endif; ?>
-
-              <?php if ( $custom_fields ) { 
-                $custom_field_name = explode(',', $custom_fields);
-                foreach ($custom_field_name as $name) { 
-                  $name = trim($name);
-                  $custom_field_values = get_post_meta($post->ID, $name, true);
-                  if ($custom_field_values) {
-                    echo '<p class="post-meta post-meta-'.$name.'">';
-                    if (!is_array($custom_field_values)) {
-                      echo $custom_field_values;
-                    } else {
-                      $last_value = end($custom_field_values);
-                      foreach ($custom_field_values as $value) {
-                        echo $value;
-                        if ($value != $last_value) echo ', ';
-                      }
-                    }
-                    echo '</p>';
-                  }
-                } 
-              } ?>
-
-            </div>
-
-          </li>
-
-        <?php
-        endwhile;
-        echo '</ul>';
-
-        if ( $instance['show_morebutton'] ) : ?>
-        <div class="upw-more">
-          <a href="<?php echo $instance['morebutton_url']; ?>" class="button"><?php echo $instance['morebutton_text']; ?></a>
-        </div>
-        <?php endif;
-
-        // Reset the global $the_post as this query will have stomped on it
-        wp_reset_postdata();
-
-      else :
-
-        echo __('No posts found.', 'upw');
-
-      endif;
+      // Reset the global $the_post as this query will have stomped on it
+      wp_reset_postdata();
 
       echo $after_widget;
 
@@ -306,12 +185,10 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       $instance['show_content'] = isset( $new_instance['show_content'] );
       $instance['show_thumbnail'] = isset( $new_instance['show_thumbnail'] );
       $instance['show_date'] = isset( $new_instance['show_date'] );
-      $instance['show_time'] = isset( $new_instance['show_time'] );
+      $instance['date_format'] = strip_tags( $new_instance['date_format'] );
       $instance['show_title'] = isset( $new_instance['show_title'] );
       $instance['show_author'] = isset( $new_instance['show_author'] );
-      $instance['thumb_w'] = strip_tags( $new_instance['thumb_w'] );
-      $instance['thumb_h'] = strip_tags( $new_instance['thumb_h'] );
-      $instance['thumb_crop'] = $new_instance['thumb_crop'];
+      $instance['thumb_size'] = strip_tags( $new_instance['thumb_size'] );
       $instance['show_readmore'] = isset( $new_instance['show_readmore']);
       $instance['excerpt_length'] = strip_tags( $new_instance['excerpt_length'] );
       $instance['excerpt_readmore'] = strip_tags( $new_instance['excerpt_readmore'] );
@@ -325,6 +202,8 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       $instance['show_cats'] = isset( $new_instance['show_cats'] );
       $instance['show_tags'] = isset( $new_instance['show_tags'] );
       $instance['custom_fields'] = strip_tags( $new_instance['custom_fields'] );
+      $instance['template'] = strip_tags( $new_instance['template'] );
+      $instance['template_custom'] = strip_tags( $new_instance['template_custom'] );
 
       $this->flush_widget_cache();
 
@@ -352,9 +231,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
         'types' => 'post',
         'cats' => '',
         'atcat' => false,
-        'thumb_w' => 100,
-        'thumb_h' => 100,
-        'thumb_crop' => 1,
+        'thumb_size' => 'thumbnail',
         'excerpt_length' => 10,
         'excerpt_readmore' => __('Read more &rarr;', 'upw'),
         'order' => 'DESC',
@@ -367,14 +244,16 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
         'show_tags' => false,
         'show_title' => false,
         'show_date' => false,
-        'show_time' => false,
+        'date_format' => get_option('date_format') . ' ' . get_option('time_format'),
         'show_author' => false,
         'show_excerpt' => false,
         'show_content' => false,
         'show_readmore' => false,
         'show_thumbnail' => false,
         'custom_fields' => '',
-        'show_morebutton' => false
+        'show_morebutton' => false,
+        'template' => 'legacy',
+        'template_custom' => ''
       ) );
 
       // Or use the instance
@@ -384,9 +263,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       $types  = $instance['types'];
       $cats = $instance['cats'];
       $atcat = $instance['atcat'];
-      $thumb_w = strip_tags($instance['thumb_w']);
-      $thumb_h = strip_tags($instance['thumb_h']);
-      $thumb_crop = strip_tags($instance['thumb_crop']);
+      $thumb_size = $instance['thumb_size'];
       $excerpt_length = strip_tags($instance['excerpt_length']);
       $excerpt_readmore = strip_tags($instance['excerpt_readmore']);
       $order = $instance['order'];
@@ -399,7 +276,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       $show_tags = $instance['show_tags'];
       $show_title = $instance['show_title'];
       $show_date = $instance['show_date'];
-      $show_time = $instance['show_time'];
+      $date_format = $instance['date_format'];
       $show_author = $instance['show_author'];
       $show_excerpt = $instance['show_excerpt'];
       $show_content = $instance['show_content'];
@@ -407,6 +284,8 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       $show_thumbnail = $instance['show_thumbnail'];
       $show_morebutton = $instance['show_morebutton'];
       $custom_fields = strip_tags($instance['custom_fields']);
+      $template = $instance['template'];
+      $template_custom = strip_tags($instance['template_custom']);
 
       //Let's turn $types and $cats into an array
       $types = explode(',', $types);
@@ -469,7 +348,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
       <hr class="upw-divider">
 
-      <h4>Post Display</h4>
+      <h4><?php _e('Post Display', 'upw'); ?></h4>
 
       <p>
         <input class="checkbox" id="<?php echo $this->get_field_id( 'show_title' ); ?>" name="<?php echo $this->get_field_name( 'show_title' ); ?>" type="checkbox" <?php checked( (bool) $show_title, true ); ?> />
@@ -482,8 +361,8 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       </p>
 
       <p>
-        <input class="checkbox" id="<?php echo $this->get_field_id( 'show_time' ); ?>" name="<?php echo $this->get_field_name( 'show_time' ); ?>" type="checkbox" <?php checked( (bool) $show_time, true ); ?> />
-        <label for="<?php echo $this->get_field_id( 'show_time' ); ?>"><?php _e( 'Show published time', 'upw' ); ?></label>
+        <label for="<?php echo $this->get_field_id('date_format'); ?>"><?php _e( 'Date Format', 'upw' ); ?>:</label>
+        <input class="widefat" type="text" id="<?php echo $this->get_field_id('date_format'); ?>" name="<?php echo $this->get_field_name('date_format'); ?>" value="<?php echo $date_format; ?>" />
       </p>
 
       <p>
@@ -514,36 +393,24 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       </p>
 
       <p>
-        <label for="<?php echo $this->get_field_id('excerpt_readmore'); ?>"><?php _e( 'Read more text', 'upw' ); ?>:</label>
         <input class="widefat" type="text" id="<?php echo $this->get_field_id('excerpt_readmore'); ?>" name="<?php echo $this->get_field_name('excerpt_readmore'); ?>" value="<?php echo $excerpt_readmore; ?>" />
       </p>
 
       <?php if ( function_exists('the_post_thumbnail') && current_theme_supports( 'post-thumbnails' ) ) : ?>
 
+        <?php $sizes = get_intermediate_image_sizes(); ?>
+
         <p>
           <input class="checkbox" id="<?php echo $this->get_field_id( 'show_thumbnail' ); ?>" name="<?php echo $this->get_field_name( 'show_thumbnail' ); ?>" type="checkbox" <?php checked( (bool) $show_thumbnail, true ); ?> />
+
           <label for="<?php echo $this->get_field_id( 'show_thumbnail' ); ?>"><?php _e( 'Show thumbnail', 'upw' ); ?></label>
         </p>
 
         <p>
-          <label><?php _e('Thumbnail size', 'upw'); ?>:</label>
-          <br />
-          <label for="<?php echo $this->get_field_id('thumb_w'); ?>">
-            <?php _e('W', 'upw'); ?>: <input class="widefat" style="width:40%;" type="text" id="<?php echo $this->get_field_id('thumb_w'); ?>" name="<?php echo $this->get_field_name('thumb_w'); ?>" value="<?php echo $thumb_w; ?>" />
-          </label>
-          <label for="<?php echo $this->get_field_id('thumb_h'); ?>">
-            <?php _e('H', 'upw'); ?>: <input class="widefat" style="width:40%;" type="text" id="<?php echo $this->get_field_id('thumb_h'); ?>" name="<?php echo $this->get_field_name('thumb_h'); ?>" value="<?php echo $thumb_h; ?>" />
-          </label>
-        </p>
-
-        <p>
-          <label><?php _e('Crop mode', 'upw'); ?>:</label>
-          <br />
-          <select id="<?php echo $this->get_field_id('thumb_crop'); ?>" name="<?php echo $this->get_field_name('thumb_crop'); ?>">
-            <option value="1"<?php if($thumb_crop == 1) echo ' selected'; ?>><?php _e('Scale &amp; Crop to Fit', 'upw'); ?></option>
-            <option value="0"<?php if($thumb_crop == 0) echo ' selected'; ?>><?php _e('Stretch to Fit', 'upw'); ?></option>
-            <option value="2"<?php if($thumb_crop == 2) echo ' selected'; ?>><?php _e('Proportional Scale', 'upw'); ?></option>
-            <option value="3"<?php if($thumb_crop == 3) echo ' selected'; ?>><?php _e('Proportional Scale No Borders', 'upw'); ?></option>
+          <select id="<?php echo $this->get_field_id('thumb_size'); ?>" name="<?php echo $this->get_field_name('thumb_size'); ?>" class="widefat">
+            <?php foreach ($sizes as $size) : ?>
+              <option value="<?php echo $size; ?>"<?php if ($thumb_size == $size) echo ' selected'; ?>><?php echo $size; ?></option>
+            <?php endforeach; ?>
           </select>
         </p>
 
@@ -566,7 +433,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
       <hr class="upw-divider">
 
-      <h4>Filters</h4>
+      <h4><?php _e('Filters', 'upw'); ?></h4>
 
       <p>
         <input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('atcat'); ?>" name="<?php echo $this->get_field_name('atcat'); ?>" <?php checked( (bool) $atcat, true ); ?> />
@@ -607,7 +474,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
       <hr class="upw-divider">
 
-      <h4>Order</h4>
+      <h4><?php _e('Order', 'upw'); ?></h4>
 
       <p>
         <select name="<?php echo $this->get_field_name('orderby'); ?>" id="<?php echo $this->get_field_id('orderby'); ?>" class="widefat">
@@ -631,7 +498,26 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
         </select>
       </p>
 
-      <p class="credits"><small><?php _e('Developed by', 'upw'); ?> <a href="http://pomelodesign.com">Pomelo Design</a></small></p>
+      <hr class="upw-divider">
+
+      <h4><?php _e('Template', 'upw'); ?></h4>
+
+      <p>
+        <select name="<?php echo $this->get_field_name('template'); ?>" id="<?php echo $this->get_field_id('template'); ?>" class="widefat">
+          <option value="legacy"<?php if( $template == 'legacy') echo ' selected'; ?>><?php _e('Legacy', 'upw'); ?></option>
+          <option value="standard"<?php if( $template == 'standard') echo ' selected'; ?>><?php _e('Standard', 'upw'); ?></option>
+          <option value="custom"<?php if( $template == 'custom') echo ' selected'; ?>><?php _e('Custom', 'upw'); ?></option>
+        </select>
+      </p>
+
+      <p>
+        <label for="<?php echo $this->get_field_id('template_custom'); ?>"><?php _e('Custom Template Name', 'upw'); ?>:</label>
+        <input class="widefat" id="<?php echo $this->get_field_id('template_custom'); ?>" name="<?php echo $this->get_field_name('template_custom'); ?>" type="text" value="<?php echo $template_custom; ?>" />
+      </p>
+
+      <hr class="upw-divider">
+
+      <p class="credits"><small><?php _e('Developed by', 'upw'); ?> <a href="http://pomelodesign.com"><?php _e('Pomelo Design', 'upw'); ?></a></small></p>
 
       <?php if ( $instance ) { ?>
 
@@ -642,15 +528,18 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
             var show_excerpt = $("#<?php echo $this->get_field_id( 'show_excerpt' ); ?>");
             var show_readmore = $("#<?php echo $this->get_field_id( 'show_readmore' ); ?>");
             var show_thumbnail = $("#<?php echo $this->get_field_id( 'show_thumbnail' ); ?>");
+            var show_date = $("#<?php echo $this->get_field_id( 'show_date' ); ?>");
+            var date_format = $("#<?php echo $this->get_field_id( 'date_format' ); ?>").parents('p');
             var excerpt_length = $("#<?php echo $this->get_field_id( 'excerpt_length' ); ?>").parents('p');
             var excerpt_readmore = $("#<?php echo $this->get_field_id( 'excerpt_readmore' ); ?>").parents('p');
-            var thumb_w = $("#<?php echo $this->get_field_id( 'thumb_w' ); ?>").parents('p');
-            var thumb_crop = $("#<?php echo $this->get_field_id( 'thumb_crop' ); ?>").parents('p');
+            var thumb_size = $("#<?php echo $this->get_field_id( 'thumb_size' ); ?>").parents('p');
             var show_morebutton = $("#<?php echo $this->get_field_id( 'show_morebutton' ); ?>");
             var morebutton_text = $("#<?php echo $this->get_field_id( 'morebutton_text' ); ?>").parents('p');
             var morebutton_url = $("#<?php echo $this->get_field_id( 'morebutton_url' ); ?>").parents('p');
             var order = $("#<?php echo $this->get_field_id('orderby'); ?>");
             var meta_key = $("#<?php echo $this->get_field_id( 'meta_key' ); ?>").parents('p');
+            var template = $("#<?php echo $this->get_field_id('template'); ?>");
+            var template_custom = $("#<?php echo $this->get_field_id('template_custom'); ?>").parents('p');
             <?php
             // Use PHP to determine if not checked and hide if so
             // jQuery method was acting up
@@ -660,9 +549,11 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
             if ( !$show_readmore ) {
               echo 'excerpt_readmore.hide();';
             }
+            if ( !$show_date ) {
+              echo 'date_format.hide();';
+            }
             if ( !$show_thumbnail ) {
-              echo 'thumb_w.hide();';
-              echo 'thumb_crop.hide();';
+              echo 'thumb_size.hide();';
             }
             if ( !$show_morebutton ) {
               echo 'morebutton_text.hide();';
@@ -670,6 +561,9 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
             }
             if ( $orderby !== 'meta_value' ) {
                 echo 'meta_key.hide();';
+            }
+            if ( $template !== 'custom' ) {
+                echo 'template_custom.hide();';
             }
             ?>
 
@@ -695,15 +589,24 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
              });
 
+            // Toggle date format on click
+            show_date.click(function(){
+
+              if ( $(this).is(":checked") ) {
+                date_format.show("fast");
+              } else {
+                date_format.hide("fast");
+              }
+
+             });
+
             // Toggle excerpt length on click
             show_thumbnail.click(function(){
 
               if ( $(this).is(":checked") ) {
-                thumb_w.show("fast");
-                thumb_crop.show("fast");
+                thumb_size.show("fast");
               } else {
-                thumb_w.hide("fast");
-                thumb_crop.hide("fast");
+                thumb_size.hide("fast");
               }
 
             });
@@ -732,6 +635,17 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
              });
 
+            // Show or hide custom template field
+            template.change(function(){
+
+              if ( $(this).val() === "custom") {
+                template_custom.show("fast");
+              } else {
+                template_custom.hide("fast");
+              }
+
+             });
+
           });
 
         </script>
@@ -745,11 +659,13 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
   }
 
   function init_WP_Widget_Ultimate_Posts() {
-
     register_widget( 'WP_Widget_Ultimate_Posts' );
+  }
 
+  function upw_enqueue_styles() {
+    wp_register_style('upw_styles_standard', plugins_url('css/standard.min.css', __FILE__));
+    wp_enqueue_style('upw_styles_standard');
   }
 
   add_action( 'widgets_init', 'init_WP_Widget_Ultimate_Posts' );
-
 }
