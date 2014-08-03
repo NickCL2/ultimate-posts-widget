@@ -85,8 +85,8 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       extract( $args );
 
       $title = apply_filters( 'widget_title', $instance['title'] );
-      $class = $instance['class'];
       $title_link = $instance['title_link'];
+      $class = $instance['class'];
       $number = $instance['number'];
       $types = ($instance['types'] ? explode(',', $instance['types']) : '');
       $cats = ($instance['cats'] ? explode(',', $instance['cats']) : '');
@@ -445,11 +445,6 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       </style>
       
       <p>
-        <label for="<?php echo $this->get_field_id( 'class' ); ?>"><?php _e( 'CSS class', 'upw' ); ?>:</label>
-        <input class="widefat" id="<?php echo $this->get_field_id( 'class' ); ?>" name="<?php echo $this->get_field_name( 'class' ); ?>" type="text" value="<?php echo $class; ?>" />
-      </p>
-
-      <p>
         <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title', 'upw' ); ?>:</label>
         <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title; ?>" />
       </p>
@@ -457,6 +452,11 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       <p>
         <label for="<?php echo $this->get_field_id( 'title_link' ); ?>"><?php _e( 'Title URL', 'upw' ); ?>:</label>
         <input class="widefat" id="<?php echo $this->get_field_id( 'title_link' ); ?>" name="<?php echo $this->get_field_name( 'title_link' ); ?>" type="text" value="<?php echo $title_link; ?>" />
+      </p>
+      
+      <p>
+        <label for="<?php echo $this->get_field_id( 'class' ); ?>"><?php _e( 'CSS class', 'upw' ); ?>:</label>
+        <input class="widefat" id="<?php echo $this->get_field_id( 'class' ); ?>" name="<?php echo $this->get_field_name( 'class' ); ?>" type="text" value="<?php echo $class; ?>" />
       </p>
 
       <p>
