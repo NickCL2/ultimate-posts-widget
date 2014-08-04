@@ -1,11 +1,11 @@
 jQuery(document).ready(function($) {
 
-  $('.upw-tabs').on('click', '.upw-tab-item:not(.active)', function(event) {
+  $('.widget').on('click', '.upw-tab-item', function(event) {
     event.preventDefault();
-    $('.upw-tab-item').removeClass('active');
+    $(this).parents('.widget-inside').find('.upw-tab-item').removeClass('active');
     $(this).addClass('active');
-    $('.upw-tab').addClass('upw-hide');
-    $('.' + $(this).data('toggle')).removeClass('upw-hide');
+    $(this).parents('.widget-inside').find('.upw-tab').addClass('upw-hide');
+    $(this).parents('.widget-inside').find('.' + $(this).data('toggle')).removeClass('upw-hide');
   });
 
 });
