@@ -402,8 +402,6 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
           <textarea class="widefat" id="<?php echo $this->get_field_id('after_posts'); ?>" name="<?php echo $this->get_field_name('after_posts'); ?>" rows="5"><?php echo $after_posts; ?></textarea>
         </p>
 
-        <p class="credits"><small><?php _e('Developed by', 'upw'); ?> <a href="http://pomelodesign.com"><?php _e('Pomelo Design', 'upw'); ?></a></small></p>
-
       </div>
 
       <div class="upw-tab upw-hide upw-tab-display">
@@ -438,7 +436,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
         </p>
 
         <p>
-          <label for="<?php echo $this->get_field_id('date_format'); ?>"><?php _e( 'Date Format', 'upw' ); ?>:</label>
+          <label for="<?php echo $this->get_field_id('date_format'); ?>"><?php _e( 'Date format', 'upw' ); ?>:</label>
           <input class="widefat" type="text" id="<?php echo $this->get_field_id('date_format'); ?>" name="<?php echo $this->get_field_name('date_format'); ?>" value="<?php echo $date_format; ?>" />
         </p>
 
@@ -454,7 +452,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
         <p>
           <label for="<?php echo $this->get_field_id('excerpt_length'); ?>"><?php _e( 'Excerpt length (in words)', 'upw' ); ?>:</label>
-          <input style="text-align: center;" type="text" id="<?php echo $this->get_field_id('excerpt_length'); ?>" name="<?php echo $this->get_field_name('excerpt_length'); ?>" value="<?php echo $excerpt_length; ?>" size="3" />
+          <input class="widefat" type="number" id="<?php echo $this->get_field_id('excerpt_length'); ?>" name="<?php echo $this->get_field_name('excerpt_length'); ?>" value="<?php echo $excerpt_length; ?>" min="1" max="100" />
         </p>
 
         <p>
@@ -595,6 +593,8 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
         </p>
 
       </div>
+
+      <p class="credits"><small><?php _e('Developed by', 'upw'); ?> <a href="http://pomelodesign.com"><?php _e('Pomelo Design', 'upw'); ?></a></small></p>
 
       <?php if ( $instance ) { ?>
 
