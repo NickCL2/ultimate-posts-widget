@@ -34,9 +34,10 @@ Options:
 * Display post categories
 * Display post tags
 * Display custom fields
-* Add custom text or html before and after posts list
-* Custom widget title link
-* Custom excerpt length (in words)
+* Add text or html before and after posts list
+* Add CSS class to widget
+* Add widget title link
+* Change excerpt length (in words)
 * Order by date, title, number of comments, random or a custom field
 
 Filters:
