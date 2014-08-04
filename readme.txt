@@ -14,9 +14,9 @@ The ultimate widget for displaying posts, custom post types or sticky posts with
 
 The ultimate widget for displaying posts, custom post types or sticky posts with an array of options to customize the display. 
 
-The plugin is designed for both the average user, aiming to provide flexibiltiy and ease of use via the widget options as well as hooks, filters and custom templates for more advanced customization.
+The plugin is designed for both the average user, aiming to provide flexibility and ease of use via the widget options as well as hooks, filters and custom templates for more advanced customization.
 
-Options:
+**Options:**
 
 * Filter by categories
 * Filter by current category
@@ -34,19 +34,38 @@ Options:
 * Display post categories
 * Display post tags
 * Display custom fields
-* Add text or html before and after posts list
+* Add text or HTML before and after posts list
 * Add CSS class to widget
 * Add widget title link
 * Change excerpt length (in words)
 * Order by date, title, number of comments, random or a custom field
 
-Filters:
+**Filters:**
 
-TODO
+`upw_enqueue_styles` (boolean)
+Allows changing whether to load the template CSS file(s).
 
-Templates:
+`upw_widget_title` (string)
+Allows changing the widget title.
 
-TODO
+`upw_wp_query_args` (array)
+Allows changing the WP_Query arguments for the widget.
+
+`upw_custom_template_path` (string)
+Allows changing the default custom template path.
+
+**Templates:**
+
+`legacy`
+As of version 2.0.0 we changed the widget HTML markup. For installs prior to 2.0.0 you can use the legacy template to retain the old HTML markup and compatibility.
+
+`standard`
+The new standard template as of version 2.0.0. It features better HTML5 markup, improved styling on various themes without the need for custom CSS, and hfeed microformat.
+
+`custom`
+As of version 2.0.0 you can now provide your own custom template files. In your theme, create a folder named `upw` then copy one of the templates from the plugin into this folder and edit as needed. In the widget settings under *Display* tab, choose *Custom* template from the drop down and enter the file name (excluding .PHP) into the subsequent field. For example, if your template is named `custom.php` then enter `custom` in the Custom Template Name field.
+
+**Support:**
 
 For support please use [wordpress.org](http://wordpress.org/support/plugin/ultimate-posts-widget). Visit [our website](http://pomelodesign.com), follow [@bostondv](http://twitter.com/bostondv/) for updates.
 
@@ -56,17 +75,19 @@ Fork or contribute on [Github](https://github.com/bostondv/ultimate-posts-widget
 
 = Thumbnail images are not displaying =
 
-This plugin uses the [TimThumb library](http://www.binarymoon.co.uk/projects/timthumb/) to resize post thumbnails. Please review these requirements and troubleshooting tips if you are having problems displaying thumbnails.
+*As of version 2.0.0 timthumb is no longer used.*
+
+This plugin uses the [timthumb library](http://www.binarymoon.co.uk/projects/timthumb/) to resize post thumbnails. Please review these requirements and troubleshooting tips if you are having problems displaying thumbnails.
 
 * Right click > view image - If an image isn't loading then this is the first thing you should do. 9 times out of 10 it will tell you what the problem is in an easy to read error message.
-* JetPack plugin - There is a known conflict between JetPack's "Photon" component, please disable it for compatibility with TimThumb.
+* JetPack plugin - There is a known conflict between JetPack's "Photon" component, please disable it for compatibility with timthumb.
 * Server requirements - PHP and the GD image library must be installed on your web server. Normally most web servers include them by default.
 * Cache permissions - The cache directory `wp-content/plugins/ultimate-posts-widget/cache` should be set to 777 or if that doesn't work, you may find 755 is ok.
-* Image sizes - TimThumb is configured to only work for images smaller than 1500 x 1500. The plugin and automatically selects the "Large" size from Settings > Media, if it is greater than 1500 x 1500 you will need to reduce the size or modify the configuration in `thumb.php` to support larger image sizes.
-* Tilde(~) in url - Timthumb has a known issue with this, please use a url without a tilde until a fix is available. [Bug report](https://code.google.com/p/timthumb/issues/detail?id=263)
+* Image sizes - timthumb is configured to only work for images smaller than 1500 x 1500. The plugin and automatically selects the "Large" size from Settings > Media, if it is greater than 1500 x 1500 you will need to reduce the size or modify the configuration in `thumb.php` to support larger image sizes.
+* Tilde(~) in url - timthumb has a known issue with this, please use a url without a tilde until a fix is available. [Bug report](https://code.google.com/p/timthumb/issues/detail?id=263)
 * Thumbnail images only work with WordPress' native post thumbnail / featured image. Many theme use a custom image field for thumbnails, these are not supported.
 
-Still stuck? See [additional troubleshooting tips](http://www.binarymoon.co.uk/2010/11/timthumb-hints-tips/) from the TimThumb author.
+Still stuck? See [additional troubleshooting tips](http://www.binarymoon.co.uk/2010/11/timthumb-hints-tips/) from the timthumb author.
 
 == Screenshots ==
 
@@ -76,15 +97,29 @@ Still stuck? See [additional troubleshooting tips](http://www.binarymoon.co.uk/2
 
 = 2.0.0 =
 
-HUGE UPDATE!
+* Added a new standard template and custom template support
+* Added basic CSS styles for better formatting
+* Add hfeed microformat into new standard template
+* Improved widget options interface
+* Add option to filter by tags or current tag
+* Remove timthumb in favor of using built-in WordPress image sizes
+* Remove widget "More Button" options
+* Add before and after posts HTML fields
+* Add option for widget CSS class (thanks @avenirer)
+* Set better defaults for newly created widgets
+* Various bug fixes and optimizations
 
-TODO
+*Upgrading from an earlier version?*
+
+* Upgrades from prior to 2.0.0 we retain the "legacy" template for you. To change which template to use, find the "Template" option under the "Display" tab.
+* If you used the "More Button", you will need to add in your own HTML into one of the new fields since the more button is now removed.
+* If you used custom thumbnail settings you will need to update them. You can now choose from pre-defined sizes available to WordPress. If you need an additional image size please see [how to add image sizes](http://codex.wordpress.org/Function_Reference/add_image_size).
 
 = 1.9.0 =
 
 * Adds option to order by custom field (thanks @enekochan)
 * Remove "Permalink to:" from link titles (thanks @wirelessgizmo)
-* Sweedish translation (thanks @brstp)
+* Swedish translation (thanks @brstp)
 
 = 1.8.1 =
 
@@ -162,7 +197,7 @@ TODO
 
 = 2.0.0 =
 
-TODO
+This is a major update and includes some breaking changes. New templates have been introduced, a few fields have changed, and thumbnails have been modified. See the changelog for details.
 
 == Installation ==
 
