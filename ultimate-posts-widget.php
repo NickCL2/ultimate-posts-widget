@@ -194,8 +194,10 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
         } else {
           require_once('templates/standard.php');
         }
-      } else {
+      } elseif ($instance['template']) {
         require_once('templates/' . $instance['template'] . '.php');
+      } else {
+        require_once('templates/legacy.php');
       }
 
       // Reset the global $the_post as this query will have stomped on it
