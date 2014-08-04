@@ -34,6 +34,10 @@
     color: #888;
     font-size: 0.9rem;
     margin-bottom: 1rem;
+    line-height: 1.4;
+    .comments {
+      white-space: nowrap;
+    }
   }
 
   .entry-summary,
@@ -43,10 +47,15 @@
     }
   }
 
+  .more-link {
+    white-space: nowrap;
+  }
+
   footer {
     display: block;
     color: #888;
     font-size: 0.9rem;
+    line-height: 1.4;
   }
 
   .entry-categories,
@@ -64,4 +73,7 @@
 .upw-before,
 .upw-after {
   margin-bottom: 1rem;
+  > :last-child {
+    margin-bottom: 0;
+  }
 }

@@ -1,7 +1,7 @@
 === Ultimate Posts Widget ===
 Contributors: bostondv
 Donate link: http://www.pomelodesign.com/donate
-Tags: widget, recent posts, custom post types, sticky posts, featured image, post thumbnail, excerpts, category, custom fields, list pages, widget query, microformats, customizable widget,  categories widget, tags widget, excerpt, widget templates, post author, post date, custom query, ultimate posts
+Tags: widget, recent posts, custom post types, sticky posts, featured image, post thumbnail, excerpts, category, custom fields, list pages, widget query, microformats, customizable widget,  categories widget, tags widget, excerpt, widget templates, post author, post date, custom query, ultimate posts, comments, orderby, comment count
 Requires at least: 3.0
 Tested up to: 4.0
 Stable tag: 2.0.0
@@ -28,6 +28,7 @@ Designed for both the average user and developer, Ultimate Posts Widgets aims to
 * Display title
 * Display publish date/time with custom format options
 * Display post author and link
+* Display post comment count
 * Display excerpt or full content
 * Display read more link with custom label
 * Display featured image and at any size
@@ -110,8 +111,10 @@ This plugin uses the [timthumb library](http://www.binarymoon.co.uk/projects/tim
 * Add option to filter by tags or current tag
 * Remove timthumb in favor of using built-in WordPress image sizes
 * Remove widget "More Button" options
+* Change date display options to now accept any custom date formats
 * Add before and after posts HTML fields
 * Add option for widget CSS class (thanks @avenirer)
+* Add option to display comment count
 * Set better defaults for newly created widgets
 * Various bug fixes and optimizations
 
@@ -120,6 +123,7 @@ This plugin uses the [timthumb library](http://www.binarymoon.co.uk/projects/tim
 * Upgrades from prior to 2.0.0 we retain the "legacy" template for you. To change which template to use, find the "Template" option under the "Display" tab.
 * If you used the "More Button", you will need to add in your own HTML into one of the new fields since the more button is now removed.
 * If you used custom thumbnail settings you will need to update them. You can now choose from pre-defined sizes available to WordPress. If you need an additional image size please see [how to add image sizes](http://codex.wordpress.org/Function_Reference/add_image_size).
+* Date formatting has changed, you will need to update your settings. By default it uses WordPress' date/time options.
 
 = 1.9.0 =
 

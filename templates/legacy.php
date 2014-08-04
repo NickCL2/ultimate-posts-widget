@@ -38,10 +38,16 @@
           </p>
         <?php endif; ?>
 
-        <?php if($instance['show_author']) : ?>
+        <?php if ($instance['show_author']) : ?>
           <p class="post-author">
             <span class="post-author-label"><?php _e('By', 'upw'); ?>:</span>
             <?php the_author_posts_link(); ?>
+          </p>
+        <?php endif; ?>
+
+        <?php if ($instance['show_comments']) : ?>
+          <p class="post-comments">
+            <?php comments_number(__('No responses', 'upw'), __('One response', 'upw'), __('% responses', 'upw')); ?>
           </p>
         <?php endif; ?>
 
@@ -59,17 +65,23 @@
           <p class="post-content"><?php the_content() ?></p>
         <?php endif; ?>
 
-        <?php if ($instance['show_cats']) : ?>
+        <?php
+        $categories = get_the_term_list($post->ID, 'category', '', ', ');
+        if ($instance['show_cats'] && $categories) :
+        ?>
           <p class="post-cats">
             <span class="post-cats-label"><?php _e('Categories', 'upw'); ?>:</span>
-            <span class="post-cats-list"><?php the_category(', '); ?></span>
+            <span class="post-cats-list"><?php echo $categories; ?></span>
           </p>
         <?php endif; ?>
 
-        <?php if ($instance['show_tags']) : ?>
+        <?php
+        $tags = get_the_term_list($post->ID, 'post_tag', '', ', ');
+        if ($instance['show_tags'] && $tags) :
+        ?>
           <p class="post-tags">
             <span class="post-tags-label"><?php _e('Tags', 'upw'); ?>:</span>
-            <?php the_tags('<span class="post-tags-list">', ', ', '</span>'); ?>
+            <span class="post-tags-list"><?php echo $tags; ?></span>
           </p>
         <?php endif; ?>
 

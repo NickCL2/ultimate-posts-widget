@@ -30,7 +30,7 @@
               </h4>
             <?php endif; ?>
 
-            <?php if ($instance['show_date'] || $instance['show_time'] || $instance['show_author']) : ?>
+            <?php if ($instance['show_date'] || $instance['show_author'] || $instance['show_comments']) : ?>
 
               <div class="entry-meta">
 
@@ -42,14 +42,23 @@
                   <span class="sep"><?php _e('|', 'upw'); ?></span>
                 <?php endif; ?>
 
-                <?php if($instance['show_author']) : ?>
+                <?php if ($instance['show_author']) : ?>
                   <span class="author vcard">
                     <?php echo __('By', 'upw'); ?>
                     <a href="<?php echo get_author_posts_url(get_the_author_meta('ID')); ?>" rel="author" class="fn">
                       <?php echo get_the_author(); ?>
                     </a>
                   </span>
+                <?php endif; ?>
 
+                <?php if ($instance['show_author'] && $instance['show_comments']) : ?>
+                  <span class="sep"><?php _e('|', 'upw'); ?></span>
+                <?php endif; ?>
+
+                <?php if ($instance['show_comments']) : ?>
+                  <a class="comments" href="<?php comments_link(); ?>">
+                    <?php comments_number(__('No comments', 'upw'), __('One comment', 'upw'), __('% comments', 'upw')); ?>
+                  </a>
                 <?php endif; ?>
 
               </div>
@@ -75,17 +84,23 @@
 
           <footer>
 
-            <?php if ($instance['show_cats']) : ?>
+            <?php
+            $categories = get_the_term_list($post->ID, 'category', '', ', ');
+            if ($instance['show_cats'] && $categories) :
+            ?>
               <div class="entry-categories">
                 <strong class="entry-cats-label"><?php _e('Posted in', 'upw'); ?>:</strong>
-                <span class="entry-cats-list"><?php the_category(', '); ?></span>
+                <span class="entry-cats-list"><?php echo $categories; ?></span>
               </div>
             <?php endif; ?>
 
-            <?php if ($instance['show_tags']) : ?>
+            <?php
+            $tags = get_the_term_list($post->ID, 'post_tag', '', ', ');
+            if ($instance['show_tags'] && $tags) :
+            ?>
               <div class="entry-tags">
                 <strong class="entry-tags-label"><?php _e('Tagged', 'upw'); ?>:</strong>
-                <?php the_tags('<span class="entry-tags-list">', ', ', '</span>'); ?>
+                <span class="entry-tags-list"><?php echo $tags; ?></span>
               </div>
             <?php endif; ?>
 

@@ -230,6 +230,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       $instance['date_format'] = strip_tags( $new_instance['date_format'] );
       $instance['show_title'] = isset( $new_instance['show_title'] );
       $instance['show_author'] = isset( $new_instance['show_author'] );
+      $instance['show_comments'] = isset( $new_instance['show_comments'] );
       $instance['thumb_size'] = strip_tags( $new_instance['thumb_size'] );
       $instance['show_readmore'] = isset( $new_instance['show_readmore']);
       $instance['excerpt_length'] = strip_tags( $new_instance['excerpt_length'] );
@@ -294,6 +295,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
         'show_date' => true,
         'date_format' => get_option('date_format') . ' ' . get_option('time_format'),
         'show_author' => true,
+        'show_comments' => false,
         'show_excerpt' => true,
         'show_content' => false,
         'show_readmore' => true,
@@ -329,6 +331,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       $show_date = $instance['show_date'];
       $date_format = $instance['date_format'];
       $show_author = $instance['show_author'];
+      $show_comments = $instance['show_comments'];
       $show_excerpt = $instance['show_excerpt'];
       $show_content = $instance['show_content'];
       $show_readmore = $instance['show_readmore'];
@@ -460,6 +463,11 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
         </p>
 
         <p>
+          <input class="checkbox" id="<?php echo $this->get_field_id( 'show_comments' ); ?>" name="<?php echo $this->get_field_name( 'show_comments' ); ?>" type="checkbox" <?php checked( (bool) $show_comments, true ); ?> />
+          <label for="<?php echo $this->get_field_id( 'show_comments' ); ?>"><?php _e( 'Show comments count', 'upw' ); ?></label>
+        </p>
+
+        <p>
           <input class="checkbox" id="<?php echo $this->get_field_id( 'show_excerpt' ); ?>" name="<?php echo $this->get_field_name( 'show_excerpt' ); ?>" type="checkbox" <?php checked( (bool) $show_excerpt, true ); ?> />
           <label for="<?php echo $this->get_field_id( 'show_excerpt' ); ?>"><?php _e( 'Show excerpt', 'upw' ); ?></label>
         </p>
@@ -474,14 +482,14 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
           <label for="<?php echo $this->get_field_id( 'show_content' ); ?>"><?php _e( 'Show content', 'upw' ); ?></label>
         </p>
 
-        <p>
+        <p<?php if (!$show_excerpt && !$show_content) echo ' style="display:none;"'; ?>>
           <label for="<?php echo $this->get_field_id('show_readmore'); ?>">
           <input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('show_readmore'); ?>" name="<?php echo $this->get_field_name('show_readmore'); ?>"<?php checked( (bool) $show_readmore, true ); ?> />
           <?php _e( 'Show read more link', 'upw' ); ?>
           </label>
         </p>
 
-        <p<?php if (!$show_readmore) echo ' style="display:none;"'; ?>>
+        <p<?php if (!$show_readmore  || (!$show_excerpt && !$show_content)) echo ' style="display:none;"'; ?>>
           <input class="widefat" type="text" id="<?php echo $this->get_field_id('excerpt_readmore'); ?>" name="<?php echo $this->get_field_name('excerpt_readmore'); ?>" value="<?php echo $excerpt_readmore; ?>" />
         </p>
 
@@ -617,53 +625,82 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
           jQuery(document).ready(function($){
 
             var show_excerpt = $("#<?php echo $this->get_field_id( 'show_excerpt' ); ?>");
+            var show_content = $("#<?php echo $this->get_field_id( 'show_content' ); ?>");
             var show_readmore = $("#<?php echo $this->get_field_id( 'show_readmore' ); ?>");
+            var show_readmore_wrap = $("#<?php echo $this->get_field_id( 'show_readmore' ); ?>").parents('p');
             var show_thumbnail = $("#<?php echo $this->get_field_id( 'show_thumbnail' ); ?>");
             var show_date = $("#<?php echo $this->get_field_id( 'show_date' ); ?>");
             var date_format = $("#<?php echo $this->get_field_id( 'date_format' ); ?>").parents('p');
             var excerpt_length = $("#<?php echo $this->get_field_id( 'excerpt_length' ); ?>").parents('p');
-            var excerpt_readmore = $("#<?php echo $this->get_field_id( 'excerpt_readmore' ); ?>").parents('p');
-            var thumb_size = $("#<?php echo $this->get_field_id( 'thumb_size' ); ?>").parents('p');
+            var excerpt_readmore_wrap = $("#<?php echo $this->get_field_id( 'excerpt_readmore' ); ?>").parents('p');
+            var thumb_size_wrap = $("#<?php echo $this->get_field_id( 'thumb_size' ); ?>").parents('p');
             var order = $("#<?php echo $this->get_field_id('orderby'); ?>");
-            var meta_key = $("#<?php echo $this->get_field_id( 'meta_key' ); ?>").parents('p');
+            var meta_key_wrap = $("#<?php echo $this->get_field_id( 'meta_key' ); ?>").parents('p');
             var template = $("#<?php echo $this->get_field_id('template'); ?>");
             var template_custom = $("#<?php echo $this->get_field_id('template_custom'); ?>").parents('p');
 
+            var toggleReadmore = function() {
+              if (show_excerpt.is(':checked') || show_content.is(':checked')) {
+                show_readmore_wrap.show('fast');
+              } else {
+                show_readmore_wrap.hide('fast');
+              }
+              toggleExcerptReadmore();
+            }
+
+            var toggleExcerptReadmore = function() {
+              if ((show_excerpt.is(':checked') || show_content.is(':checked')) && show_readmore.is(':checked')) {
+                excerpt_readmore_wrap.show('fast');
+              } else {
+                excerpt_readmore_wrap.hide('fast');
+              }
+            }
+
+            // Toggle read more option
+            show_excerpt.click(function() {
+              toggleReadmore();
+            });
+
+            // Toggle read more option
+            show_content.click(function() {
+              toggleReadmore();
+            });
+
             // Toggle excerpt length on click
             show_excerpt.click(function(){
-              excerpt_length.toggle();
+              excerpt_length.toggle('fast');
             });
 
             // Toggle excerpt length on click
             show_readmore.click(function(){
-              excerpt_readmore.toggle();
+              toggleExcerptReadmore();
             });
 
             // Toggle date format on click
             show_date.click(function(){
-              date_format.toggle();
+              date_format.toggle('fast');
             });
 
             // Toggle excerpt length on click
             show_thumbnail.click(function(){
-              thumb_size.toggle();
+              thumb_size_wrap.toggle('fast');
             });
 
             // Show or hide custom field meta_key value on order change
             order.change(function(){
               if ($(this).val() === 'meta_value') {
-                meta_key.show();
+                meta_key_wrap.show('fast');
               } else {
-                meta_key.hide();
+                meta_key_wrap.hide('fast');
               }
             });
 
             // Show or hide custom template field
             template.change(function(){
               if ($(this).val() === 'custom') {
-                template_custom.show();
+                template_custom.show('fast');
               } else {
-                template_custom.hide();
+                template_custom.hide('fast');
               }
             });
 
