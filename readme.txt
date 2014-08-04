@@ -1,7 +1,7 @@
 === Ultimate Posts Widget ===
 Contributors: bostondv
 Donate link: http://www.pomelodesign.com/donate
-Tags: widget, recent posts, custom post types, sticky posts, featured image, post thumbnail, excerpts, category, custom fields
+Tags: widget, recent posts, custom post types, sticky posts, featured image, post thumbnail, excerpts, category, custom fields, list pages, widget query, microformats, customizable widget,  categories widget, tags widget, excerpt, widget templates, post author, post date, custom query, ultimate posts
 Requires at least: 3.0
 Tested up to: 4.0
 Stable tag: 2.0.0
@@ -14,9 +14,9 @@ The ultimate widget for displaying posts, custom post types or sticky posts with
 
 The ultimate widget for displaying posts, custom post types or sticky posts with an array of options to customize the display. 
 
-The plugin is designed for both the average user, aiming to provide flexibility and ease of use via the widget options as well as hooks, filters and custom templates for more advanced customization.
+Designed for both the average user and developer, Ultimate Posts Widgets aims to provide flexibility and ease of use for displaying any kinds of posts within your widget areas. An array of widget options are available as well as hooks, filters and custom templates for more advanced customization.
 
-**Options:**
+= Options =
 
 * Filter by categories
 * Filter by current category
@@ -40,7 +40,7 @@ The plugin is designed for both the average user, aiming to provide flexibility 
 * Change excerpt length (in words)
 * Order by date, title, number of comments, random or a custom field
 
-**Filters:**
+= Filters =
 
 `upw_enqueue_styles` (boolean)
 Allows changing whether to load the template CSS file(s).
@@ -54,7 +54,7 @@ Allows changing the WP_Query arguments for the widget.
 `upw_custom_template_path` (string)
 Allows changing the default custom template path.
 
-**Templates:**
+= Templates =
 
 `legacy`
 As of version 2.0.0 we changed the widget HTML markup. For installs prior to 2.0.0 you can use the legacy template to retain the old HTML markup and compatibility.
@@ -65,11 +65,13 @@ The new standard template as of version 2.0.0. It features better HTML5 markup, 
 `custom`
 As of version 2.0.0 you can now provide your own custom template files. In your theme, create a folder named `upw` then copy one of the templates from the plugin into this folder and edit as needed. In the widget settings under *Display* tab, choose *Custom* template from the drop down and enter the file name (excluding .PHP) into the subsequent field. For example, if your template is named `custom.php` then enter `custom` in the Custom Template Name field.
 
-**Support:**
+= More Information =
 
-For support please use [wordpress.org](http://wordpress.org/support/plugin/ultimate-posts-widget). Visit [our website](http://pomelodesign.com), follow [@bostondv](http://twitter.com/bostondv/) for updates.
-
-Fork or contribute on [Github](https://github.com/bostondv/ultimate-posts-widget)
+* For help use [wordpress.org](http://wordpress.org/support/plugin/ultimate-posts-widget)
+* Fork or contribute on [Github](https://github.com/bostondv/ultimate-posts-widget)
+* Visit [our website](http://pomelodesign.com) for more
+* Follow me on [Twitter](http://twitter.com/bostondv/)
+* View my other [WordPress Plugins](http://profiles.wordpress.org/bostondv/)
 
 == Frequently Asked Questions ==
 
@@ -87,11 +89,15 @@ This plugin uses the [timthumb library](http://www.binarymoon.co.uk/projects/tim
 * Tilde(~) in url - timthumb has a known issue with this, please use a url without a tilde until a fix is available. [Bug report](https://code.google.com/p/timthumb/issues/detail?id=263)
 * Thumbnail images only work with WordPress' native post thumbnail / featured image. Many theme use a custom image field for thumbnails, these are not supported.
 
-Still stuck? See [additional troubleshooting tips](http://www.binarymoon.co.uk/2010/11/timthumb-hints-tips/) from the timthumb author.
+**Still stuck?** See [additional troubleshooting tips](http://www.binarymoon.co.uk/2010/11/timthumb-hints-tips/) from the timthumb author.
 
 == Screenshots ==
 
-1. Widget options
+1. Example with TwentyTwelve theme with the default widget options
+2. General options tab
+3. Display options tab
+4. Filter options tab
+5. Order options tab
 
 == Changelog ==
 

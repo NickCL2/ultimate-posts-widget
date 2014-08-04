@@ -1,6 +1,6 @@
 jQuery(document).ready(function($) {
 
-  $('.widget').on('click', '.upw-tab-item', function(event) {
+  $('#widgets-right').on('click', '.upw-tab-item', function(event) {
     event.preventDefault();
     var widget = $(this).parents('.widget');
     console.log(widget);
