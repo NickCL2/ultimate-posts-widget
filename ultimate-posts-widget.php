@@ -96,8 +96,10 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       $number = $instance['number'];
       $types = ($instance['types'] ? explode(',', $instance['types']) : '');
       $cats = ($instance['cats'] ? explode(',', $instance['cats']) : '');
+      $tags = ($instance['tags'] ? explode(',', $instance['tags']) : '');
       $atcat = $instance['atcat'] ? true : false;
       $thumb_size = $instance['thumb_size'];
+      $attag = $instance['attag'] ? true : false;
       $excerpt_length = $instance['excerpt_length'];
       $excerpt_readmore = $instance['excerpt_readmore'];
       $sticky = $instance['sticky'];
@@ -124,9 +126,23 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       if ($atcat && is_single()) {
         $cats = '';
         foreach (get_the_category() as $catt) {
-          $cats .= $catt->cat_ID.' ';
+          $cats .= $catt->term_id.' ';
         }
         $cats = str_replace(" ", ",", trim($cats));
+      }
+
+      // If $attag true and in tag
+      if ($attag && is_tag()) {
+        $tags = get_query_var('tag_id');
+      }
+
+      // If $attag true and is single post
+      if ($attag && is_single()) {
+        $tags = '';
+        foreach (get_the_tags() as $tagg) {
+          $tags .= $tagg->term_id.' ';
+        }
+        $tags = str_replace(" ", ",", trim($tags));
       }
 
       // Excerpt more filter
@@ -151,6 +167,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
         'order' => $order,
         'orderby' => $orderby,
         'category__in' => $cats,
+        'tag__in' => $tags,
         'post_type' => $types
       );
 
@@ -196,7 +213,9 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       $instance['number'] = strip_tags( $new_instance['number'] );
       $instance['types'] = (isset( $new_instance['types'] )) ? implode(',', (array) $new_instance['types']) : '';
       $instance['cats'] = (isset( $new_instance['cats'] )) ? implode(',', (array) $new_instance['cats']) : '';
+      $instance['tags'] = (isset( $new_instance['tags'] )) ? implode(',', (array) $new_instance['tags']) : '';
       $instance['atcat'] = isset( $new_instance['atcat'] );
+      $instance['attag'] = isset( $new_instance['attag'] );
       $instance['show_excerpt'] = isset( $new_instance['show_excerpt'] );
       $instance['show_content'] = isset( $new_instance['show_content'] );
       $instance['show_thumbnail'] = isset( $new_instance['show_thumbnail'] );
@@ -251,8 +270,10 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
         'number' => '5',
         'types' => 'post',
         'cats' => '',
+        'tags' => '',
         'atcat' => false,
         'thumb_size' => 'thumbnail',
+        'attag' => false,
         'excerpt_length' => 10,
         'excerpt_readmore' => __('Read more &rarr;', 'upw'),
         'order' => 'DESC',
@@ -283,8 +304,10 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       $number = strip_tags($instance['number']);
       $types  = $instance['types'];
       $cats = $instance['cats'];
+      $tags = $instance['tags'];
       $atcat = $instance['atcat'];
       $thumb_size = $instance['thumb_size'];
+      $attag = $instance['attag'];
       $excerpt_length = strip_tags($instance['excerpt_length']);
       $excerpt_readmore = strip_tags($instance['excerpt_readmore']);
       $order = $instance['order'];
@@ -307,25 +330,46 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       $before_posts = format_to_edit($instance['before_posts']);
       $after_posts = format_to_edit($instance['after_posts']);
 
-      //Let's turn $types and $cats into an array
+      // Let's turn $types, $cats, and $tags into an array
       $types = explode(',', $types);
       $cats = explode(',', $cats);
+      $tags = explode(',', $tags);
 
-      //Count number of post types for select box sizing
+      // Count number of post types for select box sizing
       $cpt_types = get_post_types( array( 'public' => true ), 'names' );
-      foreach ($cpt_types as $cpt ) {
-         $cpt_ar[] = $cpt;
+      if ($cpt_types) {
+        foreach ($cpt_types as $cpt ) {
+          $cpt_ar[] = $cpt;
+        }
+        $n = count($cpt_ar);
+        if($n > 6) { $n = 6; }
+      } else {
+        $n = 3;
       }
-      $n = count($cpt_ar);
-      if($n > 6) { $n = 6; }
 
-      //Count number of categories for select box sizing
+      // Count number of categories for select box sizing
       $cat_list = get_categories( 'hide_empty=0' );
-      foreach ($cat_list as $cat ) {
-         $cat_ar[] = $cat;
+      if ($cat_list) {
+        foreach ($cat_list as $cat) {
+          $cat_ar[] = $cat;
+        }
+        $c = count($cat_ar);
+        if($c > 6) { $c = 6; }
+      } else {
+        $c = 3;
       }
-      $c = count($cat_ar);
-      if($c > 6) { $c = 6; }
+
+      // Count number of tags for select box sizing
+      $tag_list = get_tags( 'hide_empty=0' );
+      if ($tag_list) {
+        foreach ($tag_list as $tag) {
+          $tag_ar[] = $tag;
+        }
+        $t = count($tag_ar);
+        if($t > 6) { $t = 6; }
+      } else {
+        $t = 3;
+      }
 
       ?>
 
@@ -483,6 +527,23 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
             <?php } ?>
           </select>
         </p>
+
+        <?php if ($tag_list) : ?>
+          <p>
+            <input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('attag'); ?>" name="<?php echo $this->get_field_name('attag'); ?>" <?php checked( (bool) $attag, true ); ?> />
+            <label for="<?php echo $this->get_field_id('attag'); ?>"> <?php _e('Show posts only from current tag', 'upw');?></label>
+          </p>
+
+          <p>
+            <label for="<?php echo $this->get_field_id('tags'); ?>"><?php _e( 'Tags', 'upw' ); ?>:</label>
+            <select name="<?php echo $this->get_field_name('tags'); ?>[]" id="<?php echo $this->get_field_id('tags'); ?>" class="widefat" style="height: auto;" size="<?php echo $t ?>" multiple>
+              <?php
+              foreach ($tag_list as $tag) { ?>
+                <option value="<?php echo $tag->term_id; ?>" <?php if( in_array($tag->term_id, $tags)) { echo 'selected="selected"'; } ?>><?php echo $tag->name;?></option>
+              <?php } ?>
+            </select>
+          </p>
+        <?php endif; ?>
 
         <p>
           <label for="<?php echo $this->get_field_id('types'); ?>"><?php _e( 'Post types', 'upw' ); ?>:</label>
