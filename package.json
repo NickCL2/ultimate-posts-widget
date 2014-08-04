@@ -1,21 +1,21 @@
 {
-  "name": "ultimate-posts-widget",
+  "name": "bostondv/ultimate-posts-widget",
   "version": "2.0.0",
   "contributors": [
     "Boston Dell-Vandenberg <boston@pomelodesign.com>"
   ],
-  "homepage": "http://wordpress.org/plugins/ultimate-posts-widget",
+  "homepage": "http://wordpress.org/plugins/ultimate-posts-widget/",
   "repository": {
     "type": "git",
     "url": "https://github.com/bostondv/ultimate-posts-widget.git"
   },
   "bugs": {
-    "url": "https://github.com/bostondv/ultimate-posts-widget/issues"
+    "url": "https://github.com/bostondv/ultimate-posts-widget/issues/"
   },
   "licenses": [
     {
-      "type": "GPL2",
-      "url": "http://www.gnu.org/licenses/gpl-2.0.html"
+      "type": "GPLv3",
+      "url": "http://www.gnu.org/licenses/gpl.html"
     }
   ],
   "engines": {

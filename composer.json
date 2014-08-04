@@ -1,0 +1,25 @@
+{
+  "name": "bostondv/ultimate-posts-widget",
+  "type": "wordpress-plugin",
+  "license": "GPLv3",
+  "description": "The ultimate widget for displaying posts, custom post types or sticky posts with an array of options.",
+  "homepage": "http://wordpress.org/plugins/ultimate-posts-widget/",
+  "authors": [
+    {
+      "name": "Boston Dell-Vandenberg",
+      "email": "boston@pomelodesign.com",
+      "homepage": "https://github.com/bostondv/"
+    }
+  ],
+  "keywords": [
+    "wordpress"
+  ],
+  "support": {
+    "issues": "https://github.com/bostondv/ultimate-posts-widget/issues/",
+    "forum": "http://wordpress.org/support/plugin/ultimate-posts-widget/"
+  },
+  "require": {
+    "php": ">=5.3.0",
+    "composer/installers": "~1.0"
+  }
+}
