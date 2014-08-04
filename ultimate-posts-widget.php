@@ -270,7 +270,8 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
         'show_readmore' => true,
         'show_thumbnail' => true,
         'custom_fields' => '',
-        'template' => 'standard',
+        // Set template to 'legacy' if field from UPW < 2.0 is set.
+        'template' => empty($instance['morebutton_text']) ? 'standard' : 'legacy',
         'template_custom' => '',
         'before_posts' => '',
         'after_posts' => ''
