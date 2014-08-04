@@ -3,8 +3,8 @@ Contributors: bostondv
 Donate link: http://www.pomelodesign.com/donate
 Tags: widget, recent posts, custom post types, sticky posts, featured image, post thumbnail, excerpts, category, custom fields
 Requires at least: 3.0
-Tested up to: 3.9
-Stable tag: 1.9.0
+Tested up to: 4.0
+Stable tag: 2.0.0
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,33 +12,40 @@ The ultimate widget for displaying posts, custom post types or sticky posts with
 
 == Description ==
 
-The ultimate widget for displaying posts, custom post types or sticky posts with an array of options.
+The ultimate widget for displaying posts, custom post types or sticky posts with an array of options to customize the display. 
+
+The plugin is designed for both the average user, aiming to provide flexibiltiy and ease of use via the widget options as well as hooks, filters and custom templates for more advanced customization.
 
 Options:
 
 * Filter by categories
 * Filter by current category
+* Filter by tags
+* Filter by current tag
 * Filter by custom post types
 * Filter by sticky posts
 * Select number of posts to display
 * Display title
-* Display publish date
-* Display publish time
-* Display post author
-* Display excerpt
-* Display content
-* Display read more link
-* Display featured image
-* Display more button link
+* Display publish date/time with custom format options
+* Display post author and link
+* Display excerpt or full content
+* Display read more link with custom label
+* Display featured image and at any size
 * Display post categories
 * Display post tags
 * Display custom fields
+* Add custom text or html before and after posts list
 * Custom widget title link
-* Custom read more link text
 * Custom excerpt length (in words)
-* Custom featured image size
-* Feature image crop mode
-* Order by date, title, number of comments, random or custom field
+* Order by date, title, number of comments, random or a custom field
+
+Filters:
+
+TODO
+
+Templates:
+
+TODO
 
 For support please use [wordpress.org](http://wordpress.org/support/plugin/ultimate-posts-widget). Visit [our website](http://pomelodesign.com), follow [@bostondv](http://twitter.com/bostondv/) for updates.
 
@@ -65,6 +72,12 @@ Still stuck? See [additional troubleshooting tips](http://www.binarymoon.co.uk/2
 1. Widget options
 
 == Changelog ==
+
+= 2.0.0 =
+
+HUGE UPDATE!
+
+TODO
 
 = 1.9.0 =
 
@@ -143,6 +156,12 @@ Still stuck? See [additional troubleshooting tips](http://www.binarymoon.co.uk/2
 = 1.0 =
 
 * First release.
+
+== Upgrade Notice ==
+
+= 2.0.0 =
+
+TODO
 
 == Installation ==
 
