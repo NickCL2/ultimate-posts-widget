@@ -74,6 +74,10 @@ As of version 2.0.0 you can now provide your own custom template files. In your 
 * Follow me on [Twitter](http://twitter.com/bostondv/)
 * View my other [WordPress Plugins](http://profiles.wordpress.org/bostondv/)
 
+= Support =
+
+Did you enjoy this plugin? Please [donate to support ongoing development](http://pomelodesign.com/donate/). Your contribution would be greatly appreciated.
+
 == Frequently Asked Questions ==
 
 = Thumbnail images are not displaying =
