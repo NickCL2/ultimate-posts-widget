@@ -194,14 +194,14 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       if ($instance['template'] === 'custom') {
         $custom_template_path = apply_filters('upw_custom_template_path',  '/upw/' . $instance['template_custom'] . '.php');
         if (locate_template($custom_template_path)) {
-          require_once(get_stylesheet_directory() . $custom_template_path);
+          include get_stylesheet_directory() . $custom_template_path;
         } else {
-          require_once('templates/standard.php');
+          include 'templates/standard.php';
         }
       } elseif ($instance['template']) {
-        require_once('templates/' . $instance['template'] . '.php');
+        include 'templates/' . $instance['template'] . '.php';
       } else {
-        require_once('templates/legacy.php');
+        include 'templates/legacy.php';
       }
 
       // Reset the global $the_post as this query will have stomped on it
@@ -277,7 +277,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
       // Set default arguments
       $instance = wp_parse_args( (array) $instance, array(
-        'title' => '',
+        'title' => __('Ultimate Posts', 'upw'),
         'class' => '',
         'title_link' => '' ,
         'number' => '5',
