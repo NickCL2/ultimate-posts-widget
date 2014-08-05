@@ -6,7 +6,7 @@ License URI: http://www.gnu.org/licenses/gpl.html
 Tags: widget, recent posts, custom post types, sticky posts, featured image, post thumbnail, excerpts, category, custom fields, list pages, widget query, microformats, customizable widget,  categories widget, tags widget, excerpt, widget templates, post author, post date, custom query, ultimate posts, comments, orderby, comment count
 Requires at least: 3.6
 Tested up to: 4.0
-Stable tag: 2.0.0
+Stable tag: 2.0.1
 
 The ultimate widget for displaying posts, custom post types or sticky posts with an array of options.
 
@@ -41,30 +41,9 @@ Designed for both the average user and developer, Ultimate Posts Widgets aims to
 * Change excerpt length (in words)
 * Order by date, title, number of comments, random or a custom field
 
-= Filters =
+= Documentation =
 
-`upw_enqueue_styles` (boolean)
-Allows changing whether to load the template CSS file(s).
-
-`upw_widget_title` (string)
-Allows changing the widget title.
-
-`upw_wp_query_args` (array)
-Allows changing the WP_Query arguments for the widget.
-
-`upw_custom_template_path` (string)
-Allows changing the default custom template path.
-
-= Templates =
-
-`legacy`
-As of version 2.0.0 we changed the widget HTML markup. For installs prior to 2.0.0 you can use the legacy template to retain the old HTML markup and compatibility.
-
-`standard`
-The new standard template as of version 2.0.0. It features better HTML5 markup, improved styling on various themes without the need for custom CSS, and hfeed microformat.
-
-`custom`
-As of version 2.0.0 you can now provide your own custom template files. In your theme, create a folder named `upw` then copy one of the templates from the plugin into this folder and edit as needed. In the widget settings under *Display* tab, choose *Custom* template from the drop down and enter the file name (excluding .PHP) into the subsequent field. For example, if your template is named `custom.php` then enter `custom` in the Custom Template Name field.
+See the [FAQ tab](https://wordpress.org/plugins/ultimate-posts-widget/faq/) for documentation on custom templates, hooks, common issues, and more.
 
 = More Information =
 
@@ -79,6 +58,40 @@ As of version 2.0.0 you can now provide your own custom template files. In your 
 Did you enjoy this plugin? Please [donate to support ongoing development](http://pomelodesign.com/donate/). Your contribution would be greatly appreciated.
 
 == Frequently Asked Questions ==
+
+= Filters =
+
+**upw_enqueue_styles** *(boolean)*
+
+Allows changing whether to load the template CSS file(s).
+
+**upw_widget_title** *(string)*
+
+Allows changing the widget title.
+
+**upw_wp_query_args** *(array)*
+
+Allows changing the WP_Query arguments for the widget.
+
+**upw_custom_template_path** *(string)*
+
+Allows changing the default custom template path.
+
+= Templates =
+
+**legacy**
+
+As of version 2.0.0 we changed the widget HTML markup. For installs prior to 2.0.0 you can use the legacy template to retain the old HTML markup and compatibility.
+
+**standard**
+
+The new standard template as of version 2.0.0. It features better HTML5 markup, improved styling on various themes without the need for custom CSS, and hfeed microformat.
+
+**custom**
+
+As of version 2.0.0 you can now provide your own custom template files. To do this, create a directory named `upw` in your theme and copy a template from the plugin's `templates` directory. Edit as needed. 
+
+Then, in the widget settings under the *Display* tab, choose *Custom* from the *Template* drop down. In the *Custom Template Name* field that appears and enter the file name of your template (excluding .php). For example, if your template is named `custom.php` then enter `custom` in the *Custom Template Name* field.
 
 = Thumbnail images are not displaying =
 
@@ -105,6 +118,11 @@ This plugin uses the [timthumb library](http://www.binarymoon.co.uk/projects/tim
 5. Order options tab
 
 == Changelog ==
+
+= 2.0.1 =
+* Fixes issue loading multiple widgets on the same page and using the same template
+* Adds a default title to the widget for new instances
+* Documentation improvements
 
 = 2.0.0 =
 
