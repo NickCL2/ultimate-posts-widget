@@ -1,3 +1,11 @@
+<?php
+/**
+ * Standard ultimate posts widget template
+ *
+ * @version     2.0.0
+ */
+?>
+
 <?php if ($instance['before_posts']) : ?>
   <div class="upw-before">
     <?php echo wpautop($instance['before_posts']); ?>
