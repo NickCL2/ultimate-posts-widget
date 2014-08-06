@@ -118,6 +118,7 @@ This plugin uses the [timthumb library](http://www.binarymoon.co.uk/projects/tim
 = 2.0.2 =
 * Reverts back to using `widget_title` filter
 * Fixes number of posts setting to allow unlimited amounts
+* Adds instance and widget ID variables to filters for more control
 
 = 2.0.1 =
 * Fixes issue loading multiple widgets on the same page and using the same template

@@ -189,12 +189,12 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
         $args[key($sticky_query)] = reset($sticky_query);
       }
 
-      $args = apply_filters('upw_wp_query_args', $args);
+      $args = apply_filters('upw_wp_query_args', $args, $instance, $this->id_base);
 
       $upw_query = new WP_Query($args);
 
       if ($instance['template'] === 'custom') {
-        $custom_template_path = apply_filters('upw_custom_template_path',  '/upw/' . $instance['template_custom'] . '.php');
+        $custom_template_path = apply_filters('upw_custom_template_path',  '/upw/' . $instance['template_custom'] . '.php', $instance, $this->id_base);
         if (locate_template($custom_template_path)) {
           include get_stylesheet_directory() . $custom_template_path;
         } else {
