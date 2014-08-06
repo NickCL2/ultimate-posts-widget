@@ -6,7 +6,7 @@ License URI: http://www.gnu.org/licenses/gpl.html
 Tags: widget, recent posts, custom post types, sticky posts, featured image, post thumbnail, excerpts, category, custom fields, list pages, widget query, microformats, customizable widget,  categories widget, tags widget, excerpt, widget templates, post author, post date, custom query, ultimate posts, comments, orderby, comment count
 Requires at least: 3.6
 Tested up to: 4.0
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 
 The ultimate widget for displaying posts, custom post types or sticky posts with an array of options.
 
@@ -65,10 +65,6 @@ Did you enjoy this plugin? Please [donate to support ongoing development](http:/
 
 Allows changing whether to load the template CSS file(s).
 
-**upw_widget_title** *(string)*
-
-Allows changing the widget title.
-
 **upw_wp_query_args** *(array)*
 
 Allows changing the WP_Query arguments for the widget.
@@ -118,6 +114,10 @@ This plugin uses the [timthumb library](http://www.binarymoon.co.uk/projects/tim
 5. Order options tab
 
 == Changelog ==
+
+= 2.0.2 =
+* Reverts back to using `widget_title` filter
+* Fixes number of posts setting to allow unlimited amounts
 
 = 2.0.1 =
 * Fixes issue loading multiple widgets on the same page and using the same template

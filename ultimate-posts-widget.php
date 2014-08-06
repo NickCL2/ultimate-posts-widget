@@ -3,7 +3,7 @@
 Plugin Name: Ultimate Posts Widget
 Plugin URI: http://wordpress.org/plugins/ultimate-posts-widget/
 Description: The ultimate widget for displaying posts, custom post types or sticky posts with an array of options.
-Version: 2.0.1
+Version: 2.0.2
 Author: Boston Dell-Vandenberg
 Author URI: http://pomelodesign.com
 Text Domain: upw
@@ -95,13 +95,13 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       ob_start();
       extract( $args );
 
-      $title = apply_filters( 'upw_widget_title', $instance['title'] );
+      $title = apply_filters('widget_title', empty($instance['title']) ? '' : $instance['title'], $instance, $this->id_base);
       $title_link = $instance['title_link'];
       $class = $instance['class'];
-      $number = $instance['number'];
-      $types = ($instance['types'] ? explode(',', $instance['types']) : '');
-      $cats = ($instance['cats'] ? explode(',', $instance['cats']) : '');
-      $tags = ($instance['tags'] ? explode(',', $instance['tags']) : '');
+      $number = empty($instance['number']) ? -1 : $instance['number'];
+      $types = empty($instance['types']) ? '' : explode(',', $instance['types']);
+      $cats = empty($instance['cats']) ? '' : explode(',', $instance['cats']);
+      $tags = empty($instance['tags']) ? '' : explode(',', $instance['tags']);
       $atcat = $instance['atcat'] ? true : false;
       $thumb_size = $instance['thumb_size'];
       $attag = $instance['attag'] ? true : false;
@@ -133,7 +133,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
         foreach (get_the_category() as $catt) {
           $cats .= $catt->term_id.' ';
         }
-        $cats = str_replace(" ", ",", trim($cats));
+        $cats = str_replace(' ', ',', trim($cats));
       }
 
       // If $attag true and in tag
@@ -147,7 +147,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
         foreach (get_the_tags() as $tagg) {
           $tags .= $tagg->term_id.' ';
         }
-        $tags = str_replace(" ", ",", trim($tags));
+        $tags = str_replace(' ', ',', trim($tags));
       }
 
       // Excerpt more filter
@@ -156,22 +156,24 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
       // Excerpt length filter
       $new_excerpt_length = create_function('$length', "return " . $excerpt_length . ";");
-      if ( $instance["excerpt_length"] > 0 ) add_filter('excerpt_length', $new_excerpt_length);
-      if( $class )
-      {
+      if ( $instance['excerpt_length'] > 0 ) add_filter('excerpt_length', $new_excerpt_length);
+
+      if( $class ) {
         $before_widget = str_replace('class="', 'class="'. $class . ' ', $before_widget);
       }
+
       echo $before_widget;
+
       if ( $title ) {
         echo $before_title;
         if ( $title_link ) echo "<a href='$title_link'>";
         echo $title;
-        if ( $title_link ) echo "</a>";
+        if ( $title_link ) echo '</a>';
         echo $after_title;
       }
 
       $args = array(
-        'showposts' => $number,
+        'posts_per_page' => $number,
         'order' => $order,
         'orderby' => $orderby,
         'category__in' => $cats,
@@ -443,7 +445,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
         <p>
           <label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of posts', 'upw' ); ?>:</label>
-          <input class="widefat" id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="number" value="<?php echo $number; ?>" min="1" max="20" />
+          <input class="widefat" id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="number" value="<?php echo $number; ?>" min="-1" />
         </p>
 
         <p>
@@ -478,7 +480,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
         <p<?php if (!$show_excerpt) echo ' style="display:none;"'; ?>>
           <label for="<?php echo $this->get_field_id('excerpt_length'); ?>"><?php _e( 'Excerpt length (in words)', 'upw' ); ?>:</label>
-          <input class="widefat" type="number" id="<?php echo $this->get_field_id('excerpt_length'); ?>" name="<?php echo $this->get_field_name('excerpt_length'); ?>" value="<?php echo $excerpt_length; ?>" min="1" max="100" />
+          <input class="widefat" type="number" id="<?php echo $this->get_field_id('excerpt_length'); ?>" name="<?php echo $this->get_field_name('excerpt_length'); ?>" value="<?php echo $excerpt_length; ?>" min="-1" />
         </p>
 
         <p>
