@@ -62,29 +62,23 @@ Did you enjoy this plugin? Please [donate to support ongoing development](http:/
 = Filters =
 
 **upw_enqueue_styles** *(boolean)*
-
 Allows changing whether to load the template CSS file(s).
 
 **upw_wp_query_args** *(array)*
-
 Allows changing the WP_Query arguments for the widget.
 
 **upw_custom_template_path** *(string)*
-
 Allows changing the default custom template path.
 
 = Templates =
 
 **legacy**
-
 As of version 2.0.0 we changed the widget HTML markup. For installs prior to 2.0.0 you can use the legacy template to retain the old HTML markup and compatibility.
 
 **standard**
-
 The new standard template as of version 2.0.0. It features better HTML5 markup, improved styling on various themes without the need for custom CSS, and hfeed microformat.
 
 **custom**
-
 As of version 2.0.0 you can now provide your own custom template files. To do this, create a directory named `upw` in your theme and copy a template from the plugin's `templates` directory. Edit as needed. 
 
 Then, in the widget settings under the *Display* tab, choose *Custom* from the *Template* drop down. In the *Custom Template Name* field that appears and enter the file name of your template (excluding .php). For example, if your template is named `custom.php` then enter `custom` in the *Custom Template Name* field.
