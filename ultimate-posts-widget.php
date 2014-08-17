@@ -99,7 +99,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       $title_link = $instance['title_link'];
       $class = $instance['class'];
       $number = empty($instance['number']) ? -1 : $instance['number'];
-      $types = empty($instance['types']) ? '' : explode(',', $instance['types']);
+      $types = empty($instance['types']) ? 'any' : explode(',', $instance['types']);
       $cats = empty($instance['cats']) ? '' : explode(',', $instance['cats']);
       $tags = empty($instance['tags']) ? '' : explode(',', $instance['tags']);
       $atcat = $instance['atcat'] ? true : false;
@@ -348,10 +348,10 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       $before_posts = format_to_edit($instance['before_posts']);
       $after_posts = format_to_edit($instance['after_posts']);
 
-      // Let's turn $types, $cats, and $tags into an array
-      $types = explode(',', $types);
-      $cats = explode(',', $cats);
-      $tags = explode(',', $tags);
+      // Let's turn $types, $cats, and $tags into an array if they are set
+      if (!empty($types)) $types = explode(',', $types);
+      if (!empty($cats)) $cats = explode(',', $cats);
+      if (!empty($tags)) $tags = explode(',', $tags);
 
       // Count number of post types for select box sizing
       $cpt_types = get_post_types( array( 'public' => true ), 'names' );
@@ -546,10 +546,11 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
         <p>
           <label for="<?php echo $this->get_field_id('cats'); ?>"><?php _e( 'Categories', 'upw' ); ?>:</label>
           <select name="<?php echo $this->get_field_name('cats'); ?>[]" id="<?php echo $this->get_field_id('cats'); ?>" class="widefat" style="height: auto;" size="<?php echo $c ?>" multiple>
+            <option value="" <?php if (empty($cats)) echo 'selected="selected"'; ?>><?php _e('&ndash; Show All &ndash;') ?></option>
             <?php
             $categories = get_categories( 'hide_empty=0' );
             foreach ($categories as $category ) { ?>
-              <option value="<?php echo $category->term_id; ?>" <?php if( in_array($category->term_id, $cats)) { echo 'selected="selected"'; } ?>><?php echo $category->cat_name;?></option>
+              <option value="<?php echo $category->term_id; ?>" <?php if(is_array($cats) && in_array($category->term_id, $cats)) echo 'selected="selected"'; ?>><?php echo $category->cat_name;?></option>
             <?php } ?>
           </select>
         </p>
@@ -563,9 +564,10 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
           <p>
             <label for="<?php echo $this->get_field_id('tags'); ?>"><?php _e( 'Tags', 'upw' ); ?>:</label>
             <select name="<?php echo $this->get_field_name('tags'); ?>[]" id="<?php echo $this->get_field_id('tags'); ?>" class="widefat" style="height: auto;" size="<?php echo $t ?>" multiple>
+              <option value="" <?php if (empty($tags)) echo 'selected="selected"'; ?>><?php _e('&ndash; Show All &ndash;') ?></option>
               <?php
               foreach ($tag_list as $tag) { ?>
-                <option value="<?php echo $tag->term_id; ?>" <?php if( in_array($tag->term_id, $tags)) { echo 'selected="selected"'; } ?>><?php echo $tag->name;?></option>
+                <option value="<?php echo $tag->term_id; ?>" <?php if (is_array($tags) && in_array($tag->term_id, $tags)) echo 'selected="selected"'; ?>><?php echo $tag->name;?></option>
               <?php } ?>
             </select>
           </p>
@@ -574,11 +576,12 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
         <p>
           <label for="<?php echo $this->get_field_id('types'); ?>"><?php _e( 'Post types', 'upw' ); ?>:</label>
           <select name="<?php echo $this->get_field_name('types'); ?>[]" id="<?php echo $this->get_field_id('types'); ?>" class="widefat" style="height: auto;" size="<?php echo $n ?>" multiple>
+            <option value="" <?php if (empty($types)) echo 'selected="selected"'; ?>><?php _e('&ndash; Show All &ndash;') ?></option>
             <?php
             $args = array( 'public' => true );
             $post_types = get_post_types( $args, 'names' );
             foreach ($post_types as $post_type ) { ?>
-              <option value="<?php echo $post_type; ?>" <?php if( in_array($post_type, $types)) { echo 'selected="selected"'; } ?>><?php echo $post_type;?></option>
+              <option value="<?php echo $post_type; ?>" <?php if(is_array($types) && in_array($post_type, $types)) { echo 'selected="selected"'; } ?>><?php echo $post_type;?></option>
             <?php } ?>
           </select>
         </p>
