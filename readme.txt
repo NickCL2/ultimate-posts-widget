@@ -161,7 +161,7 @@ This plugin uses the [timthumb library](http://www.binarymoon.co.uk/projects/tim
 
 * Upgrades from prior to 2.0.0 we retain the "legacy" template for you. To change which template to use, find the "Template" option under the "Display" tab.
 * If you used the "More Button", you will need to add in your own HTML into one of the new fields since the more button is now removed.
-* If you used custom thumbnail settings you will need to update them. You can now choose from pre-defined sizes available to WordPress. If you need an additional image size please see [how to add image sizes](http://codex.wordpress.org/Function_Reference/add_image_size/).
+* If you used custom thumbnail settings you will need to update them. You can now choose from pre-defined sizes available to WordPress. If you need an additional image size please see [how to add image sizes](http://codex.wordpress.org/Function_Reference/add_image_size).
 * Date formatting has changed, you will need to update your settings. By default it uses WordPress' date/time options.
 
 = 1.9.0 =
