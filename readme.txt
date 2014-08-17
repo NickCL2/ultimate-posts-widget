@@ -83,6 +83,20 @@ As of version 2.0.0 you can now provide your own custom template files. To do th
 
 Then, in the widget settings under the *Display* tab, choose *Custom* from the *Template* drop down. In the *Custom Template Name* field that appears and enter the file name of your template (excluding .php). For example, if your template is named `custom.php` then enter `custom` in the *Custom Template Name* field.
 
+= Images sizes =
+
+*As of version 2.0.0, the plugin no longer supports setting custom image sizes from the widget options panel.*
+
+To change image sizes you can either edit the built-in sizes (thumbnail, medium, and large) or define a custom image size in your theme `functions.php`.
+
+**Edit built-in image sizes:** Go to *Settings > Media* and change the image sizes as desired. Once image sizes are changed you will need to regenerate thumbnails to update any existing images. This can be done with [AJAX Thumbnail Rebuild](https://wordpress.org/plugins/ajax-thumbnail-rebuild/) or [Regenerate Thumbnails](https://wordpress.org/plugins/regenerate-thumbnails/) plugins. Note that this will affect image sizes for the entire site.
+
+**Define a custom image size:** Edit your `functions.php` file and add a new image size with the `add_image_size` function. See the [WordPress codex for documentation](http://codex.wordpress.org/Function_Reference/add_image_size). Once the function is added, your custom size will be available to select from the widget options. Like editing a built-in size, you will need to regenerate thumbnails for existing images.
+
+Example:
+
+`<?php add_image_size( 'my-custom-size', 800, 600, false ); ?>`
+
 = Thumbnail images are not displaying =
 
 *As of version 2.0.0 timthumb is no longer used.*
@@ -108,6 +122,13 @@ This plugin uses the [timthumb library](http://www.binarymoon.co.uk/projects/tim
 5. Order options tab
 
 == Changelog ==
+
+= 2.0.3 =
+* Adds link to thumbnail images
+* Adds option to show all categories, tags, or types for better usability
+* Improve spacing and font sizes on some themes for the standard template
+* Document adding custom image sizes
+* Add option to display full size post thumbnail
 
 = 2.0.2 =
 * Reverts back to using `widget_title` filter
