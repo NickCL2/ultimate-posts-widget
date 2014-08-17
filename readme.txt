@@ -129,6 +129,7 @@ This plugin uses the [timthumb library](http://www.binarymoon.co.uk/projects/tim
 * Improve spacing and font sizes on some themes for the standard template
 * Document adding custom image sizes
 * Add option to display full size post thumbnail
+* Remove post_class() from legacy template for better backwards compatibility
 
 = 2.0.2 =
 * Reverts back to using `widget_title` filter
