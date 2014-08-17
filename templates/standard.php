@@ -26,7 +26,9 @@
 
             <?php if (current_theme_supports('post-thumbnails') && $instance['show_thumbnail'] && has_post_thumbnail()) : ?>
               <div class="entry-image">
-                <?php the_post_thumbnail($instance['thumb_size']); ?>
+                <a href="<?php the_permalink(); ?>" rel="bookmark">
+                  <?php the_post_thumbnail($instance['thumb_size']); ?>
+                </a>
               </div>
             <?php endif; ?>
 
