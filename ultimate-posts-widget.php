@@ -514,6 +514,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
               <?php foreach ($sizes as $size) : ?>
                 <option value="<?php echo $size; ?>"<?php if ($thumb_size == $size) echo ' selected'; ?>><?php echo $size; ?></option>
               <?php endforeach; ?>
+              <option value="full"<?php if ($thumb_size == $size) echo ' selected'; ?>><?php _e('full'); ?></option>
             </select>
           </p>
 
