@@ -1,0 +1,640 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Ultimate Posts\n"
+"POT-Creation-Date: 2014-10-29 23:41+0330\n"
+"PO-Revision-Date: 2014-10-29 23:42+0330\n"
+"Last-Translator: MohammadHadi Nasiri <info@taktaweb.ir>\n"
+"Language-Team: Taktaweb Group <info@taktaweb.ir>\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.4\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
+"_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: ..\n"
+
+#: ../templates/legacy.php:51 ../templates/standard.php:57
+msgid "By"
+msgstr "بدست"
+
+#: ../templates/legacy.php:58
+msgid "No responses"
+msgstr "بدون پاسخ"
+
+#: ../templates/legacy.php:58
+msgid "One response"
+msgstr "یک پاسخ"
+
+#: ../templates/legacy.php:58
+msgid "% responses"
+msgstr "% پاسخ"
+
+#: ../templates/legacy.php:81 ../ultimate-posts-widget.php:548
+msgid "Categories"
+msgstr "دسته بندی ها"
+
+#: ../templates/legacy.php:91 ../ultimate-posts-widget.php:566
+msgid "Tags"
+msgstr "بر چسب ها"
+
+#: ../templates/legacy.php:127 ../templates/standard.php:151
+msgid "No posts found."
+msgstr "پستی پیدا نشد."
+
+#: ../templates/standard.php:52 ../templates/standard.php:65
+msgid "|"
+msgstr "|"
+
+#: ../templates/standard.php:70
+msgid "No comments"
+msgstr "بدون نظر"
+
+#: ../templates/standard.php:70
+msgid "One comment"
+msgstr "یک نظر"
+
+#: ../templates/standard.php:70
+#, php-format
+msgid "% comments"
+msgstr ""
+
+#: ../templates/standard.php:102
+msgid "Posted in"
+msgstr "ارسال شده در"
+
+#: ../templates/standard.php:112
+msgid "Tagged"
+msgstr "برچسب خورده"
+
+#: ../ultimate-posts-widget.php:38
+msgid "Displays list of posts with an array of options"
+msgstr "ابزارک نمایش آخرین پست های دسته ها بصورت اختصاصی"
+
+#: ../ultimate-posts-widget.php:47 ../ultimate-posts-widget.php:282
+msgid "Ultimate Posts"
+msgstr "ابزارک دسته بندی"
+
+#: ../ultimate-posts-widget.php:293
+msgid "Read more &rarr;"
+msgstr "ادامه مطلب &rarr;"
+
+#: ../ultimate-posts-widget.php:395
+msgid "General"
+msgstr "عمومی"
+
+#: ../ultimate-posts-widget.php:396
+msgid "Display"
+msgstr "نمایش"
+
+#: ../ultimate-posts-widget.php:397
+msgid "Filter"
+msgstr "فیلتر"
+
+#: ../ultimate-posts-widget.php:398 ../ultimate-posts-widget.php:620
+msgid "Order"
+msgstr "چیدمان"
+
+#: ../ultimate-posts-widget.php:404 ../ultimate-posts-widget.php:607
+msgid "Title"
+msgstr "تیتر"
+
+#: ../ultimate-posts-widget.php:409
+msgid "Title URL"
+msgstr "لینک تیتر"
+
+#: ../ultimate-posts-widget.php:414
+msgid "CSS class"
+msgstr "کلاس CSS"
+
+#: ../ultimate-posts-widget.php:419
+msgid "Before posts"
+msgstr "قبل پست"
+
+#: ../ultimate-posts-widget.php:424
+msgid "After posts"
+msgstr "بعد پست"
+
+#: ../ultimate-posts-widget.php:433
+msgid "Template"
+msgstr "قالب"
+
+#: ../ultimate-posts-widget.php:435
+msgid "Legacy"
+msgstr "پیشرفته"
+
+#: ../ultimate-posts-widget.php:436
+msgid "Standard"
+msgstr "معمولی"
+
+#: ../ultimate-posts-widget.php:437
+msgid "Custom"
+msgstr "دستی"
+
+#: ../ultimate-posts-widget.php:442
+msgid "Custom Template Name"
+msgstr "قالب اختصاصی"
+
+#: ../ultimate-posts-widget.php:447
+msgid "Number of posts"
+msgstr "تعداد پست ها"
+
+#: ../ultimate-posts-widget.php:453
+msgid "Show title"
+msgstr "نمایش تیتر"
+
+#: ../ultimate-posts-widget.php:458
+msgid "Show published date"
+msgstr "نمایش تاریخ انتشار"
+
+#: ../ultimate-posts-widget.php:462
+msgid "Date format"
+msgstr "فرمت تاریخ"
+
+#: ../ultimate-posts-widget.php:468
+msgid "Show post author"
+msgstr "نمایش نویسنده"
+
+#: ../ultimate-posts-widget.php:473
+msgid "Show comments count"
+msgstr "نمایش تعداد نظرات"
+
+#: ../ultimate-posts-widget.php:478
+msgid "Show excerpt"
+msgstr "نمایش چکیده"
+
+#: ../ultimate-posts-widget.php:482
+msgid "Excerpt length (in words)"
+msgstr "طول چکیده(بر اساس کلمه)"
+
+#: ../ultimate-posts-widget.php:488
+msgid "Show content"
+msgstr "نمایش محتوا"
+
+#: ../ultimate-posts-widget.php:494
+msgid "Show read more link"
+msgstr "نمایش لینک ادامه مطلب"
+
+#: ../ultimate-posts-widget.php:509
+msgid "Show thumbnail"
+msgstr "نمایش تصویر شاخص"
+
+#: ../ultimate-posts-widget.php:517
+msgid "full"
+msgstr "کامل"
+
+#: ../ultimate-posts-widget.php:525
+msgid "Show post categories"
+msgstr "نمایش دسته بندی پست"
+
+#: ../ultimate-posts-widget.php:530
+msgid "Show post tags"
+msgstr "نمایش برچسب های پست"
+
+#: ../ultimate-posts-widget.php:534
+msgid "Show custom fields (comma separated)"
+msgstr "نمایش فیلد های سفارشی (با کامای انگلیسی تفکیک کنید)"
+
+#: ../ultimate-posts-widget.php:544
+msgid "Show posts only from current category"
+msgstr "تنها نمایش پست انتخاب شده"
+
+#: ../ultimate-posts-widget.php:550 ../ultimate-posts-widget.php:568
+#: ../ultimate-posts-widget.php:580
+msgid "&ndash; Show All &ndash;"
+msgstr "&ndash;نمایش همه &ndash;"
+
+#: ../ultimate-posts-widget.php:562
+msgid "Show posts only from current tag"
+msgstr "تنها نمایش پست های این برچسب"
+
+#: ../ultimate-posts-widget.php:578
+msgid "Post types"
+msgstr "نوع پست"
+
+#: ../ultimate-posts-widget.php:591
+msgid "Sticky posts"
+msgstr "پست چسبان"
+
+#: ../ultimate-posts-widget.php:593
+msgid "Show All Posts"
+msgstr "نمایش تمامی پست ها"
+
+#: ../ultimate-posts-widget.php:594
+msgid "Hide Sticky Posts"
+msgstr "مخفی کردن پست های چسبان"
+
+#: ../ultimate-posts-widget.php:595
+msgid "Show Only Sticky Posts"
+msgstr "تنها نمایش پست های چسبان"
+
+#: ../ultimate-posts-widget.php:604
+msgid "Order by"
+msgstr "چیدمان براساس"
+
+#: ../ultimate-posts-widget.php:606
+msgid "Published Date"
+msgstr "تاریخ انتشار"
+
+#: ../ultimate-posts-widget.php:608
+msgid "Comment Count"
+msgstr "تعداد نظرات"
+
+#: ../ultimate-posts-widget.php:609
+msgid "Random"
+msgstr "تضادفی"
+
+#: ../ultimate-posts-widget.php:610
+msgid "Custom Field"
+msgstr "فیلد اختصاصی"
+
+#: ../ultimate-posts-widget.php:615
+msgid "Custom field"
+msgstr "فیلد اختصاصی"
+
+#: ../ultimate-posts-widget.php:622
+msgid "Descending"
+msgstr "نزولی"
+
+#: ../ultimate-posts-widget.php:623
+msgid "Ascending"
+msgstr "صعودی"
+
+#: ../ultimate-posts-widget.php:630
+msgid ""
+"Enjoy this plugin? Please <a href=\"http://pomelodesign.com/donate/\" target="
+"\"_blank\">donate to support development</a>."
+msgstr ""
+"آماده سازی بدست <a href=\"http://taktaweb.ir/\" target=\"_blank\">گروه طراحی "
+"و توسعه تکتاوب</a>."
+
+#, fuzzy
+#~ msgid "Comment History"
+#~ msgstr "تعداد نظرات"
+
+#, fuzzy
+#~ msgid "Re-adding..."
+#~ msgstr "صعودی"
+
+#, fuzzy
+#~ msgid "Comments"
+#~ msgstr "بدون نظر"
+
+#, fuzzy
+#~ msgid "View comment history"
+#~ msgstr "تعداد نظرات"
+
+#, fuzzy
+#~ msgid "History"
+#~ msgstr "تعداد نظرات"
+
+#, fuzzy
+#~ msgid "Title:"
+#~ msgstr "تیتر"
+
+#, fuzzy
+#~ msgid "Show approved comments"
+#~ msgstr "تعداد پست ها"
+
+#, fuzzy
+#~ msgid "List single category posts"
+#~ msgstr "دسته بندی ها"
+
+#, fuzzy
+#~ msgid "Category Posts"
+#~ msgstr "دسته بندی ها"
+
+#, fuzzy
+#~ msgid "Category"
+#~ msgstr "دسته بندی ها"
+
+#, fuzzy
+#~ msgid "Number of posts to show"
+#~ msgstr "تعداد پست ها"
+
+#, fuzzy
+#~ msgid "Number of comments"
+#~ msgstr "تعداد پست ها"
+
+#, fuzzy
+#~ msgid "Show post rutitr"
+#~ msgstr "نمایش نویسنده"
+
+#, fuzzy
+#~ msgid "Show post excerpt"
+#~ msgstr "نمایش چکیده"
+
+#, fuzzy
+#~ msgid "Excerpt length (in words):"
+#~ msgstr "طول چکیده(بر اساس کلمه)"
+
+#, fuzzy
+#~ msgid "Show number of comments"
+#~ msgstr "تعداد پست ها"
+
+#, fuzzy
+#~ msgid "Show post date"
+#~ msgstr "نمایش نویسنده"
+
+#, fuzzy
+#~ msgid "Show post thumbnail"
+#~ msgstr "نمایش تصویر شاخص"
+
+#, fuzzy
+#~ msgid "Generate Tag"
+#~ msgstr "عمومی"
+
+#, fuzzy
+#~ msgid "Untitled"
+#~ msgstr "تیتر"
+
+#, fuzzy
+#~ msgid "Sending ..."
+#~ msgstr "صعودی"
+
+#, fuzzy
+#~ msgid "optional"
+#~ msgstr "Skala proportionellt"
+
+#, fuzzy
+#~ msgid "Radio buttons"
+#~ msgstr "Visa knapp \"Läs mer\""
+
+#, fuzzy
+#~ msgid "Submit button"
+#~ msgstr "Visa knapp \"Läs mer\""
+
+#, fuzzy
+#~ msgid "Text field"
+#~ msgstr "فیلد اختصاصی"
+
+#, fuzzy
+#~ msgid "Text area"
+#~ msgstr "فیلد اختصاصی"
+
+#, fuzzy
+#~ msgid "Logged out text:"
+#~ msgstr "Text på knappen \"Läs mer\""
+
+#, fuzzy
+#~ msgid "Logged in text:"
+#~ msgstr "Text på knappen \"Läs mer\""
+
+#, fuzzy
+#~ msgid "Display avatar?"
+#~ msgstr "نمایش"
+
+#, fuzzy
+#~ msgid "Submit Text:"
+#~ msgstr "Visa knapp \"Läs mer\""
+
+#, fuzzy
+#~ msgid "Order:"
+#~ msgstr "چیدمان"
+
+#, fuzzy
+#~ msgid "Order By:"
+#~ msgstr "چیدمان براساس"
+
+#, fuzzy
+#~ msgid "Display Name"
+#~ msgstr "نمایش"
+
+#, fuzzy
+#~ msgid "Post Count"
+#~ msgstr "تعداد نظرات"
+
+#, fuzzy
+#~ msgid "Posts"
+#~ msgstr "نوع پست"
+
+#, fuzzy
+#~ msgid "Posts Title"
+#~ msgstr "نوع پست"
+
+#, fuzzy
+#~ msgid "Excerpts"
+#~ msgstr "نمایش چکیده"
+
+#, fuzzy
+#~ msgid "Comments Counter"
+#~ msgstr "تعداد نظرات"
+
+#, fuzzy
+#~ msgid "title"
+#~ msgstr "تیتر"
+
+#, fuzzy
+#~ msgid "post by post"
+#~ msgstr "نوع پست"
+
+#, fuzzy
+#~ msgid "The total number of pages."
+#~ msgstr "تعداد پست ها"
+
+#, fuzzy
+#~ msgid "Number Of Pages To Show"
+#~ msgstr "تعداد پست ها"
+
+#, fuzzy
+#~ msgid "Comment Authors"
+#~ msgstr "تعداد نظرات"
+
+#, fuzzy
+#~ msgid "Clear Filter"
+#~ msgstr "فیلتر"
+
+#, fuzzy
+#~ msgid "Displayed:"
+#~ msgstr "نمایش"
+
+#, fuzzy
+#~ msgid "No Polls Found"
+#~ msgstr "پستی پیدا نشد."
+
+#, fuzzy
+#~ msgid "Polls Stats:"
+#~ msgstr "قالب"
+
+#, fuzzy
+#~ msgid "No Poll Option Updated"
+#~ msgstr "پستی پیدا نشد."
+
+#, fuzzy
+#~ msgid "Poll Options"
+#~ msgstr "قالب"
+
+#, fuzzy
+#~ msgid "Exact Order"
+#~ msgstr "چیدمان"
+
+#, fuzzy
+#~ msgid "Random Order"
+#~ msgstr "تضادفی"
+
+#, fuzzy
+#~ msgid "Voting Form Body Template"
+#~ msgstr "قالب اختصاصی"
+
+#, fuzzy
+#~ msgid "Result Header Template"
+#~ msgstr "قالب اختصاصی"
+
+#, fuzzy
+#~ msgid "Result Body Template"
+#~ msgstr "قالب اختصاصی"
+
+#, fuzzy
+#~ msgid "Result Body2 Template"
+#~ msgstr "قالب اختصاصی"
+
+#, fuzzy
+#~ msgid "Result Footer Template"
+#~ msgstr "قالب اختصاصی"
+
+#, fuzzy
+#~ msgid "Result Footer2 Template"
+#~ msgstr "قالب اختصاصی"
+
+#, fuzzy
+#~ msgid "Poll Archive Link Template"
+#~ msgstr "قالب"
+
+#, fuzzy
+#~ msgid "Poll Disabled Template"
+#~ msgstr "قالب"
+
+#, fuzzy
+#~ msgid "Poll Error Template"
+#~ msgstr "قالب"
+
+#, fuzzy
+#~ msgid "Poll Templates"
+#~ msgstr "قالب"
+
+#, fuzzy
+#~ msgid "Template Variables"
+#~ msgstr "قالب"
+
+#, fuzzy
+#~ msgid "Poll Voting Form Templates"
+#~ msgstr "قالب"
+
+#, fuzzy
+#~ msgid "Allowed Variables:"
+#~ msgstr "قالب"
+
+#, fuzzy
+#~ msgid "Restore Default Template"
+#~ msgstr "قالب اختصاصی"
+
+#, fuzzy
+#~ msgid "Poll Result Templates"
+#~ msgstr "قالب"
+
+#, fuzzy
+#~ msgid "Result Body:"
+#~ msgstr "قالب اختصاصی"
+
+#, fuzzy
+#~ msgid "Poll Archive Templates"
+#~ msgstr "قالب"
+
+#, fuzzy
+#~ msgid "Poll Misc Templates"
+#~ msgstr "قالب"
+
+#, fuzzy
+#~ msgid "Poll Disabled"
+#~ msgstr "نمایش"
+
+#, fuzzy
+#~ msgid "Poll To Display:"
+#~ msgstr "نمایش"
+
+#, fuzzy
+#~ msgid "No Comments"
+#~ msgstr "بدون نظر"
+
+#, fuzzy
+#~ msgid "Comment"
+#~ msgstr "تعداد نظرات"
+
+#, fuzzy
+#~ msgid "Print Options"
+#~ msgstr "بدون نظر"
+
+#, fuzzy
+#~ msgid "Print Icon"
+#~ msgstr "بدون نظر"
+
+#, fuzzy
+#~ msgid "Print Comments?"
+#~ msgstr "بدون نظر"
+
+#, fuzzy
+#~ msgid "Print Links?"
+#~ msgstr "بدون نظر"
+
+#, fuzzy
+#~ msgid "Print Images?"
+#~ msgstr "بدون نظر"
+
+#, fuzzy
+#~ msgid "Print Videos?"
+#~ msgstr "بدون نظر"
+
+#, fuzzy
+#~ msgid "Posted By"
+#~ msgstr "ارسال شده در"
+
+#, fuzzy
+#~ msgid "%s Comment"
+#~ msgid_plural "%s Comments"
+#~ msgstr[0] "تعداد نظرات"
+#~ msgstr[1] "تعداد نظرات"
+
+#, fuzzy
+#~ msgid "Comments Disabled"
+#~ msgstr "تعداد نظرات"
+
+#, fuzzy
+#~ msgid "Comments Hidden"
+#~ msgstr "تعداد نظرات"
+
+#~ msgid "More button URL"
+#~ msgstr "Url på knappen \"Läs mer\""
+
+#~ msgid "Show published time"
+#~ msgstr "Visa publiceringstid"
+
+#~ msgid "Read more text"
+#~ msgstr "Text \"Läs mer\""
+
+#~ msgid "Thumbnail size"
+#~ msgstr "سایز تصویرشاخص"
+
+#~ msgid "W"
+#~ msgstr "پهنا"
+
+#~ msgid "H"
+#~ msgstr "بلندی"
+
+#~ msgid "Crop mode"
+#~ msgstr "Beskärningssätt"
+
+#~ msgid "Scale &amp; Crop to Fit"
+#~ msgstr "Skala &amp; beskär för att passa"
+
+#~ msgid "Stretch to Fit"
+#~ msgstr "Sträck för att passa"
+
+#~ msgid "Proportional Scale No Borders"
+#~ msgstr "Skala proportionellt utan ramar"
+
+#~ msgid "Developed by"
+#~ msgstr "گسترش یافته بدست"
