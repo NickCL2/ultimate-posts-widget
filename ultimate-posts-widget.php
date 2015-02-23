@@ -145,9 +145,10 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       if ($attag && is_single()) {
         $tags = '';
         $thetags = get_the_tags();
-        if($thetags!==FALSE)
-        foreach ($thetags as $tagg) {
-          $tags .= $tagg->term_id.' ';
+        if ($thetags) {
+            foreach ($thetags as $tagg) {
+                $tags .= $tagg->term_id . ' ';
+            }
         }
         $tags = str_replace(' ', ',', trim($tags));
       }
