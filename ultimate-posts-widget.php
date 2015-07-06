@@ -552,7 +552,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
           <select name="<?php echo $this->get_field_name('cats'); ?>[]" id="<?php echo $this->get_field_id('cats'); ?>" class="widefat" style="height: auto;" size="<?php echo $c ?>" multiple>
             <option value="" <?php if (empty($cats)) echo 'selected="selected"'; ?>><?php _e('&ndash; Show All &ndash;') ?></option>
             <?php
-            $categories = get_categories( 'hide_empty=0' );
+            $categories = get_all_categories( 'hide_empty=0' );
             foreach ($categories as $category ) { ?>
               <option value="<?php echo $category->term_id; ?>" <?php if(is_array($cats) && in_array($category->term_id, $cats)) echo 'selected="selected"'; ?>><?php echo $category->cat_name;?></option>
             <?php } ?>
@@ -736,4 +736,39 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
   }
 
   add_action( 'widgets_init', 'init_wp_widget_ultimate_posts' );
+  
+  function get_all_categories( $args = '' ) {
+        $args_tax = array(
+          'public'   => true,
+        ); 
+        $output = 'names'; // or objects
+        $operator = 'and'; // 'and' or 'or'
+        $taxonomies = get_taxonomies( $args_tax, $output, $operator ); 
+
+	      $defaults = array( 'taxonomy' => $taxonomies);
+        $args = wp_parse_args( $args, $defaults );
+      	$taxonomy = $args['taxonomy'];
+      	/**
+      	 * Filter the taxonomy used to retrieve terms when calling {@see get_categories()}.
+      	 *
+      	 * @since 2.7.0
+      	 *
+      	 * @param string $taxonomy Taxonomy to retrieve terms from.
+      	 * @param array  $args     An array of arguments. See {@see get_terms()}.
+      	 */
+      	$taxonomy = apply_filters( 'get_categories_taxonomy', $taxonomy, $args );
+      
+      	// Back compat
+      	if ( isset($args['type']) && 'link' == $args['type'] ) {
+      		_deprecated_argument( __FUNCTION__, '3.0', '' );
+      		$taxonomy = $args['taxonomy'] = 'link_category';
+      	}
+      
+      	$categories = (array) get_terms( $taxonomy, $args );
+      
+      	foreach ( array_keys( $categories ) as $k )
+      		_make_cat_compat( $categories[$k] );
+      
+      	return $categories;
+      }
 }
