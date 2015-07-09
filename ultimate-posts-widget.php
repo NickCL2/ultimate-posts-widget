@@ -33,18 +33,18 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
     function WP_Widget_Ultimate_Posts() {
 
-      $widget_options = array( 
-        'classname' => 'widget_ultimate_posts', 
-        'description' => __( 'Displays list of posts with an array of options', 'upw' ) 
+      $widget_options = array(
+        'classname' => 'widget_ultimate_posts',
+        'description' => __( 'Displays list of posts with an array of options', 'upw' )
       );
 
       $control_options = array(
         'width' => 450
       );
 
-      $this->WP_Widget( 
-        'sticky-posts', 
-        __( 'Ultimate Posts', 'upw' ), 
+      $this->WP_Widget(
+        'sticky-posts',
+        __( 'Ultimate Posts', 'upw' ),
         $widget_options,
         $control_options
       );
@@ -112,7 +112,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       $orderby = $instance['orderby'];
       $meta_key = $instance['meta_key'];
       $custom_fields = $instance['custom_fields'];
-      
+
       // Sticky posts
       if ($sticky == 'only') {
         $sticky_query = array( 'post__in' => get_option( 'sticky_posts' ) );
@@ -554,7 +554,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
             <?php
             $categories = get_all_categories( 'hide_empty=0' );
             foreach ($categories as $category ) { ?>
-              <option value="<?php echo $category->term_id; ?>" <?php if(is_array($cats) && in_array($category->term_id, $cats)) echo 'selected="selected"'; ?>><?php echo $category->cat_name;?></option>
+              <option value="<?php echo $category->term_id; ?>" <?php if(is_array($cats) && in_array($category->slug, $cats)) echo 'selected="selected"'; ?>><?php echo $category->cat_name;?></option>
             <?php } ?>
           </select>
         </p>
@@ -618,7 +618,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
           <label for="<?php echo $this->get_field_id( 'meta_key' ); ?>"><?php _e('Custom field', 'upw'); ?>:</label>
           <input class="widefat" id="<?php echo $this->get_field_id('meta_key'); ?>" name="<?php echo $this->get_field_name('meta_key'); ?>" type="text" value="<?php echo $meta_key; ?>" />
         </p>
-        
+
         <p>
           <label for="<?php echo $this->get_field_id('order'); ?>"><?php _e('Order', 'upw'); ?>:</label>
           <select name="<?php echo $this->get_field_name('order'); ?>" id="<?php echo $this->get_field_id('order'); ?>" class="widefat">
@@ -736,14 +736,14 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
   }
 
   add_action( 'widgets_init', 'init_wp_widget_ultimate_posts' );
-  
+
   function get_all_categories( $args = '' ) {
         $args_tax = array(
           'public'   => true,
-        ); 
+        );
         $output = 'names'; // or objects
         $operator = 'and'; // 'and' or 'or'
-        $taxonomies = get_taxonomies( $args_tax, $output, $operator ); 
+        $taxonomies = get_taxonomies( $args_tax, $output, $operator );
 
 	      $defaults = array( 'taxonomy' => $taxonomies);
         $args = wp_parse_args( $args, $defaults );
@@ -757,18 +757,18 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       	 * @param array  $args     An array of arguments. See {@see get_terms()}.
       	 */
       	$taxonomy = apply_filters( 'get_categories_taxonomy', $taxonomy, $args );
-      
+
       	// Back compat
       	if ( isset($args['type']) && 'link' == $args['type'] ) {
       		_deprecated_argument( __FUNCTION__, '3.0', '' );
       		$taxonomy = $args['taxonomy'] = 'link_category';
       	}
-      
+
       	$categories = (array) get_terms( $taxonomy, $args );
-      
+
       	foreach ( array_keys( $categories ) as $k )
       		_make_cat_compat( $categories[$k] );
-      
+
       	return $categories;
       }
 }
