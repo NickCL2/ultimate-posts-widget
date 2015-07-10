@@ -771,4 +771,38 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
       	return $categories;
       }
-}
+
+      add_filter('upw_wp_query_args', 'upw_query', 10, 3);
+
+      function upw_query($args, $instance, $base) {
+
+      	$arguments = array();
+        $catOb= get_post_type_object($args['post_type'][0]);
+        $taxonomies = $catOb->taxonomies;
+        $slug=$args['category_name'][0];
+        $taxSlug='';
+        foreach ( $taxonomies as $taxonomy)
+        {
+            $arg="slug=$slug";
+            $taxFound=  get_terms($taxonomy, $arg);
+            if(count($taxFound) >0)
+            {
+                $taxSlug=$taxFound[0]->taxonomy;
+            }
+        }
+
+        $arguments =
+                array(
+                'post_type' => $args['post_type'][0],
+                'tax_query' => array(
+                        array(
+                                'taxonomy' => $taxSlug,
+                                'field'    => 'slug',
+                                'terms'    => $slug,
+                        ),
+                ),
+        );
+
+      	return array_merge($args, $arguments);
+      }
+  }
