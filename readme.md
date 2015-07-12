@@ -1,27 +1,5 @@
 # Ultimate Posts Widget
 
-The ultimate widget for displaying posts, custom post types or sticky posts with an array of options.
-
-Contributors: bostondv
-
-Donate link: http://www.pomelodesign.com/donate/
-License: GPLv3
-
-License URI: http://www.gnu.org/licenses/gpl.html
-
-Tags: widget, recent posts, custom post types, sticky posts, featured image, post thumbnail, excerpts, category, 
-custom fields, list pages, widget query, microformats, customizable widget,  categories widget, tags widget, excerpt, widget templates, post author, post date, custom query, ultimate posts, comments, orderby, comment count
-
-Requires at least: 3.5
-
-Tested up to: 4.0
-
-Stable tag: 2.0.3
-
-
-
-## Description
-
 The ultimate widget for displaying posts, custom post types or sticky posts with an array of options to customize the display.
 
 Designed for both the average user and developer, Ultimate Posts Widgets aims to provide flexibility and ease of use for displaying any kinds of posts within your widget areas. An array of widget options are available as well as hooks, filters and custom templates for more advanced customization.
@@ -51,11 +29,7 @@ Designed for both the average user and developer, Ultimate Posts Widgets aims to
 * Change excerpt length (in words)
 * Order by date, title, number of comments, random or a custom field
 
-# Documentation
-
-See the [FAQ tab](https://wordpress.org/plugins/ultimate-posts-widget/faq/) for documentation on custom templates, hooks, common issues, and more.
-
-# More Information
+## More Information
 
 * For help use [wordpress.org](http://wordpress.org/support/plugin/ultimate-posts-widget/)
 * Fork or contribute on [Github](https://github.com/bostondv/ultimate-posts-widget/)
@@ -63,11 +37,11 @@ See the [FAQ tab](https://wordpress.org/plugins/ultimate-posts-widget/faq/) for 
 * Follow me on [Twitter](http://twitter.com/bostondv/)
 * View my other [WordPress Plugins](http://profiles.wordpress.org/bostondv/)
 
-# Support
+## Support
 
 Did you enjoy this plugin? Please [donate to support ongoing development](http://pomelodesign.com/donate/). Your contribution would be greatly appreciated.
 
-# Frequently Asked Questions
+## Frequently Asked Questions
 
 #### Filters
 
@@ -132,6 +106,9 @@ This plugin uses the [timthumb library](http://www.binarymoon.co.uk/projects/tim
 5. Order options tab
 
 ## Changelog
+
+### 2.0.4
+* Updated class constructor for WordPress 4.3 compatibility (thanks @JustB)
 
 ### 2.0.3
 * Adds link to thumbnail images
@@ -264,3 +241,7 @@ This is a major update and includes some breaking changes. New templates have be
 2. Upload `ultimate-posts-widget` folder to `/wp-content/plugins/`
 3. Activate the plugin through the 'Plugins' menu in WordPress
 4. Add the widget to a sidebar and configure the options as desired
+
+## About
+
+Written by Boston Dell-Vandenberg of [Pomelo Design](http://www.pomelodesign.com). Pomelo Design is a web and mobile app development agency based in Toronto, Canada.
