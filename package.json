@@ -14,8 +14,8 @@
   },
   "licenses": [
     {
-      "type": "GPLv3",
-      "url": "http://www.gnu.org/licenses/gpl.html"
+      "type": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
     }
   ],
   "engines": {

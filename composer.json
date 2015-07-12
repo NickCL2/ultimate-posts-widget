@@ -1,7 +1,7 @@
 {
   "name": "bostondv/ultimate-posts-widget",
   "type": "wordpress-plugin",
-  "license": "GPLv3",
+  "license": "MIT",
   "description": "The ultimate widget for displaying posts, custom post types or sticky posts with an array of options.",
   "homepage": "http://wordpress.org/plugins/ultimate-posts-widget/",
   "authors": [

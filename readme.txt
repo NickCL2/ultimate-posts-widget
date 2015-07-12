@@ -1,8 +1,8 @@
 === Ultimate Posts Widget ===
 Contributors: bostondv
 Donate link: http://www.pomelodesign.com/donate/
-License: GPLv3
-License URI: http://www.gnu.org/licenses/gpl.html
+License: MIT
+License URI: http://opensource.org/licenses/MIT
 Tags: widget, recent posts, custom post types, sticky posts, featured image, post thumbnail, excerpts, category, custom fields, list pages, widget query, microformats, customizable widget,  categories widget, tags widget, excerpt, widget templates, post author, post date, custom query, ultimate posts, comments, orderby, comment count
 Requires at least: 3.5
 Tested up to: 4.0
