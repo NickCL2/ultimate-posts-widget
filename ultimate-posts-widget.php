@@ -31,20 +31,20 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
   class WP_Widget_Ultimate_Posts extends WP_Widget {
 
-    function WP_Widget_Ultimate_Posts() {
+    function __construct() {
 
-      $widget_options = array( 
-        'classname' => 'widget_ultimate_posts', 
-        'description' => __( 'Displays list of posts with an array of options', 'upw' ) 
+      $widget_options = array(
+        'classname' => 'widget_ultimate_posts',
+        'description' => __( 'Displays list of posts with an array of options', 'upw' )
       );
 
       $control_options = array(
         'width' => 450
       );
 
-      $this->WP_Widget( 
-        'sticky-posts', 
-        __( 'Ultimate Posts', 'upw' ), 
+      parent::__construct(
+        'sticky-posts',
+        __( 'Ultimate Posts', 'upw' ),
         $widget_options,
         $control_options
       );
@@ -112,7 +112,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       $orderby = $instance['orderby'];
       $meta_key = $instance['meta_key'];
       $custom_fields = $instance['custom_fields'];
-      
+
       // Sticky posts
       if ($sticky == 'only') {
         $sticky_query = array( 'post__in' => get_option( 'sticky_posts' ) );
@@ -618,7 +618,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
           <label for="<?php echo $this->get_field_id( 'meta_key' ); ?>"><?php _e('Custom field', 'upw'); ?>:</label>
           <input class="widefat" id="<?php echo $this->get_field_id('meta_key'); ?>" name="<?php echo $this->get_field_name('meta_key'); ?>" type="text" value="<?php echo $meta_key; ?>" />
         </p>
-        
+
         <p>
           <label for="<?php echo $this->get_field_id('order'); ?>"><?php _e('Order', 'upw'); ?>:</label>
           <select name="<?php echo $this->get_field_name('order'); ?>" id="<?php echo $this->get_field_id('order'); ?>" class="widefat">
