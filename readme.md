@@ -107,6 +107,9 @@ This plugin uses the [timthumb library](http://www.binarymoon.co.uk/projects/tim
 
 ## Changelog
 
+### 2.0.5
+* Adds menu order sort by option
+
 ### 2.0.4
 * Updated class constructor for WordPress 4.3 compatibility (thanks @JustB)
 

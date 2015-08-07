@@ -3,7 +3,7 @@
 Plugin Name: Ultimate Posts Widget
 Plugin URI: http://wordpress.org/plugins/ultimate-posts-widget/
 Description: The ultimate widget for displaying posts, custom post types or sticky posts with an array of options.
-Version: 2.0.4
+Version: 2.0.5
 Author: Boston Dell-Vandenberg
 Author URI: http://pomelodesign.com
 Text Domain: upw
@@ -595,6 +595,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
             <option value="comment_count"<?php if( $orderby == 'comment_count') echo ' selected'; ?>><?php _e('Comment Count', 'upw'); ?></option>
             <option value="rand"<?php if( $orderby == 'rand') echo ' selected'; ?>><?php _e('Random'); ?></option>
             <option value="meta_value"<?php if( $orderby == 'meta_value') echo ' selected'; ?>><?php _e('Custom Field', 'upw'); ?></option>
+            <option value="menu_order"<?php if( $orderby == 'menu_order') echo ' selected'; ?>><?php _e('Menu Order', 'upw'); ?></option>
           </select>
         </p>
 
