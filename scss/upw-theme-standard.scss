@@ -1,0 +1,79 @@
+.upw-posts {
+
+  article {
+    display: block;
+    margin-bottom: 1.5em;
+    padding-bottom: 1em;
+    border-bottom: 1px solid #ddd;
+    &:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+  }
+
+  .entry-title {
+    margin-bottom: 0.5em;
+    a {
+      text-decoration: none;
+      &:hover,
+      &:focus {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .entry-image {
+    margin-bottom: 1em;
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+
+  .entry-meta {
+    color: #888;
+    font-size: 0.9em;
+    margin-bottom: 1em;
+    line-height: 1.4;
+    .comments {
+      white-space: nowrap;
+    }
+  }
+
+  .entry-summary,
+  .entry-content {
+    > :last-child {
+      margin-bottom: 1em;
+    }
+  }
+
+  .more-link {
+    white-space: nowrap;
+  }
+
+  footer {
+    display: block;
+    color: #888;
+    font-size: 0.9em;
+    line-height: 1.4;
+  }
+
+  .entry-categories,
+  .entry-tags,
+  .entry-custom-fields {
+    margin-bottom: 0.5em;
+  }
+
+  .custom-field {
+    margin-bottom: 0.5em;
+  }
+
+}
+
+.upw-before,
+.upw-after {
+  margin-bottom: 1rem;
+  > :last-child {
+    margin-bottom: 0;
+  }
+}

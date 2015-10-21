@@ -1,0 +1,313 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Ultimate Posts\n"
+"POT-Creation-Date: 2015-02-10 14:46+0100\n"
+"PO-Revision-Date: 2015-02-10 15:04+0100\n"
+"Last-Translator: Stefan Pettersson <stefan.pettersson@lumano.se>\n"
+"Language-Team: \n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-Basepath: /home/julien/Documents/web/prod/DIE/wp-content/plugins/"
+"ultimate-posts-widget\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: ultimate-posts-widget.php:38
+msgid "Displays list of posts with an array of options"
+msgstr "Montrer la liste des articles avec un tableau d'options"
+
+#: ultimate-posts-widget.php:47 ultimate-posts-widget.php:282
+msgid "Ultimate Posts"
+msgstr "Ultimate Posts"
+
+#: ultimate-posts-widget.php:293
+msgid "Read more &rarr;"
+msgstr "Lire la suite &rarr;"
+
+#: ultimate-posts-widget.php:395
+msgid "General"
+msgstr "Général"
+
+#: ultimate-posts-widget.php:396
+msgid "Display"
+msgstr "Affichage"
+
+#: ultimate-posts-widget.php:397
+msgid "Filter"
+msgstr "Filtrer"
+
+#: ultimate-posts-widget.php:398 ultimate-posts-widget.php:620
+msgid "Order"
+msgstr "Ordre"
+
+#: ultimate-posts-widget.php:404 ultimate-posts-widget.php:607
+msgid "Title"
+msgstr "Titre"
+
+#: ultimate-posts-widget.php:409
+msgid "Title URL"
+msgstr "URL du titre"
+
+#: ultimate-posts-widget.php:414
+msgid "CSS class"
+msgstr "classe CSS"
+
+#: ultimate-posts-widget.php:419
+msgid "Before posts"
+msgstr "Avant les articles"
+
+#: ultimate-posts-widget.php:424
+msgid "After posts"
+msgstr "Après les articles"
+
+#: ultimate-posts-widget.php:433
+msgid "Template"
+msgstr "Template"
+
+#: ultimate-posts-widget.php:435
+msgid "Legacy"
+msgstr "Legacy"
+
+#: ultimate-posts-widget.php:436
+msgid "Standard"
+msgstr "Standard"
+
+#: ultimate-posts-widget.php:437
+msgid "Custom"
+msgstr "Personnalisée"
+
+#: ultimate-posts-widget.php:442
+msgid "Custom Template Name"
+msgstr "Nom de la template personnalisée"
+
+#: ultimate-posts-widget.php:447
+msgid "Number of posts"
+msgstr "Nombre d'articles"
+
+#: ultimate-posts-widget.php:453
+msgid "Show title"
+msgstr "Montrer le titre"
+
+#: ultimate-posts-widget.php:458
+msgid "Show published date"
+msgstr "Montrer la date de publication"
+
+#: ultimate-posts-widget.php:462
+msgid "Date format"
+msgstr "Format de la date"
+
+#: ultimate-posts-widget.php:468
+msgid "Show post author"
+msgstr "Montrer l'auteur de l'article"
+
+#: ultimate-posts-widget.php:473
+msgid "Show comments count"
+msgstr "Montrer le nombre de commentaires"
+
+#: ultimate-posts-widget.php:478
+msgid "Show excerpt"
+msgstr "Montrer le résumé de l'article"
+
+#: ultimate-posts-widget.php:482
+msgid "Excerpt length (in words)"
+msgstr "Longueur du résumé (en mots)"
+
+#: ultimate-posts-widget.php:488
+msgid "Show content"
+msgstr "Montrer le contenu"
+
+#: ultimate-posts-widget.php:494
+msgid "Show read more link"
+msgstr "Montrer le lien \"Lire plus\""
+
+#: ultimate-posts-widget.php:509
+msgid "Show thumbnail"
+msgstr "Montrer la miniature"
+
+#: ultimate-posts-widget.php:517
+msgid "full"
+msgstr "Plein"
+
+#: ultimate-posts-widget.php:525
+msgid "Show post categories"
+msgstr "Montrer les catégories des articles"
+
+#: ultimate-posts-widget.php:530
+msgid "Show post tags"
+msgstr "Montrer les étiquettes des articles"
+
+#: ultimate-posts-widget.php:534
+msgid "Show custom fields (comma separated)"
+msgstr "Montrer des champs personnalisés (séparés par des virgules)"
+
+#: ultimate-posts-widget.php:544
+msgid "Show posts only from current category"
+msgstr "Montrer uniquement les articles de la catégorie en cours"
+
+#: ultimate-posts-widget.php:548 templates/legacy.php:81
+msgid "Categories"
+msgstr "Catégories"
+
+#: ultimate-posts-widget.php:550 ultimate-posts-widget.php:568
+#: ultimate-posts-widget.php:580
+msgid "&ndash; Show All &ndash;"
+msgstr "&ndash; Monter tout &ndash;"
+
+#: ultimate-posts-widget.php:562
+msgid "Show posts only from current tag"
+msgstr "Montrer uniquement les articles de l'étiquette en cours"
+
+#: ultimate-posts-widget.php:566 templates/legacy.php:91
+msgid "Tags"
+msgstr "Etiquettes"
+
+#: ultimate-posts-widget.php:578
+msgid "Post types"
+msgstr "Types d'article"
+
+#: ultimate-posts-widget.php:591
+msgid "Sticky posts"
+msgstr "Articles mis en avant"
+
+#: ultimate-posts-widget.php:593
+msgid "Show All Posts"
+msgstr "Montrer tous les articles"
+
+#: ultimate-posts-widget.php:594
+msgid "Hide Sticky Posts"
+msgstr "Cacher les articles mis en avant"
+
+#: ultimate-posts-widget.php:595
+msgid "Show Only Sticky Posts"
+msgstr "Montrer uniquement les articles mis en avant"
+
+#: ultimate-posts-widget.php:604
+msgid "Order by"
+msgstr "Trier par"
+
+#: ultimate-posts-widget.php:606
+msgid "Published Date"
+msgstr "Date de publication"
+
+#: ultimate-posts-widget.php:608
+msgid "Comment Count"
+msgstr "Nombre de commentaires"
+
+#: ultimate-posts-widget.php:609
+msgid "Random"
+msgstr "Aléatoire"
+
+#: ultimate-posts-widget.php:610
+msgid "Custom Field"
+msgstr "Champ Personnalisé"
+
+#: ultimate-posts-widget.php:615
+msgid "Custom field"
+msgstr "Champ personnalisé"
+
+#: ultimate-posts-widget.php:622
+msgid "Descending"
+msgstr "Décroissant"
+
+#: ultimate-posts-widget.php:623
+msgid "Ascending"
+msgstr "Croissant"
+
+#: ultimate-posts-widget.php:630
+msgid ""
+"Enjoy this plugin? Please <a href=\"http://pomelodesign.com/donate/\" target="
+"\"_blank\">donate to support development</a>."
+msgstr ""
+"Vous aimez cette extension ? <a href=\"http://pomelodesign.com/donate/\" "
+"target=\"_blank\">Donnez pour aider à son développement</a>."
+
+#: templates/legacy.php:51 templates/standard.php:57
+msgid "By"
+msgstr "Par"
+
+#: templates/legacy.php:58
+msgid "No responses"
+msgstr "Aucune réponse"
+
+#: templates/legacy.php:58
+msgid "One response"
+msgstr "Une réponse"
+
+#: templates/legacy.php:58
+msgid "% responses"
+msgstr "% réponses"
+
+#: templates/legacy.php:127 templates/standard.php:151
+msgid "No posts found."
+msgstr "Aucun article trouvé."
+
+#: templates/standard.php:52 templates/standard.php:65
+msgid "|"
+msgstr "|"
+
+#: templates/standard.php:70
+msgid "No comments"
+msgstr "Aucun commentaire"
+
+#: templates/standard.php:70
+msgid "One comment"
+msgstr "Un commentaire"
+
+#: templates/standard.php:70
+#, php-format
+msgid "% comments"
+msgstr "% commentaires"
+
+#: templates/standard.php:102
+msgid "Posted in"
+msgstr "Publié dans"
+
+#: templates/standard.php:112
+msgid "Tagged"
+msgstr "Etiqueté"
+
+#~ msgid "Show more button"
+#~ msgstr "Bouton \"Voir plus\""
+
+#~ msgid "More button text"
+#~ msgstr "Texte du bouton \"Voir plus\""
+
+#~ msgid "More button URL"
+#~ msgstr "URL du bouton \"Voir plus\""
+
+#~ msgid "Show published time"
+#~ msgstr "Montrer l'heure de publication"
+
+#~ msgid "Read more text"
+#~ msgstr "Texte \"Lire plus\""
+
+#~ msgid "Thumbnail size"
+#~ msgstr "Taille de la miniature"
+
+#~ msgid "W"
+#~ msgstr "L"
+
+#~ msgid "H"
+#~ msgstr "H"
+
+#~ msgid "Crop mode"
+#~ msgstr "Mode recadrage"
+
+#~ msgid "Scale &amp; Crop to Fit"
+#~ msgstr "Echelle &amp; Recadrer pour ajuster"
+
+#~ msgid "Stretch to Fit"
+#~ msgstr "Sträck för att passa"
+
+#~ msgid "Proportional Scale"
+#~ msgstr "Skala proportionellt"
+
+#~ msgid "Proportional Scale No Borders"
+#~ msgstr "Skala proportionellt utan ramar"
+
+#~ msgid "Developed by"
+#~ msgstr "Utvecklad av"

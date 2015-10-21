@@ -1,0 +1,204 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Ultimate Posts\n"
+"POT-Creation-Date: 2014-03-19 12:19+0100\n"
+"PO-Revision-Date: 2014-03-19 12:54+0100\n"
+"Last-Translator: Stefan Pettersson <stefan.pettersson@lumano.se>\n"
+"Language-Team: \n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.3\n"
+"X-Poedit-Basepath: /Users/stefan/Documents/plugins/ultimate-posts-widget/\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: ultimate-posts-widget.php:34
+msgid "Displays list of posts with an array of options"
+msgstr "Visar en lista med inlägg. Inställningarna skickas med i en array."
+
+#: ultimate-posts-widget.php:41
+msgid "Ultimate Posts"
+msgstr ""
+
+#: ultimate-posts-widget.php:211
+msgid "By"
+msgstr "Av"
+
+#: ultimate-posts-widget.php:227 ultimate-posts-widget.php:569
+msgid "Categories"
+msgstr "Kategorier"
+
+#: ultimate-posts-widget.php:234
+msgid "Tags"
+msgstr "Etiketter"
+
+#: ultimate-posts-widget.php:279
+msgid "No posts found."
+msgstr "Hittade inga inlägg"
+
+#: ultimate-posts-widget.php:353
+msgid "Read more &rarr;"
+msgstr "Läs mer &rarr;"
+
+#: ultimate-posts-widget.php:356
+msgid "View More Posts"
+msgstr "Visa fler inlägg"
+
+#: ultimate-posts-widget.php:433 ultimate-posts-widget.php:607
+msgid "Title"
+msgstr "Titel"
+
+#: ultimate-posts-widget.php:438
+msgid "Title URL"
+msgstr "Titel URL"
+
+#: ultimate-posts-widget.php:443
+msgid "Number of posts"
+msgstr "Antal inlägg"
+
+#: ultimate-posts-widget.php:449
+msgid "Show more button"
+msgstr "Visa knapp \"Läs mer\""
+
+#: ultimate-posts-widget.php:453
+msgid "More button text"
+msgstr "Text på knappen \"Läs mer\""
+
+#: ultimate-posts-widget.php:458
+msgid "More button URL"
+msgstr "Url på knappen \"Läs mer\""
+
+#: ultimate-posts-widget.php:468
+msgid "Show title"
+msgstr "Visa titel"
+
+#: ultimate-posts-widget.php:473
+msgid "Show published date"
+msgstr "Visa publiceringsdatum"
+
+#: ultimate-posts-widget.php:478
+msgid "Show published time"
+msgstr "Visa publiceringstid"
+
+#: ultimate-posts-widget.php:483
+msgid "Show post author"
+msgstr "Visa inläggets författare"
+
+#: ultimate-posts-widget.php:488
+msgid "Show excerpt"
+msgstr "Visa utdrag"
+
+#: ultimate-posts-widget.php:492
+msgid "Excerpt length (in words)"
+msgstr "Längd på utdrag (antal ord)"
+
+#: ultimate-posts-widget.php:498
+msgid "Show content"
+msgstr "Visa innehållet"
+
+#: ultimate-posts-widget.php:504
+msgid "Show read more link"
+msgstr "Visa länk \"Läs mer\""
+
+#: ultimate-posts-widget.php:509
+msgid "Read more text"
+msgstr "Text \"Läs mer\""
+
+#: ultimate-posts-widget.php:517
+msgid "Show thumbnail"
+msgstr "Visa miniatyr"
+
+#: ultimate-posts-widget.php:521
+msgid "Thumbnail size"
+msgstr "Miniatyrstorlek"
+
+#: ultimate-posts-widget.php:524
+msgid "W"
+msgstr "B"
+
+#: ultimate-posts-widget.php:527
+msgid "H"
+msgstr "H"
+
+#: ultimate-posts-widget.php:532
+msgid "Crop mode"
+msgstr "Beskärningssätt"
+
+#: ultimate-posts-widget.php:535
+msgid "Scale &amp; Crop to Fit"
+msgstr "Skala &amp; beskär för att passa"
+
+#: ultimate-posts-widget.php:536
+msgid "Stretch to Fit"
+msgstr "Sträck för att passa"
+
+#: ultimate-posts-widget.php:537
+msgid "Proportional Scale"
+msgstr "Skala proportionellt"
+
+#: ultimate-posts-widget.php:538
+msgid "Proportional Scale No Borders"
+msgstr "Skala proportionellt utan ramar"
+
+#: ultimate-posts-widget.php:546
+msgid "Show post categories"
+msgstr "Visa inläggskategorier"
+
+#: ultimate-posts-widget.php:551
+msgid "Show post tags"
+msgstr "Visa inläggsetiketter"
+
+#: ultimate-posts-widget.php:555
+msgid "Show Custom Fields (comma separated)"
+msgstr "Visa egna fält (kommaseparerade)"
+
+#: ultimate-posts-widget.php:565
+msgid "Show posts only from current category"
+msgstr "Visa bara inlägg från aktuella kategorin"
+
+#: ultimate-posts-widget.php:580
+msgid "Post types"
+msgstr "Posttyper"
+
+#: ultimate-posts-widget.php:592
+msgid "Sticky posts"
+msgstr "Fastklistrade inlägg"
+
+#: ultimate-posts-widget.php:594
+msgid "Show All Posts"
+msgstr "Visa alla inlägg"
+
+#: ultimate-posts-widget.php:595
+msgid "Hide Sticky Posts"
+msgstr "Dölj klistrade inlägg"
+
+#: ultimate-posts-widget.php:596
+msgid "Show Only Sticky Posts"
+msgstr "Visa bara klistrade inlägg"
+
+#: ultimate-posts-widget.php:606
+msgid "Published Date"
+msgstr "Publiceringsdatum"
+
+#: ultimate-posts-widget.php:608
+msgid "Comment Count"
+msgstr "Antal kommentarer"
+
+#: ultimate-posts-widget.php:609
+msgid "Random"
+msgstr "Slumpvis"
+
+#: ultimate-posts-widget.php:615
+msgid "Descending"
+msgstr "Avtagande"
+
+#: ultimate-posts-widget.php:616
+msgid "Ascending"
+msgstr "Ökande"
+
+#: ultimate-posts-widget.php:620
+msgid "Developed by"
+msgstr "Utvecklad av"
