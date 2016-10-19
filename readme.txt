@@ -5,14 +5,14 @@ License: MIT
 License URI: http://opensource.org/licenses/MIT
 Tags: widget, recent posts, custom post types, sticky posts, featured image, post thumbnail, excerpts, category, custom fields, list pages, widget query, microformats, customizable widget,  categories widget, tags widget, excerpt, widget templates, post author, post date, custom query, ultimate posts, comments, orderby, comment count
 Requires at least: 3.5
-Tested up to: 4.3
-Stable tag: 2.0.5
+Tested up to: 4.6.1
+Stable tag: 2.0.6
 
 The ultimate widget for displaying posts, custom post types or sticky posts with an array of options.
 
 == Description ==
 
-The ultimate widget for displaying posts, custom post types or sticky posts with an array of options to customize the display. 
+The ultimate widget for displaying posts, custom post types or sticky posts with an array of options to customize the display.
 
 Designed for both the average user and developer, Ultimate Posts Widgets aims to provide flexibility and ease of use for displaying any kinds of posts within your widget areas. An array of widget options are available as well as hooks, filters and custom templates for more advanced customization.
 
@@ -79,7 +79,7 @@ As of version 2.0.0 we changed the widget HTML markup. For installs prior to 2.0
 The new standard template as of version 2.0.0. It features better HTML5 markup, improved styling on various themes without the need for custom CSS, and hfeed microformat.
 
 **custom**
-As of version 2.0.0 you can now provide your own custom template files. To do this, create a directory named `upw` in your theme and copy a template from the plugin's `templates` directory. Edit as needed. 
+As of version 2.0.0 you can now provide your own custom template files. To do this, create a directory named `upw` in your theme and copy a template from the plugin's `templates` directory. Edit as needed.
 
 Then, in the widget settings under the *Display* tab, choose *Custom* from the *Template* drop down. In the *Custom Template Name* field that appears and enter the file name of your template (excluding .php). For example, if your template is named `custom.php` then enter `custom` in the *Custom Template Name* field.
 
@@ -122,6 +122,10 @@ This plugin uses the [timthumb library](http://www.binarymoon.co.uk/projects/tim
 5. Order options tab
 
 == Changelog ==
+
+= 2.0.6 =
+* Fix PHP notice (thanks @rhyswynne)
+* Search custom template both in child theme and in parent (thanks @groucho75)
 
 = 2.0.5 =
 * Adds menu order sort by option
