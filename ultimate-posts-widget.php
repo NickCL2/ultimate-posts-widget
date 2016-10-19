@@ -64,7 +64,12 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
     function widget( $args, $instance ) {
 
       global $post;
-      $current_post_id =  $post->ID;
+
+      if ( is_object( $post ) ) {
+        $current_post_id = $post->ID;
+      } else {
+        $current_post_id = 0;
+      }
 
       $cache = wp_cache_get( 'widget_ultimate_posts', 'widget' );
 
