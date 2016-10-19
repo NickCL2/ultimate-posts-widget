@@ -182,8 +182,8 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
       if ($instance['template'] === 'custom') {
         $custom_template_path = apply_filters('upw_custom_template_path',  '/upw/' . $instance['template_custom'] . '.php', $instance, $this->id_base);
-        if (locate_template($custom_template_path)) {
-          include get_stylesheet_directory() . $custom_template_path;
+        if ( $template = locate_template($custom_template_path) ) {
+          include $template;
         } else {
           include 'templates/standard.php';
         }
