@@ -38,7 +38,7 @@ Designed for both the average user and developer, Ultimate Posts Widgets aims to
 
 ## Support
 
-Did you enjoy this plugin? Please [donate to support ongoing development](http://bostondv.com/tips/). Your contribution would be greatly appreciated.
+Enjoy this plugin? [Send a tip to support development](http://bostondv.com/tips/).
 
 ## Frequently Asked Questions
 

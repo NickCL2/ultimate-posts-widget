@@ -266,8 +266,8 @@ msgstr "صعودی"
 
 #: ../ultimate-posts-widget.php:630
 msgid ""
-"Enjoy this plugin? Please <a href=\"http://bostondv.com/tips//\" target="
-"\"_blank\">donate to support development</a>."
+"Enjoy this plugin? <a href=\"http://bostondv.com/tips//\" target="
+"\"_blank\">Send a tip to support development</a>."
 msgstr ""
 "آماده سازی بدست <a href=\"http://bostondv.com/tips//\" target=\"_blank\">گروه طراحی "
 "و توسعه تکتاوب</a>."

@@ -56,7 +56,7 @@ Made with <3 by [Boston Dell-Vandenberg](http://bostondv.com).
 
 = Support =
 
-Did you enjoy this plugin? Please [donate to support ongoing development](http://bostondv.com/tips/). Your contribution would be greatly appreciated.
+Enjoy this plugin? [Send a tip to support development](http://bostondv.com/tips/).
 
 == Frequently Asked Questions ==
 

@@ -219,8 +219,8 @@ msgstr "Croissant"
 
 #: ultimate-posts-widget.php:630
 msgid ""
-"Enjoy this plugin? Please <a href=\"http://bostondv.com/tips//\" target="
-"\"_blank\">donate to support development</a>."
+"Enjoy this plugin? <a href=\"http://bostondv.com/tips//\" target="
+"\"_blank\">Send a tip to support development</a>."
 msgstr ""
 "Vous aimez cette extension ? <a href=\"http://bostondv.com/tips//\" "
 "target=\"_blank\">Donnez pour aider à son développement</a>."
