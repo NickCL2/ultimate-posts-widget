@@ -106,6 +106,9 @@ This plugin uses the [timthumb library](http://www.binarymoon.co.uk/projects/tim
 
 ## Changelog
 
+### 2.0.7
+* Tested update WordPress 4.8
+
 ### 2.0.6
 * Fix PHP notice (thanks @rhyswynne)
 * Search custom template both in child theme and in parent (thanks @groucho75)
