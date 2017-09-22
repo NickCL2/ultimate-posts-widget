@@ -266,10 +266,10 @@ msgstr "صعودی"
 
 #: ../ultimate-posts-widget.php:630
 msgid ""
-"Enjoy this plugin? Please <a href=\"http://pomelodesign.com/donate/\" target="
+"Enjoy this plugin? Please <a href=\"http://bostondv.com/tips//\" target="
 "\"_blank\">donate to support development</a>."
 msgstr ""
-"آماده سازی بدست <a href=\"http://taktaweb.ir/\" target=\"_blank\">گروه طراحی "
+"آماده سازی بدست <a href=\"http://bostondv.com/tips//\" target=\"_blank\">گروه طراحی "
 "و توسعه تکتاوب</a>."
 
 #, fuzzy

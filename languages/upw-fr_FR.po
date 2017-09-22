@@ -219,10 +219,10 @@ msgstr "Croissant"
 
 #: ultimate-posts-widget.php:630
 msgid ""
-"Enjoy this plugin? Please <a href=\"http://pomelodesign.com/donate/\" target="
+"Enjoy this plugin? Please <a href=\"http://bostondv.com/tips//\" target="
 "\"_blank\">donate to support development</a>."
 msgstr ""
-"Vous aimez cette extension ? <a href=\"http://pomelodesign.com/donate/\" "
+"Vous aimez cette extension ? <a href=\"http://bostondv.com/tips//\" "
 "target=\"_blank\">Donnez pour aider à son développement</a>."
 
 #: templates/legacy.php:51 templates/standard.php:57

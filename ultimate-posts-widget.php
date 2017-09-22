@@ -620,7 +620,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       </div>
 
       <p class="upw-credits">
-        <?php _e('Enjoy this plugin? Please <a href="http://pomelodesign.com/donate/" target="_blank">donate to support development</a>.', 'upw'); ?>
+        <?php _e('Enjoy this plugin? Please <a href="http://bostondv.com/tips/" target="_blank">donate to support development</a>.', 'upw'); ?>
       </p>
 
       <?php if ( $instance ) { ?>
