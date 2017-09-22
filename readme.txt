@@ -5,7 +5,7 @@ License: MIT
 License URI: http://opensource.org/licenses/MIT
 Tags: widget, recent posts, custom post types, sticky posts, featured image, post thumbnail, excerpts, category, custom fields, list pages, widget query, microformats, customizable widget,  categories widget, tags widget, excerpt, widget templates, post author, post date, custom query, ultimate posts, comments, orderby, comment count
 Requires at least: 3.5
-Tested up to: 4.6.1
+Tested up to: 4.8
 Stable tag: 2.0.6
 
 The ultimate widget for displaying posts, custom post types or sticky posts with an array of options.
