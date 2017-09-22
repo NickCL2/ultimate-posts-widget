@@ -5,7 +5,7 @@ Plugin URI: http://wordpress.org/plugins/ultimate-posts-widget/
 Description: The ultimate widget for displaying posts, custom post types or sticky posts with an array of options.
 Version: 2.0.6
 Author: Boston Dell-Vandenberg
-Author URI: http://pomelodesign.com
+Author URI: http://bostondv.com
 Text Domain: upw
 Domain Path: /languages/
 License: MIT
