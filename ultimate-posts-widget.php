@@ -85,7 +85,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       extract( $args );
       
       // Filter instance
-      $instance = apply_filters('upw_widget_instance', $instance );
+      $instance = apply_filters('upw_widget_instance', $instance, $this->id_base);
 
       $title = apply_filters('widget_title', empty($instance['title']) ? '' : $instance['title'], $instance, $this->id_base);
       $title_link = $instance['title_link'];
