@@ -116,8 +116,8 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
         $cats = get_query_var('cat');
       }
 
-      // If $atcat true and is single post
-      if ($atcat && is_single()) {
+      // If $atcat true and is single post or page
+      if ($atcat && (is_single() || is_page())) {
         $cats = '';
         foreach (get_the_category() as $catt) {
           $cats .= $catt->term_id.' ';
@@ -130,8 +130,8 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
         $tags = get_query_var('tag_id');
       }
 
-      // If $attag true and is single post
-      if ($attag && is_single()) {
+      // If $attag true and is single post or page
+      if ($attag && (is_single() || is_page())) {
         $tags = '';
         $thetags = get_the_tags();
         if ($thetags) {
@@ -538,7 +538,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
         <p>
           <label for="<?php echo $this->get_field_id('cats'); ?>"><?php _e( 'Categories', 'upw' ); ?>:</label>
-          <select name="<?php echo $this->get_field_name('cats'); ?>[]" id="<?php echo $this->get_field_id('cats'); ?>" class="widefat" style="height: auto;" size="<?php echo $c ?>" multiple>
+          <select name="<?php echo $this->get_field_name('cats'); ?>[]" id="<?php echo $this->get_field_id('cats'); ?>" class="widefat" style="height: auto; min-height: 60px;" size="<?php echo $c ?>" multiple>
             <option value="" <?php if (empty($cats)) echo 'selected="selected"'; ?>><?php _e('&ndash; Show All &ndash;') ?></option>
             <?php
             $categories = get_categories( 'hide_empty=0' );
@@ -556,7 +556,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
           <p>
             <label for="<?php echo $this->get_field_id('tags'); ?>"><?php _e( 'Tags', 'upw' ); ?>:</label>
-            <select name="<?php echo $this->get_field_name('tags'); ?>[]" id="<?php echo $this->get_field_id('tags'); ?>" class="widefat" style="height: auto;" size="<?php echo $t ?>" multiple>
+            <select name="<?php echo $this->get_field_name('tags'); ?>[]" id="<?php echo $this->get_field_id('tags'); ?>" class="widefat" style="height: auto; min-height: 60px;" size="<?php echo $t ?>" multiple>
               <option value="" <?php if (empty($tags)) echo 'selected="selected"'; ?>><?php _e('&ndash; Show All &ndash;') ?></option>
               <?php
               foreach ($tag_list as $tag) { ?>
@@ -568,7 +568,7 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
 
         <p>
           <label for="<?php echo $this->get_field_id('types'); ?>"><?php _e( 'Post types', 'upw' ); ?>:</label>
-          <select name="<?php echo $this->get_field_name('types'); ?>[]" id="<?php echo $this->get_field_id('types'); ?>" class="widefat" style="height: auto;" size="<?php echo $n ?>" multiple>
+          <select name="<?php echo $this->get_field_name('types'); ?>[]" id="<?php echo $this->get_field_id('types'); ?>" class="widefat" style="height: auto; min-height: 60px;" size="<?php echo $n ?>" multiple>
             <option value="" <?php if (empty($types)) echo 'selected="selected"'; ?>><?php _e('&ndash; Show All &ndash;') ?></option>
             <?php
             $args = array( 'public' => true );
