@@ -106,6 +106,10 @@ This plugin uses the [timthumb library](http://www.binarymoon.co.uk/projects/tim
 
 ## Changelog
 
+### 2.0.8
+* Add filter to widget instance (thanks @X-Raym)
+* Apply show posts from current tag and category to pages (thanks @veracompadriatics)
+
 ### 2.0.7
 * Tested update WordPress 4.8
 
