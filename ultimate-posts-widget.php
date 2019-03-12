@@ -146,11 +146,15 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
       }
 
       // Excerpt more filter
-      $new_excerpt_more = create_function('$more', 'return "...";');
+      $new_excerpt_more = function($more){
+        return "...";
+      };
       add_filter('excerpt_more', $new_excerpt_more);
 
       // Excerpt length filter
-      $new_excerpt_length = create_function('$length', "return " . $excerpt_length . ";");
+      $new_excerpt_length = function($length) use ($excerpt_length){
+        return $excerpt_length;
+      };
       if ( $instance['excerpt_length'] > 0 ) add_filter('excerpt_length', $new_excerpt_length);
 
       if( $class ) {
