@@ -214,6 +214,8 @@ if ( !class_exists( 'WP_Widget_Ultimate_Posts' ) ) {
         $cache[$args['widget_id']] = ob_get_flush();
       }
       wp_cache_set( 'widget_ultimate_posts', $cache, 'widget' );
+      ob_end_flush();
+
     }
 
     function update( $new_instance, $old_instance ) {
